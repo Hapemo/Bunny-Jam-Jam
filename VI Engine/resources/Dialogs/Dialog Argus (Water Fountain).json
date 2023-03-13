@@ -1,0 +1,23 @@
+[
+ {
+   "Dialogue ID": 1,
+   "Dialogue Text": "Did the place always have such a majestic waterfall like this...?",
+   "Speaker": 0,
+   "Next Dialogue": 2,
+   "Next Dialogue(2)": 0
+ },
+ {
+   "Dialogue ID": 2,
+   "Dialogue Text": "Doesn't seem right... Not even my compass seems to be working...",
+   "Speaker": 0,
+   "Next Dialogue": 3,
+   "Next Dialogue(2)": 0
+ },
+ {
+   "Dialogue ID": 3,
+   "Dialogue Text": "*Sigh* I hope it works soon... Thanks anyway!",
+   "Speaker": 0,
+   "Next Dialogue": 0,
+   "Next Dialogue(2)": 0
+ }
+]

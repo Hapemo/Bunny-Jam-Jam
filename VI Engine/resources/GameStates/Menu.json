@@ -1,0 +1,73 @@
+[
+    {
+        "SceneName": "Menu_Main",
+        "isActive": false,
+        "layer": 2,
+        "order": 0
+    },
+    {
+        "SceneName": "Settings",
+        "isActive": true,
+        "layer": 2,
+        "order": 0
+    },
+    {
+        "SceneName": "How_To_Play",
+        "isActive": true,
+        "layer": 2,
+        "order": 0
+    },
+    {
+        "SceneName": "Quit Confirmation",
+        "isActive": true,
+        "layer": 2,
+        "order": 0
+    },
+    {
+        "SceneName": "FPS",
+        "isActive": false,
+        "layer": 3,
+        "order": 0
+    },
+    {
+        "SceneName": "Credits",
+        "isActive": true,
+        "layer": 2,
+        "order": 0
+    },
+    {
+        "SceneName": "ShadowBackground",
+        "isActive": false,
+        "layer": 0,
+        "order": 0
+    },
+    {
+        "SceneName": "Transition",
+        "isActive": false,
+        "layer": 15,
+        "order": 0
+    },
+    {
+        "SceneName": "MouseMenu",
+        "Transform": {
+            "scale": {
+                "X": 1600.0,
+                "Y": 900.0
+            },
+            "rotation": 1.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "isActive": false,
+        "layer": 3,
+        "order": 0
+    },
+    {
+        "SceneName": "UIBackground",
+        "isActive": false,
+        "layer": 1,
+        "order": 0
+    }
+]

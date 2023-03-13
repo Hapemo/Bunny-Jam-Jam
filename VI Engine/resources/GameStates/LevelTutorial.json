@@ -1,0 +1,101 @@
+[
+    {
+        "SceneName": "LevelTutorial",
+        "Transform": {
+            "scale": {
+                "X": 1200.0,
+                "Y": 675.0
+            },
+            "rotation": 1.3333333730697632,
+            "translation": {
+                "X": -933.505126953125,
+                "Y": 405.0091247558594
+            }
+        },
+        "isActive": false,
+        "layer": 3,
+        "order": 3
+    },
+    {
+        "SceneName": "Pause",
+        "isActive": true,
+        "layer": 10,
+        "order": 0
+    },
+    {
+        "SceneName": "Game Over",
+        "isActive": true,
+        "layer": 10,
+        "order": 4
+    },
+    {
+        "SceneName": "How_To_Play",
+        "isActive": true,
+        "layer": 10,
+        "order": 0
+    },
+    {
+        "SceneName": "Quit Confirmation",
+        "isActive": true,
+        "layer": 10,
+        "order": 4
+    },
+    {
+        "SceneName": "TutorialDialogue",
+        "isActive": false,
+        "layer": 6,
+        "order": 7
+    },
+    {
+        "SceneName": "FPS",
+        "isActive": false,
+        "layer": 9,
+        "order": 0
+    },
+    {
+        "SceneName": "Transition",
+        "isActive": false,
+        "layer": 11,
+        "order": 0
+    },
+    {
+        "SceneName": "TutorialUI",
+        "isActive": false,
+        "layer": 7,
+        "order": 0
+    },
+    {
+        "SceneName": "LevelTutorialBackground",
+        "Transform": {
+            "scale": {
+                "X": 1200.0,
+                "Y": 675.0
+            },
+            "rotation": 1.3333333730697632,
+            "translation": {
+                "X": -933.505126953125,
+                "Y": 405.0091247558594
+            }
+        },
+        "isActive": false,
+        "layer": 0,
+        "order": 0
+    },
+    {
+        "SceneName": "Mouse",
+        "Transform": {
+            "scale": {
+                "X": 1200.0,
+                "Y": 675.0
+            },
+            "rotation": 1.3333333730697632,
+            "translation": {
+                "X": -933.505126953125,
+                "Y": 405.0091247558594
+            }
+        },
+        "isActive": false,
+        "layer": 8,
+        "order": 0
+    }
+]

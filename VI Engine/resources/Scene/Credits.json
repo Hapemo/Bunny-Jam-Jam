@@ -1,0 +1,550 @@
+[
+    {
+        "General": {
+            "name": "NEW Entity 2",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -450.0,
+                "Y": 70.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\MONSTER\\Character_Monster_SE_Attack1_Spritesheet.png",
+            "layer": 3
+        },
+        "SheetAnimation": {
+            "frameCount": 10,
+            "currFrameIndex": 8,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.033333346247673035
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Kew Yu Jun",
+            "offset": {
+                "X": 90.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -238.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 1",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1200.0,
+                "Y": 700.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": -50.000030517578125
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Menu\\UI_HowtoPlay_Window.png",
+            "layer": 1
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Credits",
+            "offset": {
+                "X": -151.0,
+                "Y": 380.0
+            },
+            "scale": 1.5,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 2",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 75.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -450.0,
+                "Y": -45.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\NPC\\Character_Ghost1_SE_Spritesheet.png",
+            "layer": 4
+        },
+        "SheetAnimation": {
+            "frameCount": 8,
+            "currFrameIndex": 6,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.06666667759418488
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Jazz Teoh",
+            "offset": {
+                "X": 95.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -268.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 3",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 75.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -450.0,
+                "Y": -160.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\NPC\\Character_Ghost4_SE_Idle_Spritesheet.png",
+            "layer": 5
+        },
+        "SheetAnimation": {
+            "frameCount": 8,
+            "currFrameIndex": 6,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.06666667759418488
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Joachim Lee",
+            "offset": {
+                "X": 90.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -610.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 3",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 75.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -450.0,
+                "Y": -275.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\NPC\\Character_Ghost6_SE_Idle_Spritesheet.png",
+            "layer": 5
+        },
+        "SheetAnimation": {
+            "frameCount": 8,
+            "currFrameIndex": 6,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.06666667759418488
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Christy Loh",
+            "offset": {
+                "X": 90.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -610.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 3",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 75.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 140.0,
+                "Y": 70.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\NPC\\Character_Ghost3_SE_Idle_Spritesheet.png",
+            "layer": 5
+        },
+        "SheetAnimation": {
+            "frameCount": 8,
+            "currFrameIndex": 6,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.06666667759418488
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Huang Wei Jhin",
+            "offset": {
+                "X": 90.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -610.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 3",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 75.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 140.0,
+                "Y": -45.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\NPC\\Character_Ghost2_SE_Idle_Spritesheet.png",
+            "layer": 5
+        },
+        "SheetAnimation": {
+            "frameCount": 8,
+            "currFrameIndex": 6,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.06666667759418488
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Chen Jia Wen",
+            "offset": {
+                "X": 90.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -610.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 3",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 75.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 140.0,
+                "Y": -160.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\NPC\\Character_Ghost5_SE_Idle_Spritesheet.png",
+            "layer": 5
+        },
+        "SheetAnimation": {
+            "frameCount": 8,
+            "currFrameIndex": 6,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.06666667759418488
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Yip Xiu Han",
+            "offset": {
+                "X": 90.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -610.0
+        }
+    },
+    {
+        "General": {
+            "name": "NEW Entity 3",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 75.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 140.0,
+                "Y": -275.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Spritesheets\\NPC\\girl-idle-spritesheet.png",
+            "layer": 5
+        },
+        "SheetAnimation": {
+            "frameCount": 9,
+            "currFrameIndex": 2,
+            "timePerFrame": 0.15000000596046448,
+            "timeToFrameSwap": 0.06666667759418488
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Sherylin Lum",
+            "offset": {
+                "X": 90.0,
+                "Y": -15.0
+            },
+            "scale": 0.800000011920929,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -610.0
+        }
+    },
+    {
+        "General": {
+            "name": "Back",
+            "tag": 5,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 60.0,
+                "Y": 60.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 535.0,
+                "Y": 238.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Icons\\ExitBtn.png",
+            "layer": 8
+        },
+        "Audio": {
+            "path": "OpenMemoryFragment",
+            "volume": 1.0,
+            "volumeMod": 1.0,
+            "pitch": 1.0,
+            "isPaused": false,
+            "isMute": false,
+            "isLoop": false,
+            "isRandPitch": false,
+            "isSpacial": false
+        },
+        "Script": {
+            "name": "BackButton"
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "Background",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1600.0,
+                "Y": 900.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 150
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 0
+        }
+    }
+]

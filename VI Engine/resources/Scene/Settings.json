@@ -1,0 +1,339 @@
+[
+    {
+        "General": {
+            "name": "ToggleSize",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 100.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": -240.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Icons\\cycle.png",
+            "layer": 8
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Fullscreen",
+            "offset": {
+                "X": -148.0,
+                "Y": 60.0
+            },
+            "scale": 1.0,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        }
+    },
+    {
+        "General": {
+            "name": "Back",
+            "tag": 5,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 60.0,
+                "Y": 60.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 535.0,
+                "Y": 238.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Icons\\ExitBtn.png",
+            "layer": 8
+        },
+        "Audio": {
+            "path": "OpenMemoryFragment",
+            "volume": 1.0,
+            "volumeMod": 1.0,
+            "pitch": 1.0,
+            "isPaused": false,
+            "isMute": false,
+            "isLoop": false,
+            "isRandPitch": false,
+            "isSpacial": false
+        },
+        "Script": {
+            "name": "BackButton"
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "BGMvolume",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 39.269927978515625,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -305.36505126953125,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 9
+        }
+    },
+    {
+        "General": {
+            "name": "BGMmax",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 200.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -225.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 61,
+                "g": 61,
+                "b": 61,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 8
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "BGM",
+            "offset": {
+                "X": -104.0,
+                "Y": 40.0
+            },
+            "scale": 1.0,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        },
+        "Script": {
+            "name": "BGMcontroller"
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "SFXvolume",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 50.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 150.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 9
+        }
+    },
+    {
+        "General": {
+            "name": "SFXmax",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 200.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 225.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 61,
+                "g": 61,
+                "b": 61,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 8
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "SFX",
+            "offset": {
+                "X": -104.0,
+                "Y": 40.0
+            },
+            "scale": 1.0,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        },
+        "Script": {
+            "name": "SFXcontroller"
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "Window",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1200.0,
+                "Y": 700.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": -50.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 200
+            },
+            "sprite": 2,
+            "texture": "Textures\\Menu\\UI_HowtoPlay_Window.png",
+            "layer": 6
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Settings",
+            "offset": {
+                "X": -175.0,
+                "Y": 380.0
+            },
+            "scale": 1.5,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        }
+    },
+    {
+        "General": {
+            "name": "Background",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1600.0,
+                "Y": 900.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 150
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 0
+        }
+    }
+]
