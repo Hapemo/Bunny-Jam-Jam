@@ -3,6 +3,6 @@ Welcome to Bunny Jam Jam, our game is a networking game about a chef chasing dow
 
 Below are each components of our system and how it works, check them out!
 
-[Architecture Planning](Bunny Jam Jam/Documentations/Architecture Planning.md)
-
+[Architecture Planning](Documentations/Architecture%20Planning.md) <br>
+[ECS System](Documentations/entity_component_system.md)
 
