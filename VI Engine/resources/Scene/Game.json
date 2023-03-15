@@ -1,0 +1,59 @@
+[
+    {
+        "General": {
+            "name": "Player1",
+            "tag": 0,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -64.0,
+                "Y": 77.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 42,
+                "g": 243,
+                "b": 42,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 0
+        },
+        "Physics2D": {
+            "dynamicsEnabled": true,
+            "mass": 1.0,
+            "inertia": 1.0,
+            "restitution": 0.0,
+            "friction": 0.0,
+            "damping": 0.8999999761581421,
+            "accumulatedForce": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "velocity": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "acceleration": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "angularVelocity": 0.0,
+            "angularTorque": 0.0,
+            "forceList": [],
+            "renderFlag": false
+        },
+        "Script": {
+            "name": ""
+        }
+    }
+]
