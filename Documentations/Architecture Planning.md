@@ -1,5 +1,5 @@
 # Bunny Jam Jam Architecture Planning
-The Original VI Engine architecture does not support Networking feature, so here is a breakdown of each architecture in attempt to merge them together
+The VI Engine architecture does not support Networking feature, so here is a breakdown of each architecture in attempt to merge them together
 * [VI Engine Architecture](#vi-engine-architecture)
 * [Networking Architecture](#networking-architecture)
 * [VI Engine with Networking](#vi-engine-with-networking)
