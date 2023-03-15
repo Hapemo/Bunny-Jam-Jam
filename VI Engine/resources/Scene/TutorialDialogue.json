@@ -196,8 +196,8 @@
             },
             "rotation": 0.0,
             "translation": {
-                "X": 400.0,
-                "Y": -234.10000610351563
+                "X": 500.0,
+                "Y": 46.0
             }
         },
         "Sprite": {
@@ -257,8 +257,8 @@
             },
             "rotation": 0.0,
             "translation": {
-                "X": 400.0,
-                "Y": -325.8999938964844
+                "X": 500.0,
+                "Y": -90.0
             }
         },
         "Sprite": {
@@ -309,7 +309,7 @@
             "name": "P1",
             "tag": 8,
             "subtag": 0,
-            "isActive": false
+            "isActive": true
         },
         "Transform": {
             "scale": {
@@ -346,7 +346,7 @@
         },
         "Text": {
             "fontFile": "BPtypewrite",
-            "text": "I'd like to play",
+            "text": "Maybe that girl knows...",
             "offset": {
                 "X": -254.5,
                 "Y": 4.900001525878906

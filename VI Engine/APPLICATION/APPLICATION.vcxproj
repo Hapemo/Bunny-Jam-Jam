@@ -36,6 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Application.h" />
+    <ClInclude Include="include\Scripts\Bunny_CarrotCollectionScript.h" />
+    <ClInclude Include="include\Scripts\Bunny_CarrotCount.h" />
+    <ClInclude Include="include\Scripts\Bunny_PlayerMovement.h" />
     <ClInclude Include="include\Scripts\FPSPrint.h" />
     <ClInclude Include="include\Scripts\DeathToMainMenuButton.h" />
     <ClInclude Include="include\Scripts\AttackScript.h" />
@@ -61,6 +64,9 @@
     <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Scripts\FPSPrint.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_CarrotCollectionScript.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_CarrotCount.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_PlayerMovement.cpp" />
     <ClCompile Include="source\Scripts\Old\PlayGameButton.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

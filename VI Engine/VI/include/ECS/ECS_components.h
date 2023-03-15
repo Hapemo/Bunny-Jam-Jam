@@ -22,6 +22,9 @@ ComponentType starts from 0.
 
 class Prefab;
 
+struct Bunny {
+	unsigned int carrots = 0;
+};
 /*!*****************************************************************************
 \brief
 Struct that encapsulates general information most component will have, such as

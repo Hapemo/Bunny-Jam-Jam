@@ -1,0 +1,554 @@
+[
+    {
+        "General": {
+            "name": "lightsource",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 254,
+                "g": 254,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 3,
+            "texture": "",
+            "layer": 0
+        },
+        "LightSource": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "radius": 999.0,
+            "intensity": 1.0
+        }
+    },
+    {
+        "General": {
+            "name": "COLLISIONBOTTOM",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 3237.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": -920.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": false,
+            "renderFlag": true
+        }
+    },
+    {
+        "General": {
+            "name": "COLLISIONTOP",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 3237.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 877.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 2
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": false,
+            "renderFlag": true
+        }
+    },
+    {
+        "General": {
+            "name": "COLLISIONRIGHT",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 50.0,
+                "Y": 1791.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 1594.0,
+                "Y": -20.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": false,
+            "renderFlag": true
+        }
+    },
+    {
+        "General": {
+            "name": "COLLISIONLEFT",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 50.0,
+                "Y": 1791.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -1594.0,
+                "Y": -20.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": false,
+            "renderFlag": true
+        }
+    },
+    {
+        "General": {
+            "name": "Bunny",
+            "tag": 0,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 567.7094116210938,
+                "Y": 32.42475891113281
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 3
+        },
+        "Physics2D": {
+            "dynamicsEnabled": true,
+            "mass": 1.0,
+            "inertia": 1.0,
+            "restitution": 0.0,
+            "friction": 0.0,
+            "damping": 0.8999999761581421,
+            "accumulatedForce": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "velocity": {
+                "X": -1.1795953724913488e-7,
+                "Y": 6.349535341954038e-10
+            },
+            "acceleration": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "angularVelocity": 0.0,
+            "angularTorque": 0.0,
+            "forceList": [],
+            "renderFlag": false
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": false,
+            "renderFlag": true
+        },
+        "Script": {
+            "name": "Bunny_PlayerMovement"
+        }
+    },
+    {
+        "General": {
+            "name": "Carrot Count",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 1144.7060546875,
+                "Y": 949.2540283203125
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 10,
+                "g": 251,
+                "b": 10,
+                "a": 255
+            },
+            "sprite": 3,
+            "texture": "",
+            "layer": 4
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Carrots:0",
+            "offset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scale": 1.5,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        },
+        "Script": {
+            "name": "Bunny_CarrotCount"
+        }
+    },
+    {
+        "General": {
+            "name": "Carrot",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 50.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 794.0780029296875,
+                "Y": 59.4117431640625
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 224,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 5
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": false
+        },
+        "Script": {
+            "name": "Bunny_CarrotCollectionScript"
+        }
+    },
+    {
+        "General": {
+            "name": "Carrot",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 50.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 227.25491333007813,
+                "Y": -410.0000305175781
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 224,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 5
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": false
+        },
+        "Script": {
+            "name": "Bunny_CarrotCollectionScript"
+        }
+    },
+    {
+        "General": {
+            "name": "Carrot",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 50.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 463.7254638671875,
+                "Y": -253.52944946289063
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 224,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 5
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": false
+        },
+        "Script": {
+            "name": "Bunny_CarrotCollectionScript"
+        }
+    },
+    {
+        "General": {
+            "name": "Carrot",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 50.0,
+                "Y": 50.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 417.84307861328125,
+                "Y": -120.58828735351563
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 224,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 5
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": false
+        },
+        "Script": {
+            "name": "Bunny_CarrotCollectionScript"
+        }
+    },
+    {
+        "General": {
+            "name": "Timer",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -108.0,
+                "Y": 988.235107421875
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 255
+            },
+            "sprite": 3,
+            "texture": "",
+            "layer": 0
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "00:60",
+            "offset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scale": 1.5,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        }
+    }
+]
