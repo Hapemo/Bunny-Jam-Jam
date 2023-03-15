@@ -230,6 +230,7 @@
     <Import Project="..\prop-page\IncludeVI.props" />
     <Import Project="..\prop-page\IncludeAPPLICATION.props" />
     <Import Project="..\prop-page\Release.props" />
+    <Import Project="..\prop-page\Client.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Server Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />

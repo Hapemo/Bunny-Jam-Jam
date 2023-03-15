@@ -197,6 +197,7 @@
     <Import Project="..\prop-page\IncludeTOOLS.props" />
     <Import Project="..\prop-page\IncludeVI.props" />
     <Import Project="..\prop-page\Release.props" />
+    <Import Project="..\prop-page\Client.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Server Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -507,6 +508,8 @@
     <ClInclude Include="include\Logic\ScriptComponent.h" />
     <ClInclude Include="include\Logic\ScriptManager.h" />
     <ClInclude Include="include\MovementAIManager.h" />
+    <ClInclude Include="include\ClientManager.h" />
+    <ClInclude Include="include\ServerManager.h" />
     <ClInclude Include="include\Physics\ColliderBody.h" />
     <ClInclude Include="include\Physics\ColliderType.h" />
     <ClInclude Include="include\Physics\Collision2DManager.h" />
@@ -601,12 +604,14 @@
     <ClCompile Include="source\Logic\MonoMethods.cpp" />
     <ClCompile Include="source\Logic\ScriptComponent.cpp" />
     <ClCompile Include="source\Logic\ScriptManager.cpp" />
+    <ClCompile Include="source\ClientManager.cpp" />
     <ClCompile Include="source\ParticleManager.cpp" />
     <ClCompile Include="source\MovementAIManager.cpp" />
     <ClCompile Include="source\Physics\Collision2DManager.cpp" />
     <ClCompile Include="source\Physics\Physics2DManager.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
     <ClCompile Include="source\Serialization.cpp" />
+    <ClCompile Include="source\ServerManager.cpp" />
     <ClCompile Include="source\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
