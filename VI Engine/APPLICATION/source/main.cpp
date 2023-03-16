@@ -17,6 +17,9 @@ main file of the whole program
 #include "SignalHandler.h"
 #include "SparseSet.h"
 
+#include "../../VI/include/ClientManager.h"
+#include "../../VI/include/ServerManager.h"
+
 // To use dedicated gpu
 #ifdef __cplusplus
 extern "C" {
@@ -55,6 +58,18 @@ void real_main() {
 
     // Part 1
     Application::init();
+
+    // Part 1.1 (Networking init)
+#ifdef _CLIENT
+    std::string tempServerAdd = "127.0.0.1";
+    u_short tempServerPort = 5050;
+    std::string tempClientName = "Client1";
+	ClientManager::GetInstance()->clientInit(tempServerAdd, tempServerPort, tempClientName);
+#endif
+    
+#ifdef _SERVER
+    ServerManager::GetInstance()->serverInit();
+#endif
 
     // Part 2
     while (!glfwWindowShouldClose(Application::getWindow())) {
