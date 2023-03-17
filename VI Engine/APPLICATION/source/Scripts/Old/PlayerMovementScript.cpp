@@ -38,7 +38,6 @@ void PlayerMovementScript::EarlyUpdate(Entity const& _e) {
 	(void)_e;
 }
 
-
 void PlayerMovementScript::Update(const Entity& _e) {
 	//if (Input::CheckKey(PRESS, SPACE)) std::cout << "MousePos: " << FUNC->GetWorldMousePos() << '\n';
 	/*if (!VI::iAudio::IsBgmPlaying((int)E_AUDIO_CHANNEL::MAINBACKGROUND))

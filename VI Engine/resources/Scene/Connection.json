@@ -14,7 +14,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -0.6117267608642578,
-                "Y": -1.3499988317489624
+                "Y": -1.4999990463256836
             }
         },
         "Sprite": {
@@ -53,7 +53,7 @@
             "renderFlag": false
         },
         "Script": {
-            "name": "PlayerMovement"
+            "name": ""
         }
     },
     {
@@ -95,7 +95,7 @@
         },
         "Transform": {
             "scale": {
-                "X": 109.5853500366211,
+                "X": 150.0,
                 "Y": 150.0
             },
             "rotation": 0.0,
@@ -114,75 +114,6 @@
             "sprite": 0,
             "texture": "",
             "layer": 2
-        },
-        "Script": {
-            "name": "Connection"
-        }
-    },
-    {
-        "General": {
-            "name": "Join",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 99.75970458984375,
-                "Y": 84.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": -0.30722618103027344,
-                "Y": -200.77467346191406
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 0,
-                "g": 255,
-                "b": 0,
-                "a": 255
-            },
-            "sprite": 0,
-            "texture": "",
-            "layer": 4
-        },
-        "Button": {
-            "interactable": true
-        }
-    },
-    {
-        "General": {
-            "name": "ButtonControl",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 150.0,
-                "Y": 150.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": -120.66580963134766,
-                "Y": -637.85400390625
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 1,
-            "texture": "",
-            "layer": 5
-        },
-        "Script": {
-            "name": "ConnectionButtonControl"
         }
     }
 ]

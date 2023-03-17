@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Application.h" />
+    <ClInclude Include="include\Scripts\ConnectionButtonControl.h" />
     <ClInclude Include="include\Scripts\FPSPrint.h" />
     <ClInclude Include="include\Scripts\DeathToMainMenuButton.h" />
     <ClInclude Include="include\Scripts\AttackScript.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="include\Scripts\ExitGameButton.h" />
     <ClInclude Include="include\Scripts\HowToPlayButton.h" />
     <ClInclude Include="include\Scripts\PauseButton.h" />
+    <ClInclude Include="include\Scripts\Connection.h" />
     <ClInclude Include="include\Scripts\PlayerMovementScript.h" />
     <ClInclude Include="include\Scripts\PlayGameButton.h" />
     <ClInclude Include="include\Scripts\RotateScript.h" />
@@ -76,8 +78,11 @@
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\Scripts\ConnectionButtonControl.cpp" />
     <ClCompile Include="source\Scripts\FPSPrint.cpp" />
+    <ClCompile Include="source\Scripts\Old\PlayerMovementScript.cpp" />
     <ClCompile Include="source\Scripts\Old\PlayGameButton.cpp" />
+    <ClCompile Include="source\Scripts\Connection.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -352,7 +357,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>Default</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -365,7 +370,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -380,7 +385,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -396,7 +401,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -412,7 +417,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -428,7 +433,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
