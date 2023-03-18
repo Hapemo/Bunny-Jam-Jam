@@ -70,6 +70,9 @@ void real_main() {
         //if (GameStateManager::GetInstance()->GetNextGS() == E_GS::EXIT) break;
     }
 
+
+
+
     // Part 3
     Application::exit();
 }
