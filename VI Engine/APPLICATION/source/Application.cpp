@@ -20,6 +20,10 @@ start up of window and game system, also runs their update functions.
 #include "ScriptManager.h"
 #include "FilePathManager.h"
 
+#include <winsock2.h>
+#include "ClientManager.h"
+#include "ServerManager.h"
+
 // Static variables
 int Application::window_width{};
 int Application::window_height{};
@@ -72,6 +76,14 @@ void Application::SystemInit() {
 
 #ifdef _EDITOR
   editorManager->Init(); //need loaded resources
+#endif
+
+      // Part 1.1 (Networking init)
+#ifdef _CLIENT
+  std::string tempServerAdd = "127.0.0.1";
+  u_short tempServerPort = 5050;
+  std::string tempClientName = "Client1";
+  ClientManager::getinstance().clientInit(tempServerAdd, tempServerPort, tempClientName);
 #endif
   // Set fullscreen for .exe build
   //Helper::SetFullScreen(true);

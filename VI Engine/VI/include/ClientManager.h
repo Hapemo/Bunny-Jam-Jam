@@ -17,8 +17,15 @@ struct C_SERVER
 	int					m_ServerPort;
 };
 
-class ClientManager : public Singleton<ClientManager> {
+//class ClientManager : public Singleton<ClientManager> {
+class ClientManager
+{
 public:
+
+	static ClientManager& getinstance() {
+		static ClientManager instance;
+		return instance;
+	}
 
 	bool clientInit(std::string, u_short, std::string);
 	bool clientSendData(std::string data);
