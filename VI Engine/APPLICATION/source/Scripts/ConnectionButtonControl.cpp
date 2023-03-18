@@ -18,10 +18,9 @@ namespace {
 	Entity join_; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
 	Entity ip_;
 
-
-	bool enlarge = true;
 	bool textin_ = false;
-	
+	int iplen_ = 0;
+
 	//Scene textinput_;
 	std::string ipstring_ = "";
 }
@@ -82,56 +81,40 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	//_e.GetComponent<Text>().text = "sgdsdadas"; 
 
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE)) {
+		iplen_ = 0;
+		ipstring_ = "";
 		textin_ = false;
 	}
 
-	
-	//if (textin_ == true) {
-		for (int i = 48,j=1; i < 58; ++i, ++j) {
-			
+	if (textin_ == true&& iplen_<16) {
+		for (int i = 48, j = 1; i < 58; ++i, ++j) {
+
 			if (j > 9) {
 				j = 0;
 			}
 			if (VI::iInput::CheckKey(E_STATE::PRESS, static_cast<E_KEY>(i)) == true) {
-				std::cout << " lalalalala" << "2" << "\n";
 
+				++iplen_;
 				ipstring_ += std::to_string(j);
 				ip_.GetComponent<Text>().text = ipstring_;
 			}
-			//if (i >= 57) {
-
-			//	textin_ = true;
-			//}
 		}
-//	}
-
-
+	}
 
 
 	if (join_.GetComponent<Button>().isHover) {
 		if (join_.GetComponent<Transform>().scale.x < 200) {
-			join_.GetComponent<Transform>().scale.x += 100.f * (float)FUNC->GetDeltaTime();
+			join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
 		}
 
 		if (join_.GetComponent<Button>().isClick) {
+			textin_ = true;
 			VI::iScene::Play("RequestIP");
-			
-
-			/*if (textin_ == false) {
-				for (int i = 48; i < 58; ++i) {
-					
-
-					if (i >= 57) {
-
-						textin_ = true;
-					}
-				}
-			}*/
 		}
 	}
 	else {
 		if (join_.GetComponent<Transform>().scale.x > 100) {
-			join_.GetComponent<Transform>().scale.x -= 100.f * (float)FUNC->GetDeltaTime();
+			join_.GetComponent<Transform>().scale.x -= 1000.f * (float)FUNC->GetDeltaTime();
 		}
 	}
 }
