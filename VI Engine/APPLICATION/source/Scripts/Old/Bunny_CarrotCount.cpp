@@ -43,7 +43,7 @@ void Bunny_CarrotCount::Update(const Entity& _e) {
 	//tmp += std::to_string(BUNNY_Player.GetComponent<Bunny>().carrots);
 	if (BUNNY_Player.HasComponent<Bunny>())
 	{
-		_e.GetComponent<Text>().text = _e.GetComponent<Text>().text.substr(0, 8) + std::to_string(BUNNY_Player.GetComponent<Bunny>().carrots);
+		_e.GetComponent<Text>().text = _e.GetComponent<Text>().text.substr(0, 4) + std::to_string(BUNNY_Player.GetComponent<Bunny>().carrots);
 	}
 }
 

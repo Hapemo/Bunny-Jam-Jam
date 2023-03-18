@@ -74,16 +74,16 @@ void Bunny_PlayerMovement::Update(const Entity& _e) {
 	switch (sPLAYERDIRECTION)
 	{
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
-		VI::iPhysics::ApplyImpulse(_e, { 0.0f,10.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { 0.0f,30.0f }, 0.0f);
 		break;
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
-		VI::iPhysics::ApplyImpulse(_e, { 0.0f,-10.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { 0.0f,-30.0f }, 0.0f);
 		break;
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
-		VI::iPhysics::ApplyImpulse(_e, { -10.0f,0.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { -30.0f,0.0f }, 0.0f);
 		break;
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
-		VI::iPhysics::ApplyImpulse(_e, { 10.0f,0.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { 30.0f,0.0f }, 0.0f);
 		break;
 	default:
 		break;
