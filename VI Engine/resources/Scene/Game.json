@@ -8,25 +8,25 @@
         },
         "Transform": {
             "scale": {
-                "X": 529.6880493164063,
-                "Y": 634.0
+                "X": 1600.0,
+                "Y": 900.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": -0.6117267608642578,
-                "Y": -1.3499988317489624
+                "X": 0.0,
+                "Y": 0.1499999463558197
             }
         },
         "Sprite": {
             "color": {
-                "r": 252,
-                "g": 211,
-                "b": 77,
+                "r": 255,
+                "g": 255,
+                "b": 255,
                 "a": 255
             },
-            "sprite": 0,
-            "texture": "",
-            "layer": 0
+            "sprite": 2,
+            "texture": "Textures\\ConnectMenu.png",
+            "layer": 2
         },
         "Physics2D": {
             "dynamicsEnabled": true,
@@ -41,7 +41,7 @@
             },
             "velocity": {
                 "X": 0.0,
-                "Y": 1.1088161500083515e-7
+                "Y": 2.8620490866160253e-7
             },
             "acceleration": {
                 "X": 0.0,
@@ -65,24 +65,24 @@
         },
         "Transform": {
             "scale": {
-                "X": 150.0,
-                "Y": 150.0
+                "X": 260.0,
+                "Y": 180.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": 4.5879926681518555,
-                "Y": 172.0
+                "X": 0.0,
+                "Y": 220.0
             }
         },
         "Sprite": {
             "color": {
-                "r": 47,
+                "r": 255,
                 "g": 255,
-                "b": 209,
+                "b": 255,
                 "a": 255
             },
-            "sprite": 0,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\Button1.png",
             "layer": 3
         }
     },
@@ -95,28 +95,25 @@
         },
         "Transform": {
             "scale": {
-                "X": 109.5853500366211,
-                "Y": 150.0
+                "X": 260.0,
+                "Y": 180.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": 0.9175949096679688,
-                "Y": -3.0
+                "X": 0.0,
+                "Y": 0.0
             }
         },
         "Sprite": {
             "color": {
                 "r": 255,
-                "g": 0,
-                "b": 0,
+                "g": 255,
+                "b": 255,
                 "a": 255
             },
-            "sprite": 0,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\Button2.png",
             "layer": 2
-        },
-        "Script": {
-            "name": "Connection"
         }
     },
     {
@@ -183,6 +180,36 @@
         },
         "Script": {
             "name": "ConnectionButtonControl"
+        }
+    },
+    {
+        "General": {
+            "name": "BG",
+            "tag": 4,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1600.0,
+                "Y": 900.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 238,
+                "g": 238,
+                "b": 238,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 0
         }
     }
 ]

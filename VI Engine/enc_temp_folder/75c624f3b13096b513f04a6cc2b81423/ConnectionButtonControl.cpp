@@ -86,10 +86,6 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 		textin_ = false;
 	}
 
-	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::L)) {
-
-	}
-
 	if (textin_ == true&& iplen_<16) {
 		for (int i = 48, j = 1; i < 58; ++i, ++j) {
 
