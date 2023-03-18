@@ -57,12 +57,6 @@ void real_main() {
     // Part 1
     Application::init();
 
-
-    
-#ifdef _SERVER
-    ServerManager::GetInstance()->serverInit();
-#endif
-
     // Part 2
     while (!glfwWindowShouldClose(Application::getWindow())) {
       Application::MainUpdate();

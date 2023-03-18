@@ -51,10 +51,12 @@ bool ServerManager::serverInit(std::string serverIPAddress, u_short serverPortNu
 bool ServerManager::serverSendData(std::string data)
 {
     // Broadcast data to all clients
-    for (CLIENT_INFO const& c : m_ClientList)
-    {
-        SendMsg(c, data);
+    for (CLIENT_INFO const& c : m_ClientList) {
+        if (SendMsg(c, data) == false)
+            return false;
     }
+
+    return true;
 }
 
 bool ServerManager::serverRecvData()
@@ -91,7 +93,7 @@ bool ServerManager::IsUsernameTaken(std::string const& username)
     return false;
 }
 
-void ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string const& msg)
+bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string const& msg)
 {
     char buffer[1024];
     strcpy(buffer, msg.c_str());
@@ -115,12 +117,14 @@ void ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string const& msg)
             std::cout << "Error sending the data to " << inet_ntoa(receiver.clientAddr.sin_addr) << std::endl;
             closesocket(receiver.hClientSocket);
             WSACleanup();
-            break;
+            return false;
         }
 
         pBuffer += nCntSend;
         msgLength -= nCntSend;
     }
+
+    return true;
 }
 
 void ServerManager::BroadcastMessage(CLIENT_INFO const& sender, std::string const& msg)
@@ -169,6 +173,17 @@ void ServerManager::DisplayAllUsers(CLIENT_INFO const& ReqClient)
     }
 
     SendMsg(ReqClient, users);
+}
+
+bool ServerManager::InitWinSock2_0()
+{
+    WSADATA wsaData;
+    WORD wVersion = MAKEWORD(2, 0);
+
+    if (!WSAStartup(wVersion, &wsaData))
+        return true;
+
+    return false;
 }
 
 BOOL WINAPI ClientServerThread(LPVOID lpData)

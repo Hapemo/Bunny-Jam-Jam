@@ -38,7 +38,7 @@ public:
 
 	// Helper functions
 	bool IsUsernameTaken(std::string const& username);
-	void SendMsg(CLIENT_INFO const& receiver, std::string const& msg);
+	bool SendMsg(CLIENT_INFO const& receiver, std::string const& msg);
 	void BroadcastMessage(CLIENT_INFO const& sender, std::string const& msg);
 	void QuitMessage(std::string const& username);
 	void DisplayAllUsers(CLIENT_INFO const& ReqClient);

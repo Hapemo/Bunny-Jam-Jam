@@ -85,6 +85,13 @@ void Application::SystemInit() {
   std::string tempClientName = "Client1";
   ClientManager::getinstance().clientInit(tempServerAdd, tempServerPort, tempClientName);
 #endif
+
+#ifdef _SERVER
+  std::string tempServerAdd = "127.0.0.1";
+  u_short tempServerPort = 5050;
+  ServerManager::GetInstance()->serverInit(tempServerAdd, tempServerPort);
+#endif
+  
   // Set fullscreen for .exe build
   //Helper::SetFullScreen(true);
 }

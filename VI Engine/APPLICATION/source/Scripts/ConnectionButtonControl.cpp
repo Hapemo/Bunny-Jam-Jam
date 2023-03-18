@@ -11,6 +11,8 @@ Updates the fps count, for the fps printer in entity
 
 
 #include "ConnectionButtonControl.h"
+#include "../../../VI/include/ServerManager.h"
+#include "../../../VI/include/ClientManager.h"
 
 REGISTER_SCRIPT(ScriptComponent, ConnectionButtonControl);
 
@@ -103,6 +105,27 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 				ip_.GetComponent<Text>().text = ipstring_;
 			}
 		}
+	}
+
+	
+	//!< === NETWORK TESTING AREA ===
+		#ifdef _SERVER
+			ServerManager::GetInstance()->serverRecvData();
+		#endif // _SERVER
+
+		#ifdef _CLIENT
+			ClientManager::getinstance().clientRecvData();
+		#endif // _CLIENT			
+
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::F12)) 
+	{
+		#ifdef _CLIENT
+			ClientManager::getinstance().clientSendData("Hello World from the client side");
+		#endif // _CLIENT
+
+		#ifdef _SERVER
+			ServerManager::GetInstance()->serverSendData("Hello World from the server side");
+		#endif // _SERVER
 	}
 
 
