@@ -28,3 +28,9 @@ C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\SCRIP
 C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\SCRIPTING.csproj.CoreCompileInputs.cache
 C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\Scripting.dll
 C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\Scripting.pdb
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\Scripting.dll
+C:\Bunny-Jam-Jam\VI Engine\bin\Debug\x64\SCRIPTING\Scripting.dll
+C:\Bunny-Jam-Jam\VI Engine\bin\Debug\x64\SCRIPTING\Scripting.pdb
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\SCRIPTING.csproj.AssemblyReference.cache
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\SCRIPTING.csproj.CoreCompileInputs.cache
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\Debug\Scripting.pdb

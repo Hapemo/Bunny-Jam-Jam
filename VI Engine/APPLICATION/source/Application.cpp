@@ -81,15 +81,14 @@ void Application::SystemInit() {
       // Part 1.1 (Networking init)
 #ifdef _CLIENT
   std::string tempServerAdd = "127.0.0.1";
-  u_short tempServerPort = 5050;
+  u_short tempServerPort = 5051;
   std::string tempClientName = "Client1";
-  ClientManager::getinstance().clientInit(tempServerAdd, tempServerPort, tempClientName);
+  ClientManager::GetInstance()->clientInit(tempServerAdd, tempServerPort, tempClientName);
 #endif
 
 #ifdef _SERVER
-  std::string tempServerAdd = "127.0.0.1";
-  u_short tempServerPort = 5050;
-  ServerManager::GetInstance()->serverInit(tempServerAdd, tempServerPort);
+  u_short tempServerPort = 5051;
+  ServerManager::GetInstance()->serverInit(tempServerPort);
 #endif
   
   // Set fullscreen for .exe build

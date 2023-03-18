@@ -108,25 +108,26 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	}
 
 	
-	//!< === NETWORK TESTING AREA ===
+	//!< === NETWORK TESTING AREA START ===
 		#ifdef _SERVER
-			ServerManager::GetInstance()->serverRecvData();
+			//ServerManager::GetInstance()->serverRecvData();
 		#endif // _SERVER
 
 		#ifdef _CLIENT
-			ClientManager::getinstance().clientRecvData();
+			//clientRecvData();
 		#endif // _CLIENT			
 
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::F12)) 
 	{
 		#ifdef _CLIENT
-			ClientManager::getinstance().clientSendData("Hello World from the client side");
+			ClientManager::GetInstance()->clientSendData("Hello World from the client side");
 		#endif // _CLIENT
 
 		#ifdef _SERVER
 			ServerManager::GetInstance()->serverSendData("Hello World from the server side");
 		#endif // _SERVER
 	}
+	//!< === NETWORK TESTING AREA END ===
 
 
 	if (join_.GetComponent<Button>().isHover) {

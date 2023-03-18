@@ -4,6 +4,13 @@
 #include "ClientManager.h"
 
 
+ClientManager::ClientManager()
+    : m_ClientRecvThread(clientRecvData) {}
+
+ClientManager::~ClientManager() {
+    m_ClientRecvThread.join();
+}
+
 // init winsock2
 // set up client UDP socket
 bool ClientManager::clientInit(std::string serverIPAddress, u_short serverPortNumber, std::string name)
@@ -36,7 +43,7 @@ bool ClientManager::clientInit(std::string serverIPAddress, u_short serverPortNu
         std::cout << "ERROR: Unable to send initial connection request message\n";
         return false;
     }
-
+    
     return true;
 }
 
@@ -53,16 +60,16 @@ bool ClientManager::InitWinSock2_0()
 }
 
 // Receive message from server. Might need to change the recv to recvfrom
-bool ClientManager::clientRecvData()
+void clientRecvData()
 {
     char buffer[1024];
 
     while (1)
     {
-        if (m_StopReceive)
-            return false;
+        if (ClientManager::GetInstance()->m_StopReceive)
+            return;
 
-        int nLength = recv(m_ClientInstance.clientSocket, buffer, sizeof(buffer), 0);
+        int nLength = recv(ClientManager::GetInstance()->m_ClientInstance.clientSocket, buffer, sizeof(buffer), 0);
         if (nLength > 0)
         {
             if (nLength < static_cast<int>(sizeof(buffer)))
@@ -70,9 +77,11 @@ bool ClientManager::clientRecvData()
 
             std::cout << buffer << std::endl;
         }
+
+        //std::cout << "running separate thread\n";
     }
 
-    return true;
+    return;
 }
 
 

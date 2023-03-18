@@ -28,10 +28,12 @@ struct S_SERVER
 
 class ServerManager : public Singleton<ServerManager> {
 public:
+	
+	ServerManager();
+	~ServerManager();
 
-	bool serverInit(std::string serverIPAddress, u_short serverPortNumber);
+	bool serverInit(u_short serverPortNumber);
 	bool serverSendData(std::string data);
-	bool serverRecvData();
 	void serverClose();
 
 	bool InitWinSock2_0();
@@ -44,14 +46,19 @@ public:
 	void DisplayAllUsers(CLIENT_INFO const& ReqClient);
 	
 //private:
+	std::thread					m_ServerRecvThread;
 	SOCKET						m_ServerSocket;
 	S_SERVER					m_ServerInstance;
 	std::vector<CLIENT_INFO>	m_ClientList;
 	std::string					m_ServerIPAddress;
 	std::string					m_ServerStringBuffer;
 	u_short						m_ServerPort;
+
+// some fancy stuff if we want to include
+	std::string					m_HostName;
 };
 
 
+void serverRecvData();
 BOOL WINAPI ClientServerThread(LPVOID lpData);
 BOOL WINAPI ClientThread(LPVOID lpData);

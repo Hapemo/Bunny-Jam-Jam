@@ -17,25 +17,22 @@ struct C_SERVER
 	int					m_ServerPort;
 };
 
-//class ClientManager : public Singleton<ClientManager> {
-class ClientManager
+//class ClientManager
+class ClientManager : public Singleton<ClientManager>
 {
 public:
 
-	static ClientManager& getinstance() {
-		static ClientManager instance;
-		return instance;
-	}
+	ClientManager();
+	~ClientManager();
 
 	bool clientInit(std::string, u_short, std::string);
 	bool clientSendData(std::string data);
-	bool clientRecvData();
 	void clientClose();
-
-private:
 	bool InitWinSock2_0();
 	
 	//!< Private Client Variable
+	std::thread			m_ClientRecvThread;
+
 	C_CLIENT			m_ClientInstance;
 	C_SERVER			m_ServerInstance;
 	char				m_ServerIPAddress[20];
@@ -43,4 +40,5 @@ private:
 	bool				m_StopReceive;
 };
 
+void clientRecvData();
 

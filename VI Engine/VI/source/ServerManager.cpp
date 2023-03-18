@@ -2,10 +2,17 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "ServerManager.h"
+#include <WS2tcpip.h>
 
+ServerManager::ServerManager()
+    : m_ServerRecvThread(serverRecvData) {}
+
+ServerManager::~ServerManager() {
+    m_ServerRecvThread.join();
+}
 
 // Create a Server Socket
-bool ServerManager::serverInit(std::string serverIPAddress, u_short serverPortNumber)
+bool ServerManager::serverInit(u_short serverPortNumber)
 {
     if (!InitWinSock2_0())
     {
@@ -15,6 +22,29 @@ bool ServerManager::serverInit(std::string serverIPAddress, u_short serverPortNu
 
     // Creating a Socket
     m_ServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    
+    // Obtaining hostname
+    char hostname[256];
+    gethostname(hostname, sizeof(hostname));
+    m_HostName = std::string(hostname);
+
+    // Obtaining my own IP Address, as a server
+    struct addrinfo hints, * info;
+    ZeroMemory(&hints, sizeof(hints));
+    hints.ai_family     = AF_INET;
+    hints.ai_socktype   = SOCK_DGRAM;
+    hints.ai_protocol   = IPPROTO_UDP;
+
+    if (getaddrinfo(hostname, NULL, &hints, &info) != 0) {
+        std::cout << "SERVER:: getaddrinfo failed with an error.\n";
+        WSACleanup();
+        return false;
+    }
+
+    char ipstr[INET_ADDRSTRLEN];
+    struct sockaddr_in* addr = (struct sockaddr_in*)info->ai_addr;
+    inet_ntop(AF_INET, &addr->sin_addr, ipstr, sizeof(ipstr));      // convert the address to a string
+    m_ServerIPAddress = std::string(ipstr);
     
     if (m_ServerSocket == INVALID_SOCKET)
     {
@@ -26,25 +56,25 @@ bool ServerManager::serverInit(std::string serverIPAddress, u_short serverPortNu
 		std::cout << "Chat Server Socket Initialized\n";
     }
     
-    // Create the structure
-    m_ServerInstance.m_ServerInfo.sin_family = AF_INET;                                    // The address family. MUST be AF_INET
-    m_ServerInstance.m_ServerInfo.sin_addr.s_addr = inet_addr(serverIPAddress.c_str());    // converts a string containing ipv4 address into a proper address for the IN_ADDR struct  
-    m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);                      // converts a u_short from host to TCP/IP network byte order (which is big-endian)
-
-    // Bind the Server socket to the address & port
-    if (bind(m_ServerSocket, (struct sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR)
+    //!< Binding the Server socket to the address & port
+    int reiterations = 0;
+    do
     {
-        std::cout << "Error Code: " << WSAGetLastError() << " - ";
-        std::cout << "Unable to connect to " << inet_ntoa(m_ServerInstance.m_ServerInfo.sin_addr) << " port " << ntohs(m_ServerInstance.m_ServerInfo.sin_port) << std::endl;
-        
-        // Free the socket and cleanup the environment initialized by WSAStartup()
-        closesocket(m_ServerSocket);
-        WSACleanup();
-        return false;
-    }
+        if (++reiterations != 1) {
+            std::cout << "Error Code: " << WSAGetLastError() << " - ";
+            std::cout << "Unable to connect to " << inet_ntoa(m_ServerInstance.m_ServerInfo.sin_addr) << " port " << ntohs(m_ServerInstance.m_ServerInfo.sin_port) << std::endl;
+            std::cout << "Retrying with port number: " << ++serverPortNumber << "\n";
+            //closesocket(m_ServerSocket);
+            //WSACleanup();
+            //return false;
+        }
+
+        m_ServerInstance.m_ServerInfo.sin_family = AF_INET;                                     // The address family. MUST be AF_INET
+        m_ServerInstance.m_ServerInfo.sin_addr.s_addr = inet_addr(m_ServerIPAddress.c_str());   // converts a string containing ipv4 address into a proper address for the IN_ADDR struct  
+        m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);                       // converts a u_short from host to TCP/IP network byte order (which is big-endian)
+    } while (bind(m_ServerSocket, (struct sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR);
 
     std::cout << "Server Connected. Information: " << inet_ntoa(m_ServerInstance.m_ServerInfo.sin_addr) << " port " << ntohs(m_ServerInstance.m_ServerInfo.sin_port) << std::endl;
-
     return true;
 }
 
@@ -59,7 +89,7 @@ bool ServerManager::serverSendData(std::string data)
     return true;
 }
 
-bool ServerManager::serverRecvData()
+void serverRecvData()
 {
     int nLength = 0;
     int nFromLength = 1024;
@@ -67,7 +97,7 @@ bool ServerManager::serverRecvData()
 
     CLIENT_INFO localClient{};
 
-    nLength = recvfrom(m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&localClient.clientAddr, &nFromLength);
+    nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&localClient.clientAddr, &nFromLength);
     if (nLength >= 0)
     {
         cBuffer[nLength] = '\0';
