@@ -1,0 +1,273 @@
+[
+    {
+        "General": {
+            "name": "Background",
+            "tag": 4,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 4000.0,
+                "Y": 2250.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 1.627685546875,
+                "Y": 29.4716796875
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 140,
+                "g": 192,
+                "b": 192,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 0
+        },
+        "LightSource": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "radius": 4000.0,
+            "intensity": 100.0
+        }
+    },
+    {
+        "General": {
+            "name": "Exit_Button",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1500.0,
+                "Y": 400.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -985.0,
+                "Y": -900.1585083007813
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 81,
+                "g": 188,
+                "b": 81,
+                "a": 0
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": true
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Exit Game",
+            "offset": {
+                "X": -722.0,
+                "Y": -45.0
+            },
+            "scale": 4.0,
+            "color": {
+                "r": 231,
+                "g": 4,
+                "b": 4,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -1000.0
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "Play_Button",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1500.0,
+                "Y": 400.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -985.0,
+                "Y": -3.677000045776367
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 72,
+                "g": 209,
+                "b": 72,
+                "a": 0
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": true
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Start Game !",
+            "offset": {
+                "X": -722.0,
+                "Y": -45.0
+            },
+            "scale": 4.0,
+            "color": {
+                "r": 231,
+                "g": 4,
+                "b": 4,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -1000.0
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "H2P_Button",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1500.0,
+                "Y": 400.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -985.0,
+                "Y": -448.03900146484375
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 81,
+                "g": 188,
+                "b": 81,
+                "a": 0
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": true
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "How to Play?",
+            "offset": {
+                "X": -722.0,
+                "Y": -45.0
+            },
+            "scale": 4.0,
+            "color": {
+                "r": 231,
+                "g": 4,
+                "b": 4,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -1000.0
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "Game_Title",
+            "tag": 0,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 3000.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 11.54638671875,
+                "Y": 852.9398193359375
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 2
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 2
+        },
+        "Text": {
+            "fontFile": "comicz",
+            "text": "BUNNY JAM JAM!",
+            "offset": {
+                "X": -1043.0,
+                "Y": 29.0
+            },
+            "scale": 7.0,
+            "color": {
+                "r": 255,
+                "g": 99,
+                "b": 0,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
+        }
+    }
+]

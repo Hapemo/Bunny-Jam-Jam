@@ -1,0 +1,19 @@
+[
+    {
+        "SceneName": "Main ",
+        "Transform": {
+            "scale": {
+                "X": 4000.0,
+                "Y": 2250.0
+            },
+            "rotation": 0.4000000059604645,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "isActive": false,
+        "layer": 0,
+        "order": 0
+    }
+]
