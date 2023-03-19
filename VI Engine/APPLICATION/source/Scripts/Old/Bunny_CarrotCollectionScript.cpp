@@ -31,7 +31,7 @@ void Bunny_CarrotCollectionScript::Alive(const Entity& _e) {
 
 void Bunny_CarrotCollectionScript::Init(const Entity& _e) {
 	(void)_e;
-	BUNNY_Player = VI::iEntity::GetEntity("Bunny", "");
+	BUNNY_Player = VI::iEntity::GetEntity("Player1", "");
 	
 }
 

@@ -207,7 +207,7 @@
     },
     {
         "General": {
-            "name": "Bunny",
+            "name": "Player1",
             "tag": 0,
             "subtag": 0,
             "isActive": true
@@ -3501,6 +3501,72 @@
         },
         "Script": {
             "name": "Bunny_CarrotCollectionScript"
+        }
+    },
+    {
+        "General": {
+            "name": "Player2",
+            "tag": 0,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 140.0,
+                "Y": 140.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -1453.68115234375,
+                "Y": -790.5723876953125
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 20,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 3
+        },
+        "Physics2D": {
+            "dynamicsEnabled": true,
+            "mass": 1.0,
+            "inertia": 1.0,
+            "restitution": 0.0,
+            "friction": 0.0,
+            "damping": 0.8999999761581421,
+            "accumulatedForce": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "velocity": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "acceleration": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "angularVelocity": 0.0,
+            "angularTorque": 0.0,
+            "forceList": [],
+            "renderFlag": false
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": false,
+            "renderFlag": true
         }
     }
 ]

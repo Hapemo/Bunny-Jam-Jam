@@ -31,7 +31,7 @@ void Bunny_CarrotCount::Alive(const Entity& _e) {
 
 void Bunny_CarrotCount::Init(const Entity& _e) {
 	(void)_e;
-	BUNNY_Player = VI::iEntity::GetEntity("Bunny", "");
+	BUNNY_Player = VI::iEntity::GetEntity("Player1", "");
 }
 
 void Bunny_CarrotCount::EarlyUpdate(Entity const& _e) {
