@@ -4,30 +4,30 @@
 #include "ServerManager.h"
 #include <WS2tcpip.h>
 
-SOCKET sServerSocket;
-
-//ServerManager::ServerManager()
-//    : m_ServerRecvThread(serverRecvData) {}
+//== Default ctor
 ServerManager::ServerManager() {}
 
+//== Default dtor
 ServerManager::~ServerManager() {
     std::cout << "SERVER ---------- DESTRUCTOR\n";
     m_ServerRecvThread.join();
+    serverClose();
 }
 
-// Create a Server Socket
+//== Create and bind Server Socket
 bool ServerManager::serverInit(u_short serverPortNumber)
 {
-    if (!InitWinSock2_0())
+    WSADATA wsaData;
+    WORD wVersion = MAKEWORD(2, 0);
+    if (WSAStartup(wVersion, &wsaData))
     {
-		std::cout << "Unable to initialize Windows Socket Environment: " << WSAGetLastError() << std::endl;
-		return false;
+        std::cout << "Unable to Initialize Windows Socket environment" << WSAGetLastError() << std::endl;
+        return false;
     }
 
     // Creating a Socket
-    //m_ServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (sServerSocket == INVALID_SOCKET)
+    m_ServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (m_ServerSocket == INVALID_SOCKET)
     {
         std::cout << "Unable to initialize Server Socket\n";
         WSACleanup();
@@ -37,13 +37,14 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 		std::cout << "Chat Server Socket Initialized\n";
     }
 
-    // Obtaining hostname
+    //!<== Obtaining hostname
     char hostname[256];
     gethostname(hostname, sizeof(hostname));
     m_HostName = std::string(hostname);
+    std::cout << ">> [SERVER]:: Hostname: " << m_HostName << "\n";
 
-    // Obtaining my own IP Address, as a server
-    struct addrinfo hints, * info;
+    //!<== Obtaining my own IP Address, as a server
+    struct addrinfo hints, *info;
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family     = AF_INET;
     hints.ai_socktype   = SOCK_DGRAM;
@@ -64,7 +65,6 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(serverPortNumber);
 	serverAddr.sin_addr.s_addr = inet_addr(ipstr);
-	//serverAddr.sin_addr.s_addr = inet_addr(std::string("127.0.0.1").c_str());
     
     //m_ServerInstance.m_ServerInfo = *(struct sockaddr_in*)info->ai_addr;
     //m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);
@@ -93,24 +93,24 @@ bool ServerManager::serverInit(u_short serverPortNumber)
    // } while (bind(m_ServerSocket, (struct sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR);
     
     
-    //if (bind(m_ServerSocket, (struct sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR)
-    if (bind(sServerSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+    if (bind(m_ServerSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
     {
-        std::cout << "SERVER: ----- ERROR!\n";
+        std::cout << "Error Code: " << WSAGetLastError() << " - ";
+        std::cout << "Unable to connect to " << inet_ntoa(serverAddr.sin_addr) << " port " << ntohs(serverAddr.sin_port) << std::endl;
+        closesocket(m_ServerSocket);
+        WSACleanup();
         return false;
     }
 
-    //std::cout << "Server Connected. Information: " << inet_ntoa(m_ServerInstance.m_ServerInfo.sin_addr) << " port " << htons(m_ServerInstance.m_ServerInfo.sin_port) << std::endl;
-    std::cout << "Server Connected. Information: " << inet_ntoa(serverAddr.sin_addr) << " port " << htons(serverAddr.sin_port) << std::endl;
+    std::cout << ">> [SERVER]:: Server Connected. Information: " << inet_ntoa(serverAddr.sin_addr) << " port " << htons(serverAddr.sin_port) << std::endl;
 
     // start the constant running thread
     m_ServerRecvThread = std::thread(serverRecvData);
-    //m_ServerRecvThread = std::thread serverrecvThread(serverRecvData);
-    //m_ServerRecvThread = serverrecvThread;
 
     return true;
 }
 
+//== Batch send to all connected clients
 bool ServerManager::serverSendData(std::string data)
 {
     // Broadcast data to all clients
@@ -122,6 +122,8 @@ bool ServerManager::serverSendData(std::string data)
     return true;
 }
 
+//== Multithreaded function -- Constantly listening to client input
+//== Updates the connected client list here
 void serverRecvData()
 {
     while (1)
@@ -137,15 +139,13 @@ void serverRecvData()
         {
             std::cout << "Unable to initialize Server Socket\n";
             WSACleanup();
-            //break;
+            break;
         }
 
-        //SOCKET localvar = ServerManager::GetInstance()->m_ServerSocket;
-        //nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&clientAddr, &fromlength);
-        nLength = recvfrom(sServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&clientAddr, &fromlength);
+        nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&clientAddr, &fromlength);
         if (nLength >= 0) {
             cBuffer[nLength] = '\0';
-            std::cout << "Server Received: " << cBuffer << "\n";
+            std::cout << ">> [S] Received: " << cBuffer << "\n";
         }
 
         if (nLength == SOCKET_ERROR) {
@@ -153,36 +153,37 @@ void serverRecvData()
             return;
         }
 
-        std::cout << "server recv data\n";
-
         // get the client's IP address
         std::string clientdata = inet_ntoa(clientAddr.sin_addr);
         
         // check and update clientlist
-        if(ServerManager::GetInstance()->m_ClientList.find(clientdata) == ServerManager::GetInstance()->m_ClientList.end())  {
+        if(ServerManager::GetInstance()->m_ClientList.find(clientdata) == ServerManager::GetInstance()->m_ClientList.end()) {
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
+            std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
 		}
     }
 }
 
+//== Closes the server sockets. Cleanup
 void ServerManager::serverClose()
 {
     closesocket(m_ServerSocket);
     WSACleanup();
 }
 
+//== Sends the message to a particular client
 bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string const& msg)
 {
     char buffer[1024];
     strcpy(buffer, msg.c_str());
     char* pBuffer = buffer;
 
-    int msgLength = static_cast<int>(msg.size());
+    int msgLength = sizeof(pBuffer);
     int nCntSend{};
     
-    while ((nCntSend = sendto(receiver.hClientSocket, pBuffer, msgLength, 0, (sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) != msgLength))
+    while ((nCntSend = sendto(m_ServerSocket, pBuffer, msgLength, 0, (sockaddr*)&receiver.clientAddr, sizeof(receiver.clientAddr)) != msgLength))
     {
         if (nCntSend == -1) {
             std::cout << "Error sending the data to " << inet_ntoa(receiver.clientAddr.sin_addr) << std::endl;
@@ -207,6 +208,7 @@ bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string const& msg)
     return true;
 }
 
+//== Broadcast messages to all connected clients
 void ServerManager::BroadcastMessage(CLIENT_INFO const& sender, std::string const& msg)
 {
     std::string message = "[" + std::string(sender.username) + ":] " + msg;
@@ -215,16 +217,19 @@ void ServerManager::BroadcastMessage(CLIENT_INFO const& sender, std::string cons
     }
 }
 
-bool ServerManager::InitWinSock2_0()
-{
-    WSADATA wsaData;
-    WORD wVersion = MAKEWORD(2, 0);
-
-    if (!WSAStartup(wVersion, &wsaData))
-        return true;
-
-    return false;
-}
+//bool ServerManager::InitWinSock2_0()
+//{
+//    WSADATA wsaData;
+//    WORD wVersion = MAKEWORD(2, 0);
+//
+//    if (WSAStartup(wVersion, &wsaData))
+//    {
+//        std::cout << "Unable to Initialize Windows Socket environment" << WSAGetLastError() << std::endl;
+//        return false;
+//    }
+//
+//    return true;
+//}
 
 //BOOL WINAPI ClientServerThread(LPVOID lpData)
 //{

@@ -108,16 +108,8 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	}
 
 	
-	//!< === NETWORK TESTING AREA START ===
-		#ifdef _SERVER
-			//ServerManager::GetInstance()->serverRecvData();
-		#endif // _SERVER
-
-		#ifdef _CLIENT
-			//clientRecvData();
-		#endif // _CLIENT			
-	
-	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::F12)) 
+	//!< === NETWORK TESTING AREA START ===	
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A)) 
 	{
 		#ifdef _CLIENT
 			ClientManager::GetInstance()->clientSendData("Hello World from the client side");

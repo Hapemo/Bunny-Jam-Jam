@@ -29,67 +29,72 @@ int Application::window_width{};
 int Application::window_height{};
 std::string Application::title{ "gam200" };
 GLFWwindow* Application::ptr_window;
-std::string Application::mCurrGameStateName{""};
+std::string Application::mCurrGameStateName{ "" };
 bool Application::mLoadAllResources{ true };
 
 void Application::startup() {
-  loadConfig("../config.txt");
-  FilePathManager::Init("../filePaths.txt");
-  GLFWStartUp();
-  Input::Init(ptr_window); 
-  Helper::Init(ptr_window);
-  GlewStartUp();
-  ECSManager::ECS_init();
-  //GameStateManager::GetInstance()->Init();
+    loadConfig("../config.txt");
+    FilePathManager::Init("../filePaths.txt");
+    GLFWStartUp();
+    Input::Init(ptr_window);
+    Helper::Init(ptr_window);
+    GlewStartUp();
+    ECSManager::ECS_init();
+    //GameStateManager::GetInstance()->Init();
 }
 
 void Application::SystemInit() {
 #ifdef _EDITOR
-  editorManager->Load(ptr_window, &window_width, &window_height);
+    editorManager->Load(ptr_window, &window_width, &window_height);
 #endif
-  audioManager->Init();
-  //aiManager->weatherAIinit();
-  movementAIManager->Init();
-  renderManager->Init(&window_width, &window_height);
-  buttonManager->Init(&window_width, &window_height);
-  //playerManager->Init(window_width, window_height);
+    audioManager->Init();
+    //aiManager->weatherAIinit();
+    movementAIManager->Init();
+    renderManager->Init(&window_width, &window_height);
+    buttonManager->Init(&window_width, &window_height);
+    //playerManager->Init(window_width, window_height);
 #ifdef _EDITOR
-  renderManager->RenderToFrameBuffer();
+    renderManager->RenderToFrameBuffer();
 #else
-  renderManager->RenderToScreen();
+    renderManager->RenderToScreen();
 #endif
-  // For render debug
-  renderManager->SetVectorLengthModifier(5.f);
+    // For render debug
+    renderManager->SetVectorLengthModifier(5.f);
 
-  // Collision database initialization
-  collision2DManager->SetupCollisionDatabase();
+    // Collision database initialization
+    collision2DManager->SetupCollisionDatabase();
 
-  // Activate logic system & Mono
-  logicSystem->Activate();
+    // Activate logic system & Mono
+    logicSystem->Activate();
 
 #ifdef _EDITOR
 #ifdef _DEBUG
-  if (Application::mLoadAllResources) // TODO: This should be removed during game launch.
+    if (Application::mLoadAllResources) // TODO: This should be removed during game launch.
 #endif
-    ResourceManager::GetInstance()->LoadAllResources();
+        ResourceManager::GetInstance()->LoadAllResources();
 #endif
 
 #ifdef _EDITOR
-  editorManager->Init(); //need loaded resources
+    editorManager->Init(); //need loaded resources
 #endif
 
       // Part 1.1 (Networking init)
 #ifdef _CLIENT
-  std::string tempServerAdd = "127.0.0.1";
-  //std::string tempServerAdd = "192.168.194.155";
-  u_short tempServerPort = 5051;
-  std::string tempClientName = "Client1";
-  ClientManager::GetInstance()->clientInit(tempServerAdd, tempServerPort, tempClientName);
+  //std::string tempServerAdd = "127.0.0.1";
+    std::string tempServerAdd = "192.168.50.178";
+    u_short tempServerPort = 5051;
+    std::string tempClientName = "Client1";
+    if(!ClientManager::GetInstance()->clientInit(tempServerAdd, tempServerPort, tempClientName)) {
+      std::cout << "ERROR: ---------- SOME FUNKY BUSINESS IS GOING ON IN CLIENT INIT\n";
+}
 #endif
 
 #ifdef _SERVER
   u_short tempServerPort = 5051;
-  ServerManager::GetInstance()->serverInit(tempServerPort);
+  
+  if (!ServerManager::GetInstance()->serverInit(tempServerPort)) {
+      std::cout << "ERROR: ---------- SOME FUNKY BUSINESS IS GOING ON IN SERVER INIT\n";
+  }
 #endif
   
   // Set fullscreen for .exe build

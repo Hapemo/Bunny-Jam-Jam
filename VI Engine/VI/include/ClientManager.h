@@ -28,17 +28,17 @@ public:
 	bool clientInit(std::string, u_short, std::string);
 	bool clientSendData(std::string data);
 	void clientClose();
-	bool InitWinSock2_0();
+
 	
 	//!< Private Client Variable
 	std::thread			m_ClientRecvThread;
 
 	C_CLIENT			m_ClientInstance;
 	C_SERVER			m_ServerInstance;
-	std::string			m_ServerIPAddress;
-	int					m_ServerPort;
 	bool				m_StopReceive;
 };
 
 void clientRecvData();
 
+
+//bool InitWinSock2_0();
