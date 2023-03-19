@@ -44,46 +44,58 @@ void Bunny_PlayerMovement::Update(const Entity& _e) {
 		_e.AddComponent(Bunny{});
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
 	{
-		sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
-		_e.GetComponent<Physics2D>().acceleration = 0;
-		_e.GetComponent<Physics2D>().velocity.x = 0;
-		_e.GetComponent<Physics2D>().velocity.y = 0;
+		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
+		{
+			sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
+			_e.GetComponent<Physics2D>().acceleration = 0;
+			_e.GetComponent<Physics2D>().velocity.x = 0;
+			_e.GetComponent<Physics2D>().velocity.y = 0;
+		}
 	}
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
 	{
-		sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN;
-		_e.GetComponent<Physics2D>().acceleration = 0;
-		_e.GetComponent<Physics2D>().velocity.x = 0;
-		_e.GetComponent<Physics2D>().velocity.y = 0;
+		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN)
+		{
+			sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN;
+			_e.GetComponent<Physics2D>().acceleration = 0;
+			_e.GetComponent<Physics2D>().velocity.x = 0;
+			_e.GetComponent<Physics2D>().velocity.y = 0;
+		}
 	}
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
 	{
-		sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
-		_e.GetComponent<Physics2D>().acceleration = 0;
-		_e.GetComponent<Physics2D>().velocity.x = 0;
-		_e.GetComponent<Physics2D>().velocity.y = 0;
+		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT)
+		{
+			sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
+			_e.GetComponent<Physics2D>().acceleration = 0;
+			_e.GetComponent<Physics2D>().velocity.x = 0;
+			_e.GetComponent<Physics2D>().velocity.y = 0;
+		}
 	}
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
 	{
-		sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
-		_e.GetComponent<Physics2D>().acceleration = 0;
-		_e.GetComponent<Physics2D>().velocity.x = 0;
-		_e.GetComponent<Physics2D>().velocity.y = 0;
+		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
+		{
+			sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
+			_e.GetComponent<Physics2D>().acceleration = 0;
+			_e.GetComponent<Physics2D>().velocity.x = 0;
+			_e.GetComponent<Physics2D>().velocity.y = 0;
+		}
 	}
 	
 	switch (sPLAYERDIRECTION)
 	{
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
-		VI::iPhysics::ApplyImpulse(_e, { 0.0f,30.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { 0.0f,40.0f }, 0.0f);
 		break;
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
-		VI::iPhysics::ApplyImpulse(_e, { 0.0f,-30.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { 0.0f,-40.0f }, 0.0f);
 		break;
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
-		VI::iPhysics::ApplyImpulse(_e, { -30.0f,0.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { -40.0f,0.0f }, 0.0f);
 		break;
 	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
-		VI::iPhysics::ApplyImpulse(_e, { 30.0f,0.0f }, 0.0f);
+		VI::iPhysics::ApplyImpulse(_e, { 40.0f,0.0f }, 0.0f);
 		break;
 	default:
 		break;
