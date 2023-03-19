@@ -36,12 +36,14 @@ bool ClientManager::clientInit(std::string serverIPAddress, u_short serverPortNu
     m_ServerInstance.m_ServerInfo.sin_port           = htons(serverPortNumber);
 
     m_ServerIPAddress = serverIPAddress;
-    m_ServerPort = serverPortNumber;
+    m_ServerPort = serverPortNumber;    
 
     //!! == EXPERIMENT SENDING CLIENT STRUCT TO SERVER HERE AS A CONNECTION REQUEST
     std::string sConnectionSetup = "Client Connected";
     int nLength = strlen(sConnectionSetup.c_str());
-    if (sendto(m_ClientInstance.clientSocket, sConnectionSetup.c_str(), nLength, 0, (sockaddr*)&serverIPAddress, sizeof(serverIPAddress) == SOCKET_ERROR))
+	SOCKET clientsocket = m_ClientInstance.clientSocket;
+    //if (sendto(m_ClientInstance.clientSocket, sConnectionSetup.c_str(), nLength, 0, (sockaddr*)&serverIPAddress, sizeof(serverIPAddress) == SOCKET_ERROR))
+    if (sendto(clientsocket, sConnectionSetup.c_str(), nLength, 0, (sockaddr*)&serverIPAddress, sizeof(serverIPAddress)) == SOCKET_ERROR)
     {
         std::cout << "ERROR: Unable to send initial connection request message\n";
         return false;

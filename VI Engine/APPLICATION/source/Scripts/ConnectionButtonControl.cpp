@@ -123,7 +123,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 			ClientManager::GetInstance()->clientSendData("Hello World from the client side");
 		#endif // _CLIENT
 
-		#ifdef _SERVER
+		#ifdef _SERVER  
 			ServerManager::GetInstance()->serverSendData("Hello World from the server side");
 		#endif // _SERVER
 	}

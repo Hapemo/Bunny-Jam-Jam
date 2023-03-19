@@ -1,6 +1,7 @@
 #pragma once
 #include "singleton.h"
 #include "pch.h"
+#include <map>
 #include <winsock2.h>
 
 
@@ -39,24 +40,24 @@ public:
 	bool InitWinSock2_0();
 
 	// Helper functions
-	bool IsUsernameTaken(std::string const& username);
 	bool SendMsg(CLIENT_INFO const& receiver, std::string const& msg);
 	void BroadcastMessage(CLIENT_INFO const& sender, std::string const& msg);
-	void QuitMessage(std::string const& username);
-	void DisplayAllUsers(CLIENT_INFO const& ReqClient);
+	//bool IsUsernameTaken(std::string const& username);
+	//void QuitMessage(std::string const& username);
+	//void DisplayAllUsers(CLIENT_INFO const& ReqClient);
 	
 //private:
-	std::thread					m_ServerRecvThread;
-	SOCKET						m_ServerSocket;
-	S_SERVER					m_ServerInstance;
-	std::vector<CLIENT_INFO>	m_ClientList;
-	std::string					m_ServerStringBuffer;
+	//std::vector<CLIENT_INFO>	m_ClientList;
+	std::thread							m_ServerRecvThread;
+	SOCKET								m_ServerSocket;
+	S_SERVER							m_ServerInstance;
+	std::map<std::string, CLIENT_INFO>	m_ClientList;
+	std::string							m_ServerStringBuffer;
 
 // some fancy stuff if we want to include
-	std::string					m_HostName;
+	std::string							m_HostName;
 };
 
-
 void serverRecvData();
-BOOL WINAPI ClientServerThread(LPVOID lpData);
-BOOL WINAPI ClientThread(LPVOID lpData);
+//BOOL WINAPI ClientServerThread(LPVOID lpData);
+//BOOL WINAPI ClientThread(LPVOID lpData);
