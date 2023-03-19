@@ -35,7 +35,7 @@ public:
 
 	C_CLIENT			m_ClientInstance;
 	C_SERVER			m_ServerInstance;
-	char				m_ServerIPAddress[20];
+	std::string			m_ServerIPAddress;
 	int					m_ServerPort;
 	bool				m_StopReceive;
 };

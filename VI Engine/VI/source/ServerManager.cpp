@@ -4,11 +4,13 @@
 #include "ServerManager.h"
 #include <WS2tcpip.h>
 
-ServerManager::ServerManager()
-    : m_ServerRecvThread(serverRecvData) {}
+//ServerManager::ServerManager()
+//    : m_ServerRecvThread(serverRecvData) {}
+ServerManager::ServerManager() {}
 
 ServerManager::~ServerManager() {
-    m_ServerRecvThread.join();
+    std::cout << "SERVER ---------- DESTRUCTOR\n";
+    //m_ServerRecvThread.join();
 }
 
 // Create a Server Socket
@@ -22,7 +24,16 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 
     // Creating a Socket
     m_ServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    
+    if (m_ServerSocket == INVALID_SOCKET)
+    {
+        std::cout << "Unable to initialize Server Socket\n";
+        WSACleanup();
+        return false;
+    }
+    else {
+		std::cout << "Chat Server Socket Initialized\n";
+    }
+
     // Obtaining hostname
     char hostname[256];
     gethostname(hostname, sizeof(hostname));
@@ -41,40 +52,41 @@ bool ServerManager::serverInit(u_short serverPortNumber)
         return false;
     }
 
+    // parsing the IP address to a string
     char ipstr[INET_ADDRSTRLEN];
     struct sockaddr_in* addr = (struct sockaddr_in*)info->ai_addr;
     inet_ntop(AF_INET, &addr->sin_addr, ipstr, sizeof(ipstr));      // convert the address to a string
-    m_ServerIPAddress = std::string(ipstr);
     
-    if (m_ServerSocket == INVALID_SOCKET)
-    {
-        std::cout << "Unable to initialize Server Socket\n";
-        WSACleanup();
-        return false;
-    }
-    else {
-		std::cout << "Chat Server Socket Initialized\n";
-    }
+    m_ServerInstance.m_ServerInfo = *(struct sockaddr_in*)info->ai_addr;
+    m_ServerInstance.m_ServerAddress = std::string(ipstr);
+    m_ServerInstance.m_ServerPort = serverPortNumber;
     
-    //!< Binding the Server socket to the address & port
+    //!< Binding the Server socket to the address & port. We need this because port numbers for UDP are more sensitive
     int reiterations = 0;
     do
     {
+        // skip the first iteration
         if (++reiterations != 1) {
             std::cout << "Error Code: " << WSAGetLastError() << " - ";
             std::cout << "Unable to connect to " << inet_ntoa(m_ServerInstance.m_ServerInfo.sin_addr) << " port " << ntohs(m_ServerInstance.m_ServerInfo.sin_port) << std::endl;
-            std::cout << "Retrying with port number: " << ++serverPortNumber << "\n";
+            std::cout << "Retrying with port number: " << ++m_ServerInstance.m_ServerPort << "\n";
             //closesocket(m_ServerSocket);
             //WSACleanup();
             //return false;
         }
 
-        m_ServerInstance.m_ServerInfo.sin_family = AF_INET;                                     // The address family. MUST be AF_INET
-        m_ServerInstance.m_ServerInfo.sin_addr.s_addr = inet_addr(m_ServerIPAddress.c_str());   // converts a string containing ipv4 address into a proper address for the IN_ADDR struct  
-        m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);                       // converts a u_short from host to TCP/IP network byte order (which is big-endian)
+        //m_ServerInstance.m_ServerInfo.sin_family = AF_INET;                                                     // The address family. MUST be AF_INET
+        //m_ServerInstance.m_ServerInfo.sin_addr.s_addr = inet_addr(m_ServerInstance.m_ServerAddress.c_str());    // converts a string containing ipv4 address into a proper address for the IN_ADDR struct  
+        //m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);                                       // converts a u_short from host to TCP/IP network byte order (which is big-endian)
     } while (bind(m_ServerSocket, (struct sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR);
 
     std::cout << "Server Connected. Information: " << inet_ntoa(m_ServerInstance.m_ServerInfo.sin_addr) << " port " << ntohs(m_ServerInstance.m_ServerInfo.sin_port) << std::endl;
+
+    // start the constant running thread
+    //m_ServerRecvThread = std::thread(serverRecvData);
+    std::thread serverrecvThread(serverRecvData);
+    //m_ServerRecvThread = serverrecvThread;
+
     return true;
 }
 
@@ -91,17 +103,24 @@ bool ServerManager::serverSendData(std::string data)
 
 void serverRecvData()
 {
-    int nLength = 0;
-    int nFromLength = 1024;
-    char cBuffer[1024];
-
-    CLIENT_INFO localClient{};
-
-    nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&localClient.clientAddr, &nFromLength);
-    if (nLength >= 0)
+    while (1)
     {
-        cBuffer[nLength] = '\0';
-        std::cout << "Server Received: " << cBuffer << "\n";
+        int nLength = 0;
+        int nFromLength = 1024;
+        char cBuffer[1024];
+
+        CLIENT_INFO localClient{};
+        struct sockaddr_in clientAddr;
+
+        //nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&localClient.clientAddr, &nFromLength);
+        nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&clientAddr, &nFromLength);
+        if (nLength >= 0)
+        {
+            cBuffer[nLength] = '\0';
+            std::cout << "Server Received: " << cBuffer << "\n";
+        }
+
+        std::cout << "server recv data\n";
     }
 }
 

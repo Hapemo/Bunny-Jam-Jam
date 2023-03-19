@@ -116,7 +116,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 		#ifdef _CLIENT
 			//clientRecvData();
 		#endif // _CLIENT			
-
+	
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::F12)) 
 	{
 		#ifdef _CLIENT

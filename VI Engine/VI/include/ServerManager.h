@@ -50,9 +50,7 @@ public:
 	SOCKET						m_ServerSocket;
 	S_SERVER					m_ServerInstance;
 	std::vector<CLIENT_INFO>	m_ClientList;
-	std::string					m_ServerIPAddress;
 	std::string					m_ServerStringBuffer;
-	u_short						m_ServerPort;
 
 // some fancy stuff if we want to include
 	std::string					m_HostName;
