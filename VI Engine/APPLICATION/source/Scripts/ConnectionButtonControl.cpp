@@ -21,6 +21,11 @@ namespace {
 	bool textin_ = false;
 	int iplen_ = 0;
 
+
+	bool player1_ = false;
+	bool player2_ = false;
+
+
 	//Scene textinput_;
 	std::string ipstring_ = "";
 }
@@ -83,7 +88,10 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE)) {
 		iplen_ = 0;
 		ipstring_ = "";
+		ip_.GetComponent<Text>().text = ipstring_;
+		VI::iScene::Pause("RequestIP");
 		textin_ = false;
+
 	}
 
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::L)) {
@@ -103,14 +111,35 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 				ip_.GetComponent<Text>().text = ipstring_;
 			}
 		}
+
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::PERIOD) == true) {
+			++iplen_;
+			ipstring_ += ".";
+			ip_.GetComponent<Text>().text = ipstring_;
+		}
+
+
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) {
+			// submit the ip address
+		}
+
+		if (iplen_ > 0) {
+			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::BACKSPACE) == true) {
+				--iplen_;
+				ipstring_.pop_back();
+				ip_.GetComponent<Text>().text = ipstring_;
+
+			}
+		}
+
 	}
+
 
 
 	if (join_.GetComponent<Button>().isHover) {
 		//if (join_.GetComponent<Transform>().scale.x < 200) {
 		//	join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
 		//}
-
 		if (join_.GetComponent<Button>().isClick) {
 			textin_ = true;
 			VI::iScene::Play("RequestIP");

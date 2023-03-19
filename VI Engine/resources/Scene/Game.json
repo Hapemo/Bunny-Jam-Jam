@@ -113,7 +113,7 @@
             },
             "sprite": 2,
             "texture": "Textures\\Button2.png",
-            "layer": 2
+            "layer": 5
         }
     },
     {
