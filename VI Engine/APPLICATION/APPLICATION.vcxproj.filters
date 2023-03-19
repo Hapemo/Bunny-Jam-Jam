@@ -32,9 +32,5 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Scripts\Old\PlayGameButton.cpp" />
     <ClCompile Include="source\Scripts\FPSPrint.cpp" />
-    <ClCompile Include="source\Scripts\Old\Bunny_PlayerMovement.cpp" />
-    <ClCompile Include="source\Scripts\Old\Bunny_CarrotCollectionScript.cpp" />
-    <ClCompile Include="source\Scripts\Old\Bunny_CarrotCount.cpp" />
-    <ClCompile Include="source\Scripts\Old\Bunny_Timer.cpp" />
   </ItemGroup>
 </Project>
