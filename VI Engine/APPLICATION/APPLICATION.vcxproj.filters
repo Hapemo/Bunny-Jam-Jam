@@ -22,7 +22,7 @@
     <ClInclude Include="include\Scripts\PauseButton.h" />
     <ClInclude Include="include\Scripts\DeathToMainMenuButton.h" />
     <ClInclude Include="include\Scripts\FPSPrint.h" />
-    <ClInclude Include="include\Scripts\Connection.h" />
+    <ClInclude Include="include\Scripts\BackBunny.h" />
     <ClInclude Include="include\Scripts\ConnectionButtonControl.h" />
   </ItemGroup>
   <ItemGroup>
@@ -30,7 +30,7 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Scripts\Old\PlayGameButton.cpp" />
     <ClCompile Include="source\Scripts\FPSPrint.cpp" />
-    <ClCompile Include="source\Scripts\Connection.cpp" />
+    <ClCompile Include="source\Scripts\BackBunny.cpp" />
     <ClCompile Include="source\Scripts\ConnectionButtonControl.cpp" />
     <ClCompile Include="source\Scripts\Old\PlayerMovementScript.cpp" />
   </ItemGroup>

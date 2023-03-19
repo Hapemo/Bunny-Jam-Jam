@@ -142,10 +142,12 @@ void SparseSet<T>::AddData(DataType const& _data, IndexType const& _index) {
 	++mCapacity;
 }
 
+
 template<typename T>
 bool SparseSet<T>::CheckData(IndexType const& _index) {
 	return mShallow[static_cast<int>(_index)] != emptyID;
 }
+
 
 template<typename T>
 void SparseSet<T>::PrintSet() {

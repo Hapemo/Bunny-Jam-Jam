@@ -10,13 +10,13 @@ Updates the fps count, for the fps printer in entity
 *******************************************************************************/
 
 
-#include "Connection.h"
+#include "BackBunny.h"
 
-REGISTER_SCRIPT(ScriptComponent, Connection);
+REGISTER_SCRIPT(ScriptComponent, BackBunny);
 
 namespace {
-	Entity board; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
-	bool enlarge = true;
+	//Entity board; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
+	//bool enlarge = true;
 	//std::string apple = "dasdasd";
 }
 
@@ -24,9 +24,9 @@ namespace {
 \brief
 Function will run when the gamestate of the entity is activated.
 *******************************************************************************/
-void Connection::Alive(Entity const& _e) {
-	board = VI::iEntity::GetEntity("Board", "");
-	if (board.id == 0) return;
+void BackBunny::Alive(Entity const& _e) {
+	//board = VI::iEntity::GetEntity("Board", "");
+	//if (board.id == 0) return;
 
 	(void)_e;
 }
@@ -35,7 +35,7 @@ void Connection::Alive(Entity const& _e) {
 \brief
 Function will run on initialisation of the entity.
 *******************************************************************************/
-void Connection::Init(Entity const& _e) {
+void BackBunny::Init(Entity const& _e) {
 	(void)_e;
 }
 
@@ -43,7 +43,7 @@ void Connection::Init(Entity const& _e) {
 \brief
 Function will run on every update while the entity is active.
 *******************************************************************************/
-void Connection::EarlyUpdate(Entity const& _e) {
+void BackBunny::EarlyUpdate(Entity const& _e) {
 	(void)_e;
 }
 
@@ -52,23 +52,10 @@ void Connection::EarlyUpdate(Entity const& _e) {
 Function will run on every update while the entity is active after running all
 EarlyUpdate functions from all other active scripts.
 *******************************************************************************/
-void Connection::Update(Entity const& _e) {
+void BackBunny::Update(Entity const& _e) {
 	//(void)_e;
 
-	if (_e.GetComponent<Transform>().scale.x < 100 && enlarge == false) {
-		enlarge = true;
-	}
-	if (_e.GetComponent<Transform>().scale.x > 200 && enlarge == true) {
-		enlarge = false;
-	}
 
-	if (enlarge == true) {
-		_e.GetComponent<Transform>().scale.x += 100.f* (float)FUNC->GetDeltaTime();
-	}
-	else {
-		_e.GetComponent<Transform>().scale.x -= 100.f * (float)FUNC->GetDeltaTime();
-
-	}
 
 	//_e.GetComponent<Text>().text = "sgdsdadas";
 }
@@ -78,7 +65,7 @@ void Connection::Update(Entity const& _e) {
 Function will run on fixed delta time after running all EarlyUpdate and Update
 functions from all other active scripts.
 *******************************************************************************/
-void Connection::FixedUpdate(Entity const& _e) {
+void BackBunny::FixedUpdate(Entity const& _e) {
 	(void)_e;
 }
 
@@ -87,7 +74,7 @@ void Connection::FixedUpdate(Entity const& _e) {
 Function will run on every update while the entity is active after running all
 EarlyUpdate, Update, and FixedUpdate functions from all other active scripts.
 *******************************************************************************/
-void Connection::LateUpdate(Entity const& _e) {
+void BackBunny::LateUpdate(Entity const& _e) {
 	(void)_e;
 }
 
@@ -95,7 +82,7 @@ void Connection::LateUpdate(Entity const& _e) {
 \brief
 Function will run on exit or when the entity is destroyed.
 *******************************************************************************/
-void Connection::Exit(Entity const& _e) {
+void BackBunny::Exit(Entity const& _e) {
 	(void)_e;
 	//LOG_INFO("How to Play button script end works!!!");
 }
@@ -104,6 +91,6 @@ void Connection::Exit(Entity const& _e) {
 \brief
 Function will run when the gamestate of the entity exits.
 *******************************************************************************/
-void Connection::Dead(Entity const& _e) {
+void BackBunny::Dead(Entity const& _e) {
 	(void)_e;
 }
