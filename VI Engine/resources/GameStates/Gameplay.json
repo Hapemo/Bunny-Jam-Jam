@@ -1,0 +1,14 @@
+[
+    {
+        "SceneName": "Game",
+        "isActive": false,
+        "layer": 1,
+        "order": 0
+    },
+    {
+        "SceneName": "RequestIP",
+        "isActive": true,
+        "layer": 2,
+        "order": 0
+    }
+]
