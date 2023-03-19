@@ -42,7 +42,18 @@ void Bunny_PlayerMovement::EarlyUpdate(Entity const& _e) {
 void Bunny_PlayerMovement::Update(const Entity& _e) {
 	if (!_e.HasComponent<Bunny>())
 		_e.AddComponent(Bunny{});
-	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
+	/*if (_e.HasComponent<Physics2D>())
+	{
+		if (_e.GetComponent<Physics2D>().velocity.x > 0.1f)
+		{
+		}
+		else
+		{
+			_e.GetComponent<Transform>().scale.x = abs(_e.GetComponent<Transform>().scale.x);
+
+		}
+	}*/
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
 	{
 		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
 		{
@@ -66,20 +77,26 @@ void Bunny_PlayerMovement::Update(const Entity& _e) {
 	{
 		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT)
 		{
+			if (_e.GetComponent<Transform>().scale.x > 0.0f)
+				_e.GetComponent<Transform>().scale.x = -_e.GetComponent<Transform>().scale.x;
 			sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
 			_e.GetComponent<Physics2D>().acceleration = 0;
 			_e.GetComponent<Physics2D>().velocity.x = 0;
 			_e.GetComponent<Physics2D>().velocity.y = 0;
+			
 		}
 	}
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
 	{
 		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
 		{
+				if (_e.GetComponent<Transform>().scale.x < 0.0f)
+					_e.GetComponent<Transform>().scale.x = -_e.GetComponent<Transform>().scale.x;
 			sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
 			_e.GetComponent<Physics2D>().acceleration = 0;
 			_e.GetComponent<Physics2D>().velocity.x = 0;
 			_e.GetComponent<Physics2D>().velocity.y = 0;
+			
 		}
 	}
 	

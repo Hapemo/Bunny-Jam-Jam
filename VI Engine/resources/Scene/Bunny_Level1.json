@@ -172,8 +172,8 @@
         },
         "Transform": {
             "scale": {
-                "X": 50.0,
-                "Y": 1791.0
+                "X": 57.5,
+                "Y": 1798.5
             },
             "rotation": 0.0,
             "translation": {
@@ -219,20 +219,26 @@
             },
             "rotation": 0.0,
             "translation": {
-                "X": -1422.70068359375,
-                "Y": 781.5846557617188
+                "X": -1279.5633544921875,
+                "Y": 558.0552978515625
             }
         },
         "Sprite": {
             "color": {
-                "r": 0,
+                "r": 255,
                 "g": 255,
-                "b": 0,
+                "b": 255,
                 "a": 255
             },
-            "sprite": 1,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\Bunny\\Bunny.png",
             "layer": 3
+        },
+        "SheetAnimation": {
+            "frameCount": 5,
+            "currFrameIndex": 2,
+            "timePerFrame": 0.10000000149011612,
+            "timeToFrameSwap": 0.0
         },
         "Physics2D": {
             "dynamicsEnabled": true,
@@ -1715,8 +1721,8 @@
         },
         "Transform": {
             "scale": {
-                "X": 3237.0,
-                "Y": 1944.0
+                "X": 3247.0,
+                "Y": 1954.0
             },
             "rotation": 0.0,
             "translation": {
