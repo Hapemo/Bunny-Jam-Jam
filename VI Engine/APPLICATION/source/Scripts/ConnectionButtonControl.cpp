@@ -42,13 +42,6 @@ namespace {
 Function will run when the gamestate of the entity is activated.
 *******************************************************************************/
 void ConnectionButtonControl::Alive(Entity const& _e) {
-
-
-
-
-
-	/*textinput_ =*/ 
-
 	(void)_e;
 }
 
@@ -65,14 +58,6 @@ void ConnectionButtonControl::Init(Entity const& _e) {
 Function will run on every update while the entity is active.
 *******************************************************************************/
 void ConnectionButtonControl::EarlyUpdate(Entity const& _e) {
-	if (!updateOnce)
-	{
-		bgeff_ = VI::iEntity::GetEntity("BGEffect", "");
-		bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "");
-		ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
-		join_ = VI::iEntity::GetEntity("Join", "");
-	}
-
 	(void)_e;
 }
 
@@ -87,6 +72,13 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 	//2764 position 
 
+	if (!updateOnce)
+	{
+		bgeff_ = VI::iEntity::GetEntity("BGEffect", "");
+		bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "");
+		ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
+		join_ = VI::iEntity::GetEntity("Join", "");
+	}
 	if (bgeff_.GetComponent<Transform>().translation.x >= -500 && posap_ == false) {
 		bgeff2_.GetComponent<Transform>().translation.x = -2764;
 		bgeff2_.GetComponent<Transform>().translation.y = 2764;
@@ -120,13 +112,13 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 	//_e.GetComponent<Text>().text = "sgdsdadas"; 
 
-	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE)) {
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
+	{
 		iplen_ = 0;
 		ipstring_ = "";
 		ip_.GetComponent<Text>().text = ipstring_;
 		VI::iScene::Pause("RequestIP");
 		textin_ = false;
-
 	}
 
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::L)) {

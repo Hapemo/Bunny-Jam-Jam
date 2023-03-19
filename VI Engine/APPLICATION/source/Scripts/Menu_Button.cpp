@@ -11,7 +11,7 @@ Updates the fps count, for the fps printer in entity
 
 
 #include "Menu_Button.h"
-static bool updateOnce{ false };
+static bool updateOne{ false };
 
 REGISTER_SCRIPT(ScriptComponent, Menu_Button);
 
@@ -25,15 +25,6 @@ namespace {
 Function will run when the gamestate of the entity is activated.
 *******************************************************************************/
 void Menu_Button::Alive(Entity const& _e) {
-
-	//bgeff_ = VI::iEntity::GetEntity("BGEffect", "Game");
-	//bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "Game");
-	//ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
-	playButton = VI::iEntity::GetEntity("Play_Button", "");
-
-	if (playButton.id == 0) return;
-
-	/*textinput_ =*/
 
 	(void)_e;
 }
@@ -52,6 +43,7 @@ Function will run on every update while the entity is active.
 *******************************************************************************/
 void Menu_Button::EarlyUpdate(Entity const& _e) {
 
+
 	(void)_e;
 }
 
@@ -62,11 +54,11 @@ EarlyUpdate functions from all other active scripts.
 *******************************************************************************/
 void Menu_Button::Update(Entity const& _e) {
 	//(void)_e;
-	if (!updateOnce)
+	if (!updateOne)
 	{
 		playButton = VI::iEntity::GetEntity("Play_Button", "");
-		std::cout << "HELLO" << std::endl;
-		updateOnce = true;
+		updateOne = true;
+
 	}
 
 	//If PlayButton is clicked
