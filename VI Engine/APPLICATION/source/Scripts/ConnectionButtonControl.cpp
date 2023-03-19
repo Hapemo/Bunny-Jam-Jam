@@ -11,6 +11,7 @@ Updates the fps count, for the fps printer in entity
 
 
 #include "ConnectionButtonControl.h"
+static bool updateOnce{ false };
 
 REGISTER_SCRIPT(ScriptComponent, ConnectionButtonControl);
 
@@ -48,16 +49,6 @@ Function will run when the gamestate of the entity is activated.
 *******************************************************************************/
 void ConnectionButtonControl::Alive(Entity const& _e) {
 
-
-	loadicon_ = VI::iEntity::GetEntity("BunnyLoad", "Game");
-	bgeff_ = VI::iEntity::GetEntity("BGEffect", "Game");
-	bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "Game");
-	ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
-	join_ = VI::iEntity::GetEntity("Join", "");
-	if (join_.id == 0) return;
-
-	/*textinput_ =*/ 
-
 	(void)_e;
 }
 
@@ -86,6 +77,16 @@ EarlyUpdate functions from all other active scripts.
 *******************************************************************************/
 void ConnectionButtonControl::Update(Entity const& _e) {
 	//(void)_e;
+
+	if (!updateOnce)
+	{
+		loadicon_ = VI::iEntity::GetEntity("BunnyLoad", "Game");
+		bgeff_ = VI::iEntity::GetEntity("BGEffect", "Game");
+		bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "Game");
+		ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
+		join_ = VI::iEntity::GetEntity("Join", "");
+	}
+
 
 
 	if (zoom_ == true){
@@ -120,6 +121,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 	//2764 position 
 
+
 	if (bgeff_.GetComponent<Transform>().translation.x >= -500 && posap_ == false) {
 		bgeff2_.GetComponent<Transform>().translation.x = -2764;
 		bgeff2_.GetComponent<Transform>().translation.y = 2764;
@@ -153,13 +155,13 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 	//_e.GetComponent<Text>().text = "sgdsdadas"; 
 
-	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE)) {
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
+	{
 		iplen_ = 0;
 		ipstring_ = "";
 		ip_.GetComponent<Text>().text = ipstring_;
 		VI::iScene::Pause("RequestIP");
 		textin_ = false;
-
 	}
 
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::L)) {

@@ -1,0 +1,259 @@
+[
+    {
+        "General": {
+            "name": "Background",
+            "tag": 4,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1533.0,
+                "Y": 871.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -3.371999979019165,
+                "Y": 7.4720001220703125
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 140,
+                "g": 192,
+                "b": 192,
+                "a": 255
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 0
+        },
+        "LightSource": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "radius": 4000.0,
+            "intensity": 100.0
+        }
+    },
+    {
+        "General": {
+            "name": "Exit_Button",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 300.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -563.8705444335938,
+                "Y": -315.3228454589844
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 81,
+                "g": 188,
+                "b": 81,
+                "a": 0
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": true
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Exit Game",
+            "offset": {
+                "X": -122.0,
+                "Y": -27.0
+            },
+            "scale": 1.0,
+            "color": {
+                "r": 231,
+                "g": 4,
+                "b": 4,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -1000.0
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "Play_Button",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 300.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -560.5546875,
+                "Y": -100.32274627685547
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 72,
+                "g": 209,
+                "b": 72,
+                "a": 0
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": true
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "Start Game !",
+            "offset": {
+                "X": -174.0,
+                "Y": -6.0
+            },
+            "scale": 1.0,
+            "color": {
+                "r": 231,
+                "g": 4,
+                "b": 4,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -1000.0
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "H2P_Button",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 300.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -566.5821533203125,
+                "Y": -222.90333557128906
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 81,
+                "g": 188,
+                "b": 81,
+                "a": 0
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 1
+        },
+        "RectCollider": {
+            "centerOffset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scaleOffset": {
+                "X": 1.0,
+                "Y": 1.0
+            },
+            "isTrigger": true,
+            "renderFlag": true
+        },
+        "Text": {
+            "fontFile": "BPtypewrite",
+            "text": "How to Play?",
+            "offset": {
+                "X": -182.0,
+                "Y": -14.0
+            },
+            "scale": 1.0,
+            "color": {
+                "r": 231,
+                "g": 4,
+                "b": 4,
+                "a": 255
+            },
+            "followCam": false,
+            "width": -1000.0
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "ButtonManager",
+            "tag": 0,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 0,
+                "g": 255,
+                "b": 0,
+                "a": 0
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 3
+        },
+        "Script": {
+            "name": "Menu_Button"
+        }
+    }
+]

@@ -249,6 +249,7 @@ void ECSManager::RegisterAllComponents() {
 	ECS::RegisterComponent<Viewport>();
 	ECS::RegisterComponent<MovementAI>();
 	ECS::RegisterComponent<ParticleSystem>();
+	ECS::RegisterComponent<Bunny>();
 
 	// More to come
 }
