@@ -17,6 +17,10 @@ REGISTER_SCRIPT(ScriptComponent, ConnectionButtonControl);
 namespace {
 	Entity join_; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
 	Entity ip_;
+	Entity bgeff_;
+	Entity bgeff2_;
+
+	bool posap_ = false;
 
 	bool textin_ = false;
 	int iplen_ = 0;
@@ -24,6 +28,8 @@ namespace {
 
 	bool player1_ = false;
 	bool player2_ = false;
+	
+
 
 
 	//Scene textinput_;
@@ -36,6 +42,8 @@ Function will run when the gamestate of the entity is activated.
 *******************************************************************************/
 void ConnectionButtonControl::Alive(Entity const& _e) {
 
+	bgeff_ = VI::iEntity::GetEntity("BGEffect", "Game");
+	bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "Game");
 	ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
 	join_ = VI::iEntity::GetEntity("Join", "");
 	if (join_.id == 0) return;
@@ -69,6 +77,26 @@ EarlyUpdate functions from all other active scripts.
 void ConnectionButtonControl::Update(Entity const& _e) {
 	//(void)_e;
 
+
+	//2764 position 
+
+	if (bgeff_.GetComponent<Transform>().translation.x >= -500 && posap_ == false) {
+		bgeff2_.GetComponent<Transform>().translation.x = -2764;
+		bgeff2_.GetComponent<Transform>().translation.y = 2764;
+		posap_ = true;
+	}
+	if (bgeff2_.GetComponent<Transform>().translation.x >= -500 && posap_ == true) {
+		bgeff_.GetComponent<Transform>().translation.x = -2764;
+		bgeff_.GetComponent<Transform>().translation.y = 2764;
+		posap_ = false;
+	}
+
+	bgeff_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
+	bgeff_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
+
+	bgeff2_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
+	bgeff2_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
+
 	//if (join_.GetComponent<Transform>().scale.x < 100 && enlarge == false) {
 	//	enlarge = true;
 	//}
@@ -99,7 +127,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	}
 
 	if (textin_ == true&& iplen_<16) {
-		for (int i = 48, j = 1; i < 58; ++i, ++j) {
+		for (int i = 48, j = 0; i < 59; ++i, ++j) {
 
 			if (j > 9) {
 				j = 0;
@@ -117,23 +145,20 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 			ipstring_ += ".";
 			ip_.GetComponent<Text>().text = ipstring_;
 		}
-
-
-		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) {
-			// submit the ip address
-		}
-
-		if (iplen_ > 0) {
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::BACKSPACE) == true) {
-				--iplen_;
-				ipstring_.pop_back();
-				ip_.GetComponent<Text>().text = ipstring_;
-
-			}
-		}
-
 	}
 
+	if (iplen_ > 0) {
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::BACKSPACE) == true) {
+			--iplen_;
+			ipstring_.pop_back();
+			ip_.GetComponent<Text>().text = ipstring_;
+
+		}
+	}
+
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) {
+		// submit the ip address
+	}
 
 
 	if (join_.GetComponent<Button>().isHover) {

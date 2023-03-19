@@ -14,7 +14,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 0.0,
-                "Y": 0.1499999463558197
+                "Y": 0.0
             }
         },
         "Sprite": {
@@ -210,6 +210,66 @@
             "sprite": 0,
             "texture": "",
             "layer": 0
+        }
+    },
+    {
+        "General": {
+            "name": "BGEffect",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 3200.0,
+                "Y": 1900.0
+            },
+            "rotation": 5.497786998748779,
+            "translation": {
+                "X": -500.0,
+                "Y": 500.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\BGeffect.png",
+            "layer": 1
+        }
+    },
+    {
+        "General": {
+            "name": "BGEffect2",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 3200.0,
+                "Y": 1900.0
+            },
+            "rotation": 5.497786998748779,
+            "translation": {
+                "X": -2764.0,
+                "Y": 2764.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\BGeffect.png",
+            "layer": 1
         }
     }
 ]
