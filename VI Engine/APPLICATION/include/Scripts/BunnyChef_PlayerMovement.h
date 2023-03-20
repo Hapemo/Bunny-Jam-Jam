@@ -32,6 +32,9 @@ private:
 	Scene* currScene;
 	Transform* currCamera;
 	BUNNY_PLAYER_DIRECTION sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_NONE;
+	BUNNY_PLAYER_DIRECTION sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_NONE;
+
+	
 	unsigned int Carrots = 0;
 	bool inited;
 	Math::Vec2 originalTranslate;

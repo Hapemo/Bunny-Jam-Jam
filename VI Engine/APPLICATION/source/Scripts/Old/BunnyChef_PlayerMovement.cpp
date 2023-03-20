@@ -37,20 +37,20 @@ void BunnyChef_PlayerMovement::Init(const Entity& _e) {
 	(void)_e;
 	inited = false;
 	sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_NONE;
+	sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_NONE;
 	Carrots = 0;
 	if (_e.ReadComponent<General>().name == "Bunny")
 	{
-		isPlayer = false;
+		isPlayer = true;
 		BunnyPlayer = VI::iEntity::GetEntity("Bunny", "");
 
 	}
-	else
+	if(_e.ReadComponent<General>().name == "Chef")
 	{
-		isPlayer = true;
-		BunnyPlayer = VI::iEntity::GetEntity("Chef", "");
+		isPlayer = false;
+		ChefPlayer = VI::iEntity::GetEntity("Chef", "");
 
 	}
-	//ChefPlayer = VI::iEntity::GetEntity("Bunny", "");
 
 
 }
@@ -62,11 +62,13 @@ void BunnyChef_PlayerMovement::EarlyUpdate(Entity const& _e) {
 void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 	(void)_e;
 
-	if (!BunnyPlayer.HasComponent<Bunny>())
-		BunnyPlayer.AddComponent(Bunny{});
-
-
 	
+		
+		if (!BunnyPlayer.HasComponent<Bunny>())
+			BunnyPlayer.AddComponent(Bunny{});
+
+
+
 		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
 		{
 			if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
@@ -131,6 +133,79 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 		default:
 			break;
 		}
+
+
+	
+
+	
+		//Mac Chef
+
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::UP))
+		{
+			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
+			{
+				sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
+				ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+			}
+		}
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::DOWN))
+		{
+			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN)
+			{
+				sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN;
+				ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+			}
+		}
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::LEFT))
+		{
+			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT)
+			{
+				if (ChefPlayer.GetComponent<Transform>().scale.x > 0.0f)
+					ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
+				sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
+				ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
+			}
+		}
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::RIGHT))
+		{
+			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
+			{
+				if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)
+					ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
+				sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
+				ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+				ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
+			}
+		}
+
+		switch (sCHEFDIRECTION)
+		{
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,40.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-40.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { -40.0f,0.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { 40.0f,0.0f }, 0.0f);
+			break;
+		default:
+			break;
+		}
+
+	
 	
 }
 
