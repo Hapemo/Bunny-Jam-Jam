@@ -1,0 +1,19 @@
+[
+    {
+        "SceneName": "Bunny_Level1",
+        "Transform": {
+            "scale": {
+                "X": 3837.0,
+                "Y": 2158.3125
+            },
+            "rotation": 0.4169924557209015,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "isActive": false,
+        "layer": 0,
+        "order": 0
+    }
+]

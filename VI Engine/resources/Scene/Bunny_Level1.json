@@ -236,9 +236,9 @@
         },
         "SheetAnimation": {
             "frameCount": 5,
-            "currFrameIndex": 0,
+            "currFrameIndex": 4,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 0.016666671261191368
+            "timeToFrameSwap": 0.0833333358168602
         },
         "Physics2D": {
             "dynamicsEnabled": true,
@@ -277,7 +277,7 @@
             "renderFlag": true
         },
         "Script": {
-            "name": "Bunny_PlayerMovement"
+            "name": "BunnyChef_PlayerMovement"
         }
     },
     {
@@ -637,7 +637,7 @@
         },
         "Text": {
             "fontFile": "BPtypewrite",
-            "text": "00:9",
+            "text": "00:57",
             "offset": {
                 "X": 0.0,
                 "Y": 0.0
@@ -3523,7 +3523,7 @@
             },
             "rotation": 0.0,
             "translation": {
-                "X": -1491.4178466796875,
+                "X": -935.6455078125,
                 "Y": -788.3448486328125
             }
         },
@@ -3540,9 +3540,9 @@
         },
         "SheetAnimation": {
             "frameCount": 5,
-            "currFrameIndex": 0,
+            "currFrameIndex": 4,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 0.016666671261191368
+            "timeToFrameSwap": 0.0833333358168602
         },
         "Physics2D": {
             "dynamicsEnabled": true,
@@ -3556,7 +3556,7 @@
                 "Y": 0.0
             },
             "velocity": {
-                "X": -136.8000030517578,
+                "X": 0.0,
                 "Y": 0.0
             },
             "acceleration": {
@@ -3579,9 +3579,6 @@
             },
             "isTrigger": false,
             "renderFlag": true
-        },
-        "Script": {
-            "name": "Bunny_PlayerMovement"
         }
     }
 ]
