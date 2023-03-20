@@ -212,11 +212,13 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A)) 
 	{
 		#ifdef _CLIENT
-			ClientManager::GetInstance()->clientSendData("Hello World from the client side");
+		std::string msg{ "Hello World from the client side" };
+			ClientManager::GetInstance()->clientSendData(msg.c_str(), msg.size());
 		#endif // _CLIENT
 
 		#ifdef _SERVER  
-			ServerManager::GetInstance()->serverSendData("Hello World from the server side");
+			std::string msg{ "Hello World from the server side" };
+			ServerManager::GetInstance()->serverSendData(msg.c_str(), msg.size());
 		#endif // _SERVER
 	}
 	//!< === NETWORK TESTING AREA END ===

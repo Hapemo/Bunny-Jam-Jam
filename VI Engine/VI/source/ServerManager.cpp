@@ -112,13 +112,13 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 }
 
 //== Batch send to all connected clients
-bool ServerManager::serverSendData(std::string data)
+bool ServerManager::serverSendData(const char* data, int size)
 {
     std::cout << "ClientList Size: " << m_ClientList.size() << "\n";
     
     // Broadcast data to all clients
     for (auto const& c : m_ClientList) {
-        if (SendMsg(c.second, data) == false)
+        if (SendMsg(c.second, data, size) == false)
             return false;
     }
 
@@ -177,13 +177,14 @@ void ServerManager::serverClose()
 }
 
 //== Sends the message to a particular client
-bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string Data)
+bool ServerManager::SendMsg(CLIENT_INFO const& receiver, const char* Data, int size)
 {
     int nSendCnt = 0;
-    int nLength = strlen(Data.c_str());
-    char* pBuffer = (char*)Data.c_str();
+    //int nLength = strlen(Data.c_str());
+    int nLength = size;
+    //char* pBuffer = (char*)Data.c_str();
     
-    while ((nSendCnt = sendto(m_ServerSocket, pBuffer, nLength, 0, (sockaddr*)&receiver.clientAddr, sizeof(receiver.clientAddr))) != nLength)
+    while ((nSendCnt = sendto(m_ServerSocket, Data, nLength, 0, (sockaddr*)&receiver.clientAddr, sizeof(receiver.clientAddr))) != nLength)
     {
         if (nSendCnt == nLength)
             break;
@@ -196,7 +197,7 @@ bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string Data)
             return false;
         }
 
-        pBuffer += nSendCnt;
+        Data += nSendCnt;
         nLength -= nSendCnt;
     }
 
@@ -207,8 +208,9 @@ bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string Data)
 void ServerManager::BroadcastMessage(CLIENT_INFO const& sender, std::string const& msg)
 {
     std::string message = "[" + std::string(sender.username) + ":] " + msg;
+    int msgLen = strlen(message.c_str());
     for (auto const& c : m_ClientList) {
-        SendMsg(c.second, message);
+        SendMsg(c.second, message.c_str(), msgLen);
     }
 }
 

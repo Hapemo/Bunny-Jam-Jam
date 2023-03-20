@@ -82,13 +82,14 @@ void clientRecvData()
 
 
 //== Send message to the server.
-bool ClientManager::clientSendData(std::string Data)
+bool ClientManager::clientSendData(const char* Data, int size)
 {
     int nSendCnt = 0;
-	int nLength = strlen(Data.c_str());
-	char* pBuffer = (char*)Data.c_str();
+	//int nLength = strlen(Data.c_str());
+	int nLength = size;
+	//char* pBuffer = (char*)Data.c_str();
     
-    while ((nSendCnt = sendto(m_ClientInstance.clientSocket, pBuffer, nLength, 0, (sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo))) != nLength)
+    while ((nSendCnt = sendto(m_ClientInstance.clientSocket, Data, nLength, 0, (sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo))) != nLength)
     {
         if (nSendCnt == -1)
         {
@@ -99,7 +100,7 @@ bool ClientManager::clientSendData(std::string Data)
         if (nSendCnt == nLength)
             break;
 
-        pBuffer += nSendCnt;
+        Data += nSendCnt;
         nLength -= nSendCnt;
     }
 
