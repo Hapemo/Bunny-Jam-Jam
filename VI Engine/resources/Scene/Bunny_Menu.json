@@ -19,9 +19,9 @@
         },
         "Sprite": {
             "color": {
-                "r": 140,
-                "g": 192,
-                "b": 192,
+                "r": 250,
+                "g": 250,
+                "b": 250,
                 "a": 255
             },
             "sprite": 0,
@@ -46,25 +46,25 @@
         },
         "Transform": {
             "scale": {
-                "X": 300.0,
-                "Y": 100.0
+                "X": 182.0,
+                "Y": 126.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": -563.8705444335938,
-                "Y": -315.3228454589844
+                "X": -1.0472526550292969,
+                "Y": -335.0511169433594
             }
         },
         "Sprite": {
             "color": {
-                "r": 81,
-                "g": 188,
-                "b": 81,
-                "a": 0
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
             },
-            "sprite": 0,
-            "texture": "",
-            "layer": 1
+            "sprite": 2,
+            "texture": "Textures\\ExitButton.png",
+            "layer": 3
         },
         "RectCollider": {
             "centerOffset": {
@@ -77,23 +77,6 @@
             },
             "isTrigger": true,
             "renderFlag": true
-        },
-        "Text": {
-            "fontFile": "BPtypewrite",
-            "text": "Exit Game",
-            "offset": {
-                "X": -122.0,
-                "Y": -27.0
-            },
-            "scale": 1.0,
-            "color": {
-                "r": 231,
-                "g": 4,
-                "b": 4,
-                "a": 255
-            },
-            "followCam": false,
-            "width": -1000.0
         },
         "Button": {
             "interactable": true
@@ -108,24 +91,24 @@
         },
         "Transform": {
             "scale": {
-                "X": 300.0,
-                "Y": 100.0
+                "X": 182.0,
+                "Y": 126.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": -560.5546875,
-                "Y": -100.32274627685547
+                "X": -1.3464584350585938,
+                "Y": -33.14881896972656
             }
         },
         "Sprite": {
             "color": {
-                "r": 72,
-                "g": 209,
-                "b": 72,
-                "a": 0
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
             },
-            "sprite": 0,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\PlayButton.png",
             "layer": 1
         },
         "RectCollider": {
@@ -139,23 +122,6 @@
             },
             "isTrigger": true,
             "renderFlag": true
-        },
-        "Text": {
-            "fontFile": "BPtypewrite",
-            "text": "Start Game !",
-            "offset": {
-                "X": -174.0,
-                "Y": -6.0
-            },
-            "scale": 1.0,
-            "color": {
-                "r": 231,
-                "g": 4,
-                "b": 4,
-                "a": 255
-            },
-            "followCam": false,
-            "width": -1000.0
         },
         "Button": {
             "interactable": true
@@ -170,24 +136,24 @@
         },
         "Transform": {
             "scale": {
-                "X": 300.0,
-                "Y": 100.0
+                "X": 182.0,
+                "Y": 126.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": -566.5821533203125,
-                "Y": -222.90333557128906
+                "X": 0.0,
+                "Y": -183.96737670898438
             }
         },
         "Sprite": {
             "color": {
-                "r": 81,
-                "g": 188,
-                "b": 81,
-                "a": 0
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
             },
-            "sprite": 0,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\HowButton.png",
             "layer": 1
         },
         "RectCollider": {
@@ -202,23 +168,6 @@
             "isTrigger": true,
             "renderFlag": true
         },
-        "Text": {
-            "fontFile": "BPtypewrite",
-            "text": "How to Play?",
-            "offset": {
-                "X": -182.0,
-                "Y": -14.0
-            },
-            "scale": 1.0,
-            "color": {
-                "r": 231,
-                "g": 4,
-                "b": 4,
-                "a": 255
-            },
-            "followCam": false,
-            "width": -1000.0
-        },
         "Button": {
             "interactable": true
         }
@@ -232,13 +181,13 @@
         },
         "Transform": {
             "scale": {
-                "X": 150.0,
+                "X": 157.5,
                 "Y": 150.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": 0.0,
-                "Y": 0.0
+                "X": 898.6921997070313,
+                "Y": 92.44563293457031
             }
         },
         "Sprite": {
@@ -254,6 +203,66 @@
         },
         "Script": {
             "name": "Menu_Button"
+        }
+    },
+    {
+        "General": {
+            "name": "Title",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 400.0,
+                "Y": 320.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -6.433158874511719,
+                "Y": 246.35873413085938
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\BunnyTitleRe.png",
+            "layer": 4
+        }
+    },
+    {
+        "General": {
+            "name": "BunnyLoadM",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 1,
+            "texture": "",
+            "layer": 11
         }
     }
 ]
