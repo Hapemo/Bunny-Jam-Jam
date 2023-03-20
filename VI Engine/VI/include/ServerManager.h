@@ -28,11 +28,11 @@ public:
 	~ServerManager();
 
 	bool serverInit(u_short serverPortNumber);
-	bool serverSendData(std::string data);
+	bool serverSendData(const char* data, int size);
 	void serverClose();
 
 	// Helper functions
-	bool SendMsg(CLIENT_INFO const& receiver, std::string msg);
+	bool SendMsg(CLIENT_INFO const& receiver, const char* msg, int size);
 	void BroadcastMessage(CLIENT_INFO const& sender, std::string const& msg);
 	
 //private:

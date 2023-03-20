@@ -26,7 +26,7 @@ public:
 	~ClientManager();
 
 	bool clientInit(std::string, u_short, std::string);
-	bool clientSendData(std::string data);
+	bool clientSendData(const char* Data, int size);
 	void clientClose();
 
 	
