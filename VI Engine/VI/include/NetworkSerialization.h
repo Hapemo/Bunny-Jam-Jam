@@ -26,6 +26,9 @@ public:
 	NetworkSerializationManager();
 	~NetworkSerializationManager();
 
+	void SerialiseAndSend();
+	void DeserialiseAndLoad();
+
 	int SerialisePlayerControls();
 	int SerialisePlayAgain();
 	int SerialiseNumberOfClientConnected();

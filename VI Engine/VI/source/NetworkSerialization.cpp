@@ -3,7 +3,7 @@
 #include "Input.h"
 #include "GameStateManager.h"
 
-#define DEBUGPRINT 1
+#define DEBUGPRINT 0
 
 
 namespace {
