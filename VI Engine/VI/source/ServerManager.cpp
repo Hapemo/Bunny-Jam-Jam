@@ -3,6 +3,7 @@
 
 #include "ServerManager.h"
 #include <WS2tcpip.h>
+#include "NetworkSerialization.h"
 
 //== Default ctor
 ServerManager::ServerManager() {}
@@ -132,8 +133,8 @@ void serverRecvData()
     while (1)
     {
         int nLength = 0;
-        char cBuffer[1024];
-        int fromlength = sizeof(cBuffer);
+        //char cBuffer[1024];
+        //int fromlength = sizeof(cBuffer);
 
         CLIENT_INFO localClient{};
         struct sockaddr_in clientAddr;
@@ -144,11 +145,13 @@ void serverRecvData()
             WSACleanup();
             break;
         }
-
-        nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, cBuffer, sizeof(cBuffer), 0, (sockaddr*)&clientAddr, &fromlength);
+        int temp{ MAX_UDP_PACKET_SIZE };
+        nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, 
+                           NetworkSerializationManager::GetInstance()->mRecvBuff, 
+                           MAX_UDP_PACKET_SIZE, 0, (sockaddr*)&clientAddr, &temp);
         if (nLength >= 0) {
-            cBuffer[nLength] = '\0';
-            std::cout << ">> [S] Received: " << cBuffer << "\n";
+            //cBuffer[nLength] = '\0';
+            std::cout << ">> [S] Data received!\n";
         }
 
         if (nLength == SOCKET_ERROR) {
@@ -156,16 +159,27 @@ void serverRecvData()
             return;
         }
 
+        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long)));
+
         // get the client's IP address
         std::string clientdata = inet_ntoa(clientAddr.sin_addr);
         
         // check and update clientlist
-        if(ServerManager::GetInstance()->m_ClientList.find(clientdata) == ServerManager::GetInstance()->m_ClientList.end()) {
+        auto clientinstance = ServerManager::GetInstance()->m_ClientList.find(clientdata);
+        if(clientinstance == ServerManager::GetInstance()->m_ClientList.end()) {
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
             std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
-		}
+		    }
+        else {
+          // wrong instnace
+          if (clientinstance->second.clientPacketNum < newPacketNum) {
+            clientinstance->second.clientPacketNum = newPacketNum;
+            // tell jazz to deserialize
+            NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
+          }
+        }
     }
 }
 

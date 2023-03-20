@@ -13,11 +13,13 @@ class NetworkSerializationManager : public Singleton<NetworkSerializationManager
 public:
 	enum class NETWORKDATATYPE : char {
 		// Client to Server
-		C2SPlayerControls,
+		C2SPlayerControls = 1,
 		C2SPlayAgain,
 
 		// Server to Client 
+		ServerDataTypes, // This mark the beginning of server data types
 		S2CNumOfClientConnected,
+		S2CGamePlayData,
 		S2CEntityDetail, // For player and jam
 		S2CGameStats, // TODO What game stats are there
 		S2CNumOfPlayerReplay
@@ -26,13 +28,15 @@ public:
 	NetworkSerializationManager();
 	~NetworkSerializationManager();
 
-	void SerialiseAndSend();
+	void SerialiseAndSend(NETWORKDATATYPE);
 	void DeserialiseAndLoad();
 
 	int SerialisePlayerControls();
 	int SerialisePlayAgain();
 	int SerialiseNumberOfClientConnected();
-	int SerialiseMultipleEntities(std::set<Entity>);
+	int SerialiseGamePlayData();
+	int SerialiseGameStats(char*&);
+	int SerialiseMultipleEntities(char*&, std::set<Entity>);
 	int SerialiseEntityDetail(char*&, Entity);
 
 	int SerialiseNumberOfPlayerReplay();

@@ -2,8 +2,10 @@
 #include <ECSManager.h>
 #include "Input.h"
 #include "GameStateManager.h"
+#include "ServerManager.h"
+#include "ClientManager.h"
 
-#define DEBUGPRINT 0
+#define DEBUGPRINT 1
 
 
 namespace {
@@ -22,6 +24,75 @@ NetworkSerializationManager::NetworkSerializationManager() :
 
 NetworkSerializationManager::~NetworkSerializationManager() {
 	delete[] mSendBuff;
+}
+
+void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
+	// Serialise into mSendBuff
+	int dataSize{};
+	switch (dataType) {
+	case NETWORKDATATYPE::C2SPlayerControls:
+		dataSize = SerialisePlayerControls();
+		break;
+		
+	case NETWORKDATATYPE::C2SPlayAgain:
+		break;
+		
+	case NETWORKDATATYPE::ServerDataTypes:
+		break;// DO NOTHING HERE PLEASE
+
+	case NETWORKDATATYPE::S2CNumOfClientConnected:
+		break;
+		
+	case NETWORKDATATYPE::S2CGamePlayData:
+		break;
+		
+	case NETWORKDATATYPE::S2CEntityDetail:
+		break;
+		
+	case NETWORKDATATYPE::S2CGameStats:
+		break;
+		
+	case NETWORKDATATYPE::S2CNumOfPlayerReplay:
+		break;
+	}
+
+	bool isServer = static_cast<char>(dataType) > static_cast<char>(NETWORKDATATYPE::ServerDataTypes);
+
+	if (isServer) {
+		*reinterpret_cast<unsigned long*>(mSendBuff + dataSize) = ++ServerManager::GetInstance()->serverPacketNum;
+	} else {
+		*reinterpret_cast<unsigned long*>(mSendBuff + dataSize) = ++ClientManager::GetInstance()->clientPacketNum;
+	}
+
+	ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
+}
+
+void NetworkSerializationManager::DeserialiseAndLoad() {
+	NETWORKDATATYPE dataType = static_cast<NETWORKDATATYPE>(mRecvBuff[0]);
+
+	switch (dataType) {
+	case NETWORKDATATYPE::C2SPlayerControls:
+		DeserialisePlayerControls();
+		break;
+
+	case NETWORKDATATYPE::C2SPlayAgain:
+		break;
+
+	case NETWORKDATATYPE::S2CNumOfClientConnected:
+		break;
+
+	case NETWORKDATATYPE::S2CGamePlayData:
+		break;
+
+	case NETWORKDATATYPE::S2CEntityDetail:
+		break;
+
+	case NETWORKDATATYPE::S2CGameStats:
+		break;
+
+	case NETWORKDATATYPE::S2CNumOfPlayerReplay:
+		break;
+	}
 }
 
 // TODO Do you want me to check if there is input update here before sending?
@@ -116,12 +187,41 @@ void NetworkSerializationManager::DeserialiseNumberOfClientConnected() {
 	int clientsConnected{ static_cast<int>(mRecvBuff[1]) };
 }
 
-int NetworkSerializationManager::SerialiseMultipleEntities(std::set<Entity> entities) {
-	// Data Structure
-	// NETWORKDATATYPE::S2CEntityDetail<NumberOfEntities><ListOfMemoryPosition><EachEntityData>
+int NetworkSerializationManager::SerialiseGamePlayData() {
 	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
 	char* currBuff{ mSendBuff + 1 };
-	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CEntityDetail);
+	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGamePlayData);
+
+	std::set<Entity> entitiesToSerialise;
+
+	SerialiseGameStats(currBuff);
+	SerialiseMultipleEntities(currBuff, entitiesToSerialise);
+
+	return currBuff - mSendBuff;
+}
+
+int NetworkSerializationManager::SerialiseGameStats(char*& currBuff) {
+	// int jam collected, float time remaining, bool swap
+	int jam{};
+	float timeRemain{};
+	bool swap{};
+
+	*(reinterpret_cast<int*>(currBuff)) = jam;
+	currBuff += sizeof(int);
+	*(reinterpret_cast<int*>(currBuff)) = timeRemain;
+	currBuff += sizeof(float);
+	*(reinterpret_cast<bool*>(currBuff)) = swap;
+	currBuff += sizeof(bool);
+	
+	return static_cast<int>(currBuff - mSendBuff);
+}
+
+int NetworkSerializationManager::SerialiseMultipleEntities(char*& currBuff, std::set<Entity> entities) {
+	// Data Structure
+	// NETWORKDATATYPE::S2CEntityDetail<NumberOfEntities><ListOfMemoryPosition><EachEntityData>
+	//memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
+	//char* currBuff{ mSendBuff + 1 };
+	//mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CEntityDetail);
 	
 	*reinterpret_cast<int*>(currBuff) = static_cast<int>(entities.size());
 	currBuff += sizeof(int);

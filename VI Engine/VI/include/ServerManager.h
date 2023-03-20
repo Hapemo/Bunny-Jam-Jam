@@ -11,6 +11,7 @@ struct CLIENT_INFO
 	struct sockaddr_in	clientAddr;
 	char				username[516];
 	HANDLE				semaphore;
+	unsigned long	clientPacketNum;
 };
 
 
@@ -39,11 +40,15 @@ public:
 	std::map<std::string, CLIENT_INFO>	m_ClientList;
 	std::thread							m_ServerRecvThread;
 
-	SOCKET								m_ServerSocket;
-	S_SERVER							m_ServerInstance;
+	SOCKET									m_ServerSocket;
+	S_SERVER								m_ServerInstance;
 
 // some fancy stuff if we want to include
 	std::string							m_HostName;
+	int											player1Score;
+	int											player2Score;
+	int											time;
+	unsigned long						serverPacketNum;
 };
 
 void serverRecvData();

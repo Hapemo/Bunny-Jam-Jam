@@ -21,7 +21,7 @@ start up of window and game system, also runs their update functions.
 #include "FilePathManager.h"
 #include "NetworkSerialization.h"
 
-#define NETWORKSERIALISETEST 1
+#define NETWORKSERIALISETEST 0
 
 #include <winsock2.h>
 #include "ClientManager.h"
@@ -385,6 +385,15 @@ bool Application::FirstUpdate() {
   // Part 1
   glfwPollEvents();
 
+#ifdef _CLIENT
+  NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::C2SPlayerControls);
+#endif
+
+//#ifdef _SERVER
+//
+//#endif
+
+
 #if NETWORKSERIALISETEST
   //NetworkSerializationManager::GetInstance()->SerialisePlayerControls();
   GameStateManager::GetInstance()->mCurrentGameState->mScenes[0].mEntities.insert(globalE);
@@ -466,6 +475,8 @@ void Application::MainUpdate() {
     TRACK_PERFORMANCE("Shadow");
     shadowManager->Update();
     END_TRACK("Shadow");
+
+
 
     TRACK_PERFORMANCE("Graphics");
     //--------------------- Drawing and rendering ---------------------

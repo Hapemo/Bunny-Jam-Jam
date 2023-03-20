@@ -2,7 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "ClientManager.h"
-
+#include "NetworkSerialization.h";
 //== Defualt ctor
 ClientManager::ClientManager() {}
 
@@ -62,18 +62,31 @@ void clientRecvData()
 {
     while (1)
     {
-        char buffer[1024];
-        int fromlength = sizeof(buffer);
+        //char buffer[1024];
+        //int fromlength = sizeof(buffer);
         if (ClientManager::GetInstance()->m_StopReceive)
             return;
 
-        int nLength = recvfrom(ClientManager::GetInstance()->m_ClientInstance.clientSocket, buffer, sizeof(buffer), 0, (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, &fromlength);
-        if (nLength > 0)
-        {
-            if (nLength < static_cast<int>(sizeof(buffer)))
-                buffer[nLength] = '\0';
+        int temp{ MAX_UDP_PACKET_SIZE };
+        int nLength = recvfrom(ClientManager::GetInstance()->m_ClientInstance.clientSocket, 
+                               NetworkSerializationManager::GetInstance()->mRecvBuff,
+                               MAX_UDP_PACKET_SIZE, 0, 
+                               (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, 
+                               &temp);
 
-            std::cout << ">> [C] Received: " << buffer << std::endl;
+        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long)));
+
+        if (nLength > 0) std::cout << ">> [C] Received data from server!";
+
+        if (nLength == SOCKET_ERROR) {
+          std::cout << "RECV SOCKET ERROR\n";
+          return;
+        }
+
+        if (ClientManager::GetInstance()->serverPacketNum < newPacketNum) {
+          ClientManager::GetInstance()->serverPacketNum = newPacketNum;
+          // tell jazz to deserialize
+          NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
         }
     }
 
