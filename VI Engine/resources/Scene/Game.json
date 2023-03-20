@@ -145,16 +145,6 @@
             "texture": "Textures\\Join.png",
             "layer": 5
         },
-        "Animation": {
-            "sheets": [
-                {
-                    "sheet": "Textures\\Bunny.png",
-                    "frameCount": 5,
-                    "timePerFrame": 1.0
-                }
-            ],
-            "currentImageIndex": 0
-        },
         "Button": {
             "interactable": true
         }
@@ -287,7 +277,7 @@
             "name": "BunnyLoad",
             "tag": 8,
             "subtag": 0,
-            "isActive": false
+            "isActive": true
         },
         "Transform": {
             "scale": {
