@@ -16,15 +16,15 @@ attacking animation.
 #include "ScriptManager.h"
 #include "ScriptComponent.h"
 
-class Connection : public ScriptComponent {
+class BackBunny : public ScriptComponent {
 private:
 	std::string name = "Connection";
 	Entity enemy;
 	Entity player;
 	size_t visible = 0;
 public:
-	Connection() = default;
-	~Connection() override = default;
+	BackBunny() = default;
+	~BackBunny() override = default;
 
 	/*!*****************************************************************************
 	\brief

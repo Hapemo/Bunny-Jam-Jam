@@ -13,18 +13,36 @@ Updates the fps count, for the fps printer in entity
 #include "ConnectionButtonControl.h"
 #include "../../../VI/include/ServerManager.h"
 #include "../../../VI/include/ClientManager.h"
+static bool updateOnce{ false };
 
 REGISTER_SCRIPT(ScriptComponent, ConnectionButtonControl);
 
 namespace {
 	Entity join_; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
 	Entity ip_;
+	Entity bgeff_;
+	Entity bgeff2_;
+	Entity loadicon_;
 
+
+	// menu effect variables
+	bool posap_ = false;
+
+
+
+
+	bool player1_ = false;
+	bool player2_ = false;
+	
+	// scene transition variables
+	float acc_ = 3;
+	float scaling_ = 1000;
+	bool zoom_ = true;
+
+	// text input variables
+	std::string ipstring_ = "";
 	bool textin_ = false;
 	int iplen_ = 0;
-
-	//Scene textinput_;
-	std::string ipstring_ = "";
 }
 
 /*!*****************************************************************************
@@ -32,12 +50,6 @@ namespace {
 Function will run when the gamestate of the entity is activated.
 *******************************************************************************/
 void ConnectionButtonControl::Alive(Entity const& _e) {
-
-	ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
-	join_ = VI::iEntity::GetEntity("Join", "");
-	if (join_.id == 0) return;
-
-	/*textinput_ =*/ 
 
 	(void)_e;
 }
@@ -47,6 +59,8 @@ void ConnectionButtonControl::Alive(Entity const& _e) {
 Function will run on initialisation of the entity.
 *******************************************************************************/
 void ConnectionButtonControl::Init(Entity const& _e) {
+	 acc_ = 1;
+	 scaling_ = 1000;
 	(void)_e;
 }
 
@@ -66,6 +80,67 @@ EarlyUpdate functions from all other active scripts.
 void ConnectionButtonControl::Update(Entity const& _e) {
 	//(void)_e;
 
+	if (!updateOnce)
+	{
+		loadicon_ = VI::iEntity::GetEntity("BunnyLoad", "Game");
+		bgeff_ = VI::iEntity::GetEntity("BGEffect", "Game");
+		bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "Game");
+		ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
+		join_ = VI::iEntity::GetEntity("Join", "");
+	}
+
+
+
+	if (zoom_ == true){
+		loadicon_.GetComponent<Transform>().scale.x += scaling_ * (float)FUNC->GetDeltaTime();
+		loadicon_.GetComponent<Transform>().scale.y += scaling_ * (float)FUNC->GetDeltaTime();
+		acc_ += 1000.f * (float)FUNC->GetDeltaTime();
+		scaling_ += acc_ * (float)FUNC->GetDeltaTime();
+	}
+
+	else if (zoom_ == false  && loadicon_.GetComponent<Transform>().scale.x >=0) {
+
+		if (scaling_ > 0) {
+			acc_ += 1000.f * (float)FUNC->GetDeltaTime();
+			scaling_ -= acc_ * (float)FUNC->GetDeltaTime();
+		}
+
+		loadicon_.GetComponent<Transform>().scale.x -= scaling_ * (float)FUNC->GetDeltaTime();
+		loadicon_.GetComponent<Transform>().scale.y -= scaling_ * (float)FUNC->GetDeltaTime();
+
+
+	}
+
+	if (loadicon_.GetComponent<Transform>().scale.x > 20000) {
+		acc_ =3;
+		//scaling_ = 1000;
+		zoom_ = false;
+	}
+
+	if (loadicon_.GetComponent<Transform>().scale.x <= 0) {
+		loadicon_.GetComponent<Sprite>().color.a = 0;
+	}
+
+	//2764 position 
+
+
+	if (bgeff_.GetComponent<Transform>().translation.x >= -500 && posap_ == false) {
+		bgeff2_.GetComponent<Transform>().translation.x = -2764;
+		bgeff2_.GetComponent<Transform>().translation.y = 2764;
+		posap_ = true;
+	}
+	if (bgeff2_.GetComponent<Transform>().translation.x >= -500 && posap_ == true) {
+		bgeff_.GetComponent<Transform>().translation.x = -2764;
+		bgeff_.GetComponent<Transform>().translation.y = 2764;
+		posap_ = false;
+	}
+
+	bgeff_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
+	bgeff_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
+
+	bgeff2_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
+	bgeff2_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
+
 	//if (join_.GetComponent<Transform>().scale.x < 100 && enlarge == false) {
 	//	enlarge = true;
 	//}
@@ -82,9 +157,12 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 	//_e.GetComponent<Text>().text = "sgdsdadas"; 
 
-	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE)) {
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
+	{
 		iplen_ = 0;
 		ipstring_ = "";
+		ip_.GetComponent<Text>().text = ipstring_;
+		VI::iScene::Pause("RequestIP");
 		textin_ = false;
 	}
 
@@ -93,7 +171,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	}
 
 	if (textin_ == true&& iplen_<16) {
-		for (int i = 48, j = 1; i < 58; ++i, ++j) {
+		for (int i = 48, j = 0; i < 59; ++i, ++j) {
 
 			if (j > 9) {
 				j = 0;
@@ -105,6 +183,25 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 				ip_.GetComponent<Text>().text = ipstring_;
 			}
 		}
+
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::PERIOD) == true) {
+			++iplen_;
+			ipstring_ += ".";
+			ip_.GetComponent<Text>().text = ipstring_;
+		}
+	}
+
+	if (iplen_ > 0) {
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::BACKSPACE) == true) {
+			--iplen_;
+			ipstring_.pop_back();
+			ip_.GetComponent<Text>().text = ipstring_;
+
+		}
+	}
+
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) {
+		// submit the ip address
 	}
 
 	
@@ -126,7 +223,6 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 		//if (join_.GetComponent<Transform>().scale.x < 200) {
 		//	join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
 		//}
-
 		if (join_.GetComponent<Button>().isClick) {
 			textin_ = true;
 			VI::iScene::Play("RequestIP");
@@ -137,6 +233,8 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 		//	join_.GetComponent<Transform>().scale.x -= 1000.f * (float)FUNC->GetDeltaTime();
 		//}
 	}
+
+	(void)_e;
 }
 
 /*!*****************************************************************************
@@ -162,6 +260,9 @@ void ConnectionButtonControl::LateUpdate(Entity const& _e) {
 Function will run on exit or when the entity is destroyed.
 *******************************************************************************/
 void ConnectionButtonControl::Exit(Entity const& _e) {
+
+	acc_ = 1;
+	scaling_ = 1000;
 	(void)_e;
 	//LOG_INFO("How to Play button script end works!!!");
 }
@@ -171,5 +272,10 @@ void ConnectionButtonControl::Exit(Entity const& _e) {
 Function will run when the gamestate of the entity exits.
 *******************************************************************************/
 void ConnectionButtonControl::Dead(Entity const& _e) {
+	loadicon_.GetComponent<Transform>().scale.x = 0;
+	loadicon_.GetComponent<Transform>().scale.y = 0;
+	zoom_ = true;
+	acc_ = 1;
+	scaling_ = 1000;
 	(void)_e;
 }

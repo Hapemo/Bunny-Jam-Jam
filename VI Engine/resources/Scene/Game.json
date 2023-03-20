@@ -14,7 +14,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 0.0,
-                "Y": 0.1499999463558197
+                "Y": 0.44999992847442627
             }
         },
         "Sprite": {
@@ -41,7 +41,7 @@
             },
             "velocity": {
                 "X": 0.0,
-                "Y": 2.8620490866160253e-7
+                "Y": 1.1088161500083515e-7
             },
             "acceleration": {
                 "X": 0.0,
@@ -113,7 +113,7 @@
             },
             "sprite": 2,
             "texture": "Textures\\Button2.png",
-            "layer": 2
+            "layer": 5
         }
     },
     {
@@ -143,7 +143,17 @@
             },
             "sprite": 0,
             "texture": "",
-            "layer": 4
+            "layer": 5
+        },
+        "Animation": {
+            "sheets": [
+                {
+                    "sheet": "Textures\\Bunny.png",
+                    "frameCount": 5,
+                    "timePerFrame": 1.0
+                }
+            ],
+            "currentImageIndex": 0
         },
         "Button": {
             "interactable": true
@@ -210,6 +220,96 @@
             "sprite": 0,
             "texture": "",
             "layer": 0
+        }
+    },
+    {
+        "General": {
+            "name": "BGEffect",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 3200.0,
+                "Y": 1900.0
+            },
+            "rotation": 5.497786998748779,
+            "translation": {
+                "X": -360.2201232910156,
+                "Y": 360.2201232910156
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\BGeffect.png",
+            "layer": 1
+        }
+    },
+    {
+        "General": {
+            "name": "BGEffect2",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 3200.0,
+                "Y": 1900.0
+            },
+            "rotation": 5.497786998748779,
+            "translation": {
+                "X": -2624.41845703125,
+                "Y": 2624.41845703125
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\BGeffect.png",
+            "layer": 1
+        }
+    },
+    {
+        "General": {
+            "name": "BunnyLoad",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\BunnyLoad.png",
+            "layer": 6
         }
     }
 ]
