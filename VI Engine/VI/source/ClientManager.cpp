@@ -1,8 +1,8 @@
+#include "NetworkSerialization.h";
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "ClientManager.h"
-#include "NetworkSerialization.h";
 //== Defualt ctor
 ClientManager::ClientManager() {}
 

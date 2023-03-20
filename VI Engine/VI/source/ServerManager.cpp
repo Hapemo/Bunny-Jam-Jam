@@ -1,9 +1,9 @@
+#include "NetworkSerialization.h"
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "ServerManager.h"
 #include <WS2tcpip.h>
-#include "NetworkSerialization.h"
 
 //== Default ctor
 ServerManager::ServerManager() {}
