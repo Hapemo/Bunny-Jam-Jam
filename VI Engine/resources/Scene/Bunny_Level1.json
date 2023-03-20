@@ -207,20 +207,20 @@
     },
     {
         "General": {
-            "name": "Player1",
+            "name": "Bunny",
             "tag": 0,
             "subtag": 0,
             "isActive": true
         },
         "Transform": {
             "scale": {
-                "X": 140.0,
+                "X": -140.0,
                 "Y": 140.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": -1279.5633544921875,
-                "Y": 558.0552978515625
+                "X": 442.2575378417969,
+                "Y": -471.3918762207031
             }
         },
         "Sprite": {
@@ -236,9 +236,9 @@
         },
         "SheetAnimation": {
             "frameCount": 5,
-            "currFrameIndex": 2,
+            "currFrameIndex": 0,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 0.0
+            "timeToFrameSwap": 0.016666671261191368
         },
         "Physics2D": {
             "dynamicsEnabled": true,
@@ -311,7 +311,7 @@
         },
         "Text": {
             "fontFile": "BPtypewrite",
-            "text": "Jam:0",
+            "text": "Jam:9",
             "offset": {
                 "X": 0.0,
                 "Y": 0.0
@@ -335,7 +335,7 @@
             "name": "Jam1",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -345,7 +345,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 230.78466796875,
-                "Y": -244.21595764160156
+                "Y": -244.0659637451172
             }
         },
         "Sprite": {
@@ -404,7 +404,7 @@
             "name": "Jam2",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -414,7 +414,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 227.25491333007813,
-                "Y": -409.7003479003906
+                "Y": -409.5505065917969
             }
         },
         "Sprite": {
@@ -473,7 +473,7 @@
             "name": "Jam3",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -483,7 +483,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 450.39208984375,
-                "Y": -495.5827941894531
+                "Y": -495.4329528808594
             }
         },
         "Sprite": {
@@ -542,7 +542,7 @@
             "name": "Jam4",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -552,7 +552,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -655.4901733398438,
-                "Y": -259.6540832519531
+                "Y": -259.5042419433594
             }
         },
         "Sprite": {
@@ -637,7 +637,7 @@
         },
         "Text": {
             "fontFile": "BPtypewrite",
-            "text": "00:60",
+            "text": "00:9",
             "offset": {
                 "X": 0.0,
                 "Y": 0.0
@@ -1811,7 +1811,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 465.68634033203125,
-                "Y": -12.445432662963867
+                "Y": -12.295434951782227
             }
         },
         "Sprite": {
@@ -1880,7 +1880,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 467.6470947265625,
-                "Y": -270.48468017578125
+                "Y": -270.3348388671875
             }
         },
         "Sprite": {
@@ -1949,7 +1949,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -57.254425048828125,
-                "Y": 401.08404541015625
+                "Y": 401.23388671875
             }
         },
         "Sprite": {
@@ -2018,7 +2018,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -219.01959228515625,
-                "Y": -23.42582893371582
+                "Y": -23.27583885192871
             }
         },
         "Sprite": {
@@ -2087,7 +2087,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -462.5489501953125,
-                "Y": 418.9270935058594
+                "Y": 419.0769348144531
             }
         },
         "Sprite": {
@@ -2156,7 +2156,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 719.6077880859375,
-                "Y": 190.299560546875
+                "Y": 190.44955444335938
             }
         },
         "Sprite": {
@@ -2215,7 +2215,7 @@
             "name": "Jam11",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -2225,7 +2225,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -386.2745361328125,
-                "Y": -252.05325317382813
+                "Y": -251.90325927734375
             }
         },
         "Sprite": {
@@ -2294,7 +2294,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -938.2354736328125,
-                "Y": -26.1708984375
+                "Y": -26.02090835571289
             }
         },
         "Sprite": {
@@ -2363,7 +2363,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 1482.744384765625,
-                "Y": -771.8572387695313
+                "Y": -771.7073974609375
             }
         },
         "Sprite": {
@@ -2422,7 +2422,7 @@
             "name": "Jam14",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -2432,7 +2432,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -1055.0980224609375,
-                "Y": -244.99441528320313
+                "Y": -244.84442138671875
             }
         },
         "Sprite": {
@@ -2501,7 +2501,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 1492.94091796875,
-                "Y": -275.7786560058594
+                "Y": -275.6288146972656
             }
         },
         "Sprite": {
@@ -2560,7 +2560,7 @@
             "name": "Jam16",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -2570,7 +2570,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 607.0584106445313,
-                "Y": -796.9552612304688
+                "Y": -796.805419921875
             }
         },
         "Sprite": {
@@ -2639,7 +2639,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 1501.372314453125,
-                "Y": -5.7784576416015625
+                "Y": -5.628460884094238
             }
         },
         "Sprite": {
@@ -2708,7 +2708,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -471.9613037109375,
-                "Y": 189.71180725097656
+                "Y": 189.86180114746094
             }
         },
         "Sprite": {
@@ -2767,7 +2767,7 @@
             "name": "Jam19",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -2777,7 +2777,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -399.2157897949219,
-                "Y": -808.3279418945313
+                "Y": -808.1781005859375
             }
         },
         "Sprite": {
@@ -2846,7 +2846,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -943.333740234375,
-                "Y": 445.3975830078125
+                "Y": 445.54742431640625
             }
         },
         "Sprite": {
@@ -2915,7 +2915,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -689.608154296875,
-                "Y": 770.6915893554688
+                "Y": 770.8414306640625
             }
         },
         "Sprite": {
@@ -3248,7 +3248,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 1306.07861328125,
-                "Y": -770.2882690429688
+                "Y": -770.138427734375
             }
         },
         "Sprite": {
@@ -3317,7 +3317,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": -54.5098876953125,
-                "Y": 620.8878173828125
+                "Y": 621.0376586914063
             }
         },
         "Sprite": {
@@ -3386,7 +3386,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 1428.627197265625,
-                "Y": 753.0446166992188
+                "Y": 753.1944580078125
             }
         },
         "Sprite": {
@@ -3445,7 +3445,7 @@
             "name": "Jam25",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -3455,7 +3455,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 608.0391845703125,
-                "Y": -495.9749755859375
+                "Y": -495.82513427734375
             }
         },
         "Sprite": {
@@ -3511,7 +3511,7 @@
     },
     {
         "General": {
-            "name": "Player2",
+            "name": "Chef",
             "tag": 0,
             "subtag": 0,
             "isActive": true
@@ -3523,20 +3523,26 @@
             },
             "rotation": 0.0,
             "translation": {
-                "X": -1453.68115234375,
-                "Y": -790.5723876953125
+                "X": -1491.4178466796875,
+                "Y": -788.3448486328125
             }
         },
         "Sprite": {
             "color": {
-                "r": 0,
-                "g": 20,
+                "r": 255,
+                "g": 255,
                 "b": 255,
                 "a": 255
             },
-            "sprite": 1,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\Chef.png",
             "layer": 3
+        },
+        "SheetAnimation": {
+            "frameCount": 5,
+            "currFrameIndex": 0,
+            "timePerFrame": 0.10000000149011612,
+            "timeToFrameSwap": 0.016666671261191368
         },
         "Physics2D": {
             "dynamicsEnabled": true,
@@ -3550,7 +3556,7 @@
                 "Y": 0.0
             },
             "velocity": {
-                "X": 0.0,
+                "X": -136.8000030517578,
                 "Y": 0.0
             },
             "acceleration": {
@@ -3573,6 +3579,9 @@
             },
             "isTrigger": false,
             "renderFlag": true
+        },
+        "Script": {
+            "name": "Bunny_PlayerMovement"
         }
     }
 ]
