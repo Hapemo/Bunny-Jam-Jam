@@ -88,8 +88,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 		ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
 		join_ = VI::iEntity::GetEntity("Join", "");
 	}
-
-
+	
 
 	if (zoom_ == true){
 		loadicon_.GetComponent<Transform>().scale.x += scaling_ * (float)FUNC->GetDeltaTime();
@@ -157,6 +156,9 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 	//_e.GetComponent<Text>().text = "sgdsdadas"; 
 
+
+
+
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
 	{
 		iplen_ = 0;
@@ -201,6 +203,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	}
 
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) {
+		ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay");
 		// submit the ip address
 	}
 
