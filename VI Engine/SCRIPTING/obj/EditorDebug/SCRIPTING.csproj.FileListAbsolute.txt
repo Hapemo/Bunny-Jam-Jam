@@ -44,3 +44,15 @@ C:\Users\joach\source\repos\Hapemo\MemoryLeak\MemoryLeak\Scripting\obj\EditorDeb
 C:\Users\joach\source\repos\Hapemo\MemoryLeak\MemoryLeak\Scripting\obj\EditorDebug\SCRIPTING.csproj.CoreCompileInputs.cache
 C:\Users\joach\source\repos\Hapemo\MemoryLeak\MemoryLeak\Scripting\obj\EditorDebug\Scripting.dll
 C:\Users\joach\source\repos\Hapemo\MemoryLeak\MemoryLeak\Scripting\obj\EditorDebug\Scripting.pdb
+C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\bin\EditorDebug\x64\SCRIPTING\Scripting.dll
+C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\bin\EditorDebug\x64\SCRIPTING\Scripting.pdb
+C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\SCRIPTING.csproj.AssemblyReference.cache
+C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\SCRIPTING.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\Scripting.dll
+C:\Users\User\Documents\School\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\Scripting.pdb
+C:\Bunny-Jam-Jam\VI Engine\bin\EditorDebug\x64\SCRIPTING\Scripting.dll
+C:\Bunny-Jam-Jam\VI Engine\bin\EditorDebug\x64\SCRIPTING\Scripting.pdb
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\SCRIPTING.csproj.AssemblyReference.cache
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\SCRIPTING.csproj.CoreCompileInputs.cache
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\Scripting.dll
+C:\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorDebug\Scripting.pdb

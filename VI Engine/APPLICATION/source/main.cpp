@@ -17,6 +17,7 @@ main file of the whole program
 #include "SignalHandler.h"
 #include "SparseSet.h"
 
+
 // To use dedicated gpu
 #ifdef __cplusplus
 extern "C" {
@@ -62,6 +63,9 @@ void real_main() {
         //GameStateManager::GetInstance()->Update();
         //if (GameStateManager::GetInstance()->GetNextGS() == E_GS::EXIT) break;
     }
+
+
+
 
     // Part 3
     Application::exit();

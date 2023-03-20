@@ -109,7 +109,7 @@ SparseSet<T>::SparseSet(int _size) : mSize(_size), emptyID(INT_MAX), mCapacity(0
 template<typename T>
 SparseSet<T>::DataType& SparseSet<T>::operator[](IndexType const& _index) {
 	int deepID{ mShallow[static_cast<int>(_index)] };
-	BREAKPOINT(deepID == emptyID); // If ECS breaks here, means the ecs is breaking here.
+BREAKPOINT(deepID == emptyID); // If ECS breaks here, means the ecs is breaking here.
 	ASSERT(deepID == emptyID, "SparseSet cannot find ID: " + std::to_string(deepID));
 	return mDense[deepID];
 }
@@ -144,10 +144,12 @@ void SparseSet<T>::AddData(DataType const& _data, IndexType const& _index) {
 	++mCapacity;
 }
 
+
 template<typename T>
 bool SparseSet<T>::CheckData(IndexType const& _index) {
 	return mShallow[static_cast<int>(_index)] != emptyID;
 }
+
 
 template<typename T>
 void SparseSet<T>::PrintSet() {
