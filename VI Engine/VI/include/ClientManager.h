@@ -8,6 +8,7 @@ public:
 
 
 
+	char playerNum;
 private:
 
 };

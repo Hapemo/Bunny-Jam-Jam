@@ -19,6 +19,9 @@ start up of window and game system, also runs their update functions.
 #include "ResourceManager.h"
 #include "ScriptManager.h"
 #include "FilePathManager.h"
+#include "NetworkSerialization.h"
+
+#define NETWORKSERIALISETEST 1
 
 // Static variables
 int Application::window_width{};
@@ -134,15 +137,214 @@ void Application::SystemUpdate() {
   //END_TRACK("Audio");
 }
 
+#if NETWORKSERIALISETEST
+Entity globalE{};
+Entity globalE2{};
+Entity globalE3{};
+#endif
+
 void Application::init() {
   // Part 1
   startup();
   SystemInit();
 
   GameStateManager::GetInstance()->Init();
-
   // Set up quadtree after scene entities have been loaded
   collision2DManager->SetupQuadTree();
+
+#if NETWORKSERIALISETEST
+  {
+    globalE = ECS::CreateEntity();
+
+    globalE.AddComponent<General>(General());
+    globalE.GetComponent<General>().name = "testingName";
+    globalE.GetComponent<General>().isActive = true;
+    globalE.GetComponent<General>().isPaused = false;
+
+    globalE.AddComponent<Transform>(Transform());
+    globalE.GetComponent<Transform>().rotation = 12.3f;
+    globalE.GetComponent<Transform>().scale = Math::Vec2{ 2.23f, 3.23f };
+    globalE.GetComponent<Transform>().translation = Math::Vec2{ 4.23f, 5.23f };
+
+    globalE.AddComponent<Physics2D>(Physics2D());
+    globalE.GetComponent<Physics2D>().dynamicsEnabled = true;
+    globalE.GetComponent<Physics2D>().mass = 1.123f;
+    globalE.GetComponent<Physics2D>().inertia = 2.123f;
+    globalE.GetComponent<Physics2D>().restitution = 3.123f;
+    globalE.GetComponent<Physics2D>().friction = 4.123f;
+    globalE.GetComponent<Physics2D>().damping = 5.123f;
+    globalE.GetComponent<Physics2D>().accumulatedForce = Math::Vec2{ 10.123f, 11.123f };
+    globalE.GetComponent<Physics2D>().velocity = Math::Vec2{ 12.123f, 13.123f };
+    globalE.GetComponent<Physics2D>().acceleration = Math::Vec2{ 14.123f, 15.123f };
+    globalE.GetComponent<Physics2D>().angularVelocity = 6.123f;
+    globalE.GetComponent<Physics2D>().angularTorque = 7.123f;
+
+    std::array<Force, 5> forces;
+    int count{};
+    for (auto& force : forces) {
+      if (++count == 3) break;
+      force.lifetimeLimit = 1.23;
+      force.age = 2.23;
+      force.isActive = true;
+      force.forceID = 2;
+      force.dragForce.directionalDrag = 10.23f;
+      force.dragForce.rotationalDrag = 11.23f;
+      globalE.GetComponent<Physics2D>().forceList.push_back(force);
+    }
+
+    count = 0;
+    for (auto& force : forces) {
+      if (++count < 3) continue;
+      force.lifetimeLimit = 1.23;
+      force.age = 2.23;
+      force.isActive = true;
+      force.forceID = 0;
+      force.linearForce.unitDirection = Math::Vec2{ 10.23f,11.23f };
+      force.linearForce.magnitude = 12.23f;
+      globalE.GetComponent<Physics2D>().forceList.push_back(force);
+    }
+
+    globalE.AddComponent<RectCollider>(RectCollider());
+    globalE.GetComponent<RectCollider>().centerOffset = Math::Vec2{ 20.123f, 21.123f };
+    globalE.GetComponent<RectCollider>().scaleOffset = Math::Vec2{ 22.123f, 23.123f };
+    globalE.GetComponent<RectCollider>().isTrigger = true;
+    globalE.GetComponent<RectCollider>().renderFlag = false;
+
+    globalE.AddComponent<CircleCollider>(CircleCollider());
+    globalE.GetComponent<CircleCollider>().centerOffset = Math::Vec2{ 30.123f, 31.123f };
+    globalE.GetComponent<CircleCollider>().scaleOffset = 32.123f;
+    globalE.GetComponent<CircleCollider>().isTrigger = true;
+    globalE.GetComponent<CircleCollider>().renderFlag = false;
+  }
+
+  {
+    globalE2 = ECS::CreateEntity();
+
+    globalE2.AddComponent<General>(General());
+    globalE2.GetComponent<General>().name = "testingName2";
+    globalE2.GetComponent<General>().isActive = true;
+    globalE2.GetComponent<General>().isPaused = false;
+
+    globalE2.AddComponent<Transform>(Transform());
+    globalE2.GetComponent<Transform>().rotation = 72.3f;
+    globalE2.GetComponent<Transform>().scale = Math::Vec2{ 2.23f, 3.23f };
+    globalE2.GetComponent<Transform>().translation = Math::Vec2{ 4.23f, 5.23f };
+
+    globalE2.AddComponent<Physics2D>(Physics2D());
+    globalE2.GetComponent<Physics2D>().dynamicsEnabled = true;
+    globalE2.GetComponent<Physics2D>().mass = 7.723f;
+    globalE2.GetComponent<Physics2D>().inertia = 2.723f;
+    globalE2.GetComponent<Physics2D>().restitution = 3.723f;
+    globalE2.GetComponent<Physics2D>().friction = 4.723f;
+    globalE2.GetComponent<Physics2D>().damping = 5.723f;
+    globalE2.GetComponent<Physics2D>().accumulatedForce = Math::Vec2{ 70.723f, 77.723f };
+    globalE2.GetComponent<Physics2D>().velocity = Math::Vec2{ 72.723f, 73.723f };
+    globalE2.GetComponent<Physics2D>().acceleration = Math::Vec2{ 74.723f, 75.723f };
+    globalE2.GetComponent<Physics2D>().angularVelocity = 6.723f;
+    globalE2.GetComponent<Physics2D>().angularTorque = 7.723f;
+
+    std::array<Force, 5> forces;
+    int count{};
+    for (auto& force : forces) {
+      if (++count == 3) break;
+      force.lifetimeLimit = 7.23;
+      force.age = 2.23;
+      force.isActive = true;
+      force.forceID = 2;
+      force.dragForce.directionalDrag = 70.23f;
+      force.dragForce.rotationalDrag = 77.23f;
+      globalE2.GetComponent<Physics2D>().forceList.push_back(force);
+    }
+
+    count = 0;
+    for (auto& force : forces) {
+      if (++count < 3) continue;
+      force.lifetimeLimit = 7.23;
+      force.age = 2.23;
+      force.isActive = true;
+      force.forceID = 0;
+      force.linearForce.unitDirection = Math::Vec2{ 70.23f,77.23f };
+      force.linearForce.magnitude = 72.23f;
+      globalE2.GetComponent<Physics2D>().forceList.push_back(force);
+    }
+
+    globalE2.AddComponent<RectCollider>(RectCollider());
+    globalE2.GetComponent<RectCollider>().centerOffset = Math::Vec2{ 20.723f, 27.723f };
+    globalE2.GetComponent<RectCollider>().scaleOffset = Math::Vec2{ 22.723f, 23.723f };
+    globalE2.GetComponent<RectCollider>().isTrigger = true;
+    globalE2.GetComponent<RectCollider>().renderFlag = false;
+
+    globalE2.AddComponent<CircleCollider>(CircleCollider());
+    globalE2.GetComponent<CircleCollider>().centerOffset = Math::Vec2{ 30.723f, 37.723f };
+    globalE2.GetComponent<CircleCollider>().scaleOffset = 32.723f;
+    globalE2.GetComponent<CircleCollider>().isTrigger = true;
+    globalE2.GetComponent<CircleCollider>().renderFlag = false;
+}
+
+  {
+    globalE3 = ECS::CreateEntity();
+
+    globalE3.AddComponent<General>(General());
+    globalE3.GetComponent<General>().name = "testingName3";
+    globalE3.GetComponent<General>().isActive = true;
+    globalE3.GetComponent<General>().isPaused = false;
+
+    globalE3.AddComponent<Transform>(Transform());
+    globalE3.GetComponent<Transform>().rotation = 12.3f;
+    globalE3.GetComponent<Transform>().scale = Math::Vec2{ 2.23f, 3.23f };
+    globalE3.GetComponent<Transform>().translation = Math::Vec2{ 4.23f, 5.23f };
+
+    globalE3.AddComponent<Physics2D>(Physics2D());
+    globalE3.GetComponent<Physics2D>().dynamicsEnabled = true;
+    globalE3.GetComponent<Physics2D>().mass = 1.123f;
+    globalE3.GetComponent<Physics2D>().inertia = 2.123f;
+    globalE3.GetComponent<Physics2D>().restitution = 3.123f;
+    globalE3.GetComponent<Physics2D>().friction = 4.123f;
+    globalE3.GetComponent<Physics2D>().damping = 5.123f;
+    globalE3.GetComponent<Physics2D>().accumulatedForce = Math::Vec2{ 10.123f, 11.123f };
+    globalE3.GetComponent<Physics2D>().velocity = Math::Vec2{ 12.123f, 13.123f };
+    globalE3.GetComponent<Physics2D>().acceleration = Math::Vec2{ 14.123f, 15.123f };
+    globalE3.GetComponent<Physics2D>().angularVelocity = 6.123f;
+    globalE3.GetComponent<Physics2D>().angularTorque = 7.123f;
+
+    std::array<Force, 5> forces;
+    int count{};
+    for (auto& force : forces) {
+      if (++count == 3) break;
+      force.lifetimeLimit = 1.23;
+      force.age = 2.23;
+      force.isActive = true;
+      force.forceID = 2;
+      force.dragForce.directionalDrag = 10.23f;
+      force.dragForce.rotationalDrag = 11.23f;
+      globalE3.GetComponent<Physics2D>().forceList.push_back(force);
+    }
+
+    count = 0;
+    for (auto& force : forces) {
+      if (++count < 3) continue;
+      force.lifetimeLimit = 1.23;
+      force.age = 2.23;
+      force.isActive = true;
+      force.forceID = 0;
+      force.linearForce.unitDirection = Math::Vec2{ 10.23f,11.23f };
+      force.linearForce.magnitude = 12.23f;
+      globalE3.GetComponent<Physics2D>().forceList.push_back(force);
+    }
+
+    globalE3.AddComponent<RectCollider>(RectCollider());
+    globalE3.GetComponent<RectCollider>().centerOffset = Math::Vec2{ 20.123f, 21.123f };
+    globalE3.GetComponent<RectCollider>().scaleOffset = Math::Vec2{ 22.123f, 23.123f };
+    globalE3.GetComponent<RectCollider>().isTrigger = true;
+    globalE3.GetComponent<RectCollider>().renderFlag = false;
+
+    globalE3.AddComponent<CircleCollider>(CircleCollider());
+    globalE3.GetComponent<CircleCollider>().centerOffset = Math::Vec2{ 30.123f, 31.123f };
+    globalE3.GetComponent<CircleCollider>().scaleOffset = 32.123f;
+    globalE3.GetComponent<CircleCollider>().isTrigger = true;
+    globalE3.GetComponent<CircleCollider>().renderFlag = false;
+  }
+#endif
 
 #ifdef NDEBUG
 #ifdef _EDITOR
@@ -159,6 +361,19 @@ bool Application::FirstUpdate() {
   // Part 1
   glfwPollEvents();
 
+#if NETWORKSERIALISETEST
+  //NetworkSerializationManager::GetInstance()->SerialisePlayerControls();
+  GameStateManager::GetInstance()->mCurrentGameState->mScenes[0].mEntities.insert(globalE);
+  GameStateManager::GetInstance()->mCurrentGameState->mScenes[0].mEntities.insert(globalE2);
+  GameStateManager::GetInstance()->mCurrentGameState->mScenes[0].mEntities.insert(globalE3);
+  std::set<Entity> globalEs;
+  globalEs.insert(globalE);
+  globalEs.insert(globalE2);
+  globalEs.insert(globalE3);
+  int size = NetworkSerializationManager::GetInstance()->SerialiseMultipleEntities(globalEs);
+  std::cout << "size: " << size << '\n';
+#endif
+
   // Part 2
   FPSManager::CalcFPS(0);
   return !Helper::GetWindowMinimized();
@@ -170,7 +385,13 @@ void Application::SecondUpdate() {
   // Close the window if the close flag is triggered
   if (glfwWindowShouldClose(Application::getWindow())) GameStateManager::mGSMState = GameStateManager::E_GSMSTATE::EXIT;
   /////audioManager->UpdateSound();
-  
+
+#if NETWORKSERIALISETEST
+  NetworkSerializationManager::GetInstance()->TestTransferData();
+  //NetworkSerializationManager::GetInstance()->DeserialisePlayerControls();
+  NetworkSerializationManager::GetInstance()->DeserialiseMultipleEntities();
+#endif 
+
   // Reset input
   Input::UpdatePrevKeyStates();
   buttonManager->ResetAllButtons();

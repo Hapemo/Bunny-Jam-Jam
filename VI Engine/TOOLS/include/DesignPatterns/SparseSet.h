@@ -86,8 +86,10 @@ public:
 	*******************************************************************************/
 	void PrintSet();
 
-	DataType* DenseBegin() { return mDense.begin(); }
-	DataType* DenseEnd() { return mDense.begin() + mCapacity; }
+	DataType* DenseBegin() { return &*(mDense.begin()); }
+	DataType* DenseEnd() { return &*(mDense.begin() + mCapacity); }
+	int* ShallowBegin() { return &*(mShallow.begin()); }
+	int* ShallowEnd() { return &*(mShallow.end()); }
 
 private:
 	std::vector<int> mShallow; // Interface container

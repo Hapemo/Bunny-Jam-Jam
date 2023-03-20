@@ -509,6 +509,7 @@
     <ClInclude Include="include\Logic\ScriptManager.h" />
     <ClInclude Include="include\MovementAIManager.h" />
     <ClInclude Include="include\ClientManager.h" />
+    <ClInclude Include="include\NetworkSerialization.h" />
     <ClInclude Include="include\ServerManager.h" />
     <ClInclude Include="include\Physics\ColliderBody.h" />
     <ClInclude Include="include\Physics\ColliderType.h" />
@@ -609,6 +610,7 @@
     <ClCompile Include="source\MovementAIManager.cpp" />
     <ClCompile Include="source\Physics\Collision2DManager.cpp" />
     <ClCompile Include="source\Physics\Physics2DManager.cpp" />
+    <ClCompile Include="source\NetworkSerialization.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
     <ClCompile Include="source\Serialization.cpp" />
     <ClCompile Include="source\ServerManager.cpp" />

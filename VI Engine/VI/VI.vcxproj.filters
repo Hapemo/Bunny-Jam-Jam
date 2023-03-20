@@ -58,6 +58,7 @@
     <ClCompile Include="source\ParticleManager.cpp" />
     <ClCompile Include="source\ClientManager.cpp" />
     <ClCompile Include="source\ServerManager.cpp" />
+    <ClCompile Include="source\NetworkSerialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AI.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="include\ParticleManager.h" />
     <ClInclude Include="include\ClientManager.h" />
     <ClInclude Include="include\ServerManager.h" />
+    <ClInclude Include="include\NetworkSerialization.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\batch.frag" />

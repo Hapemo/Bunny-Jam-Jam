@@ -171,6 +171,12 @@ public:
 	- True if has data of entity, otherwise false
 	*******************************************************************************/
 	virtual bool HasEntity(EntityID) = 0;
+
+	virtual void* GetDenseArrayBegin() = 0;
+	virtual int* GetShallowArrayBegin() = 0;
+	virtual void* GetDenseArrayEnd() = 0;
+	virtual int* GetShallowArrayEnd() = 0;
+	virtual size_t GetArrayCapacity() = 0;
 };
 
 
@@ -234,6 +240,12 @@ public:
 	- True if has data of the entity, otherwise false
 	*******************************************************************************/
 	bool HasEntity(EntityID);
+
+	virtual void* GetDenseArrayBegin();
+	virtual int* GetShallowArrayBegin();
+	virtual void* GetDenseArrayEnd();
+	virtual int* GetShallowArrayEnd();
+	virtual size_t GetArrayCapacity();
 
 private:
 	SparseSet<T> mData;
@@ -405,6 +417,32 @@ template<typename T>
 bool ComponentArray<T>::HasEntity(EntityID _entity) {
 	return mData.CheckData(static_cast<short>(_entity));
 }
+
+template<typename T>
+void* ComponentArray<T>::GetDenseArrayBegin() {
+	return reinterpret_cast<void*>(mData.DenseBegin());
+}
+
+template<typename T>
+int* ComponentArray<T>::GetShallowArrayBegin() {
+	return mData.ShallowBegin();
+}
+
+template<typename T>
+void* ComponentArray<T>::GetDenseArrayEnd() {
+	return reinterpret_cast<void*>(mData.DenseEnd());
+}
+
+template<typename T>
+int* ComponentArray<T>::GetShallowArrayEnd() {
+	return mData.ShallowEnd();
+}
+
+template<typename T>
+size_t ComponentArray<T>::GetArrayCapacity() {
+	return mData.DenseEnd() - mData.DenseBegin();
+}
+
 
 //template<typename T>
 //void EntityDestroyed(EntityID entity) {

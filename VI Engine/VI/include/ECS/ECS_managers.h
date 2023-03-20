@@ -367,6 +367,10 @@ public:
 		return mEntityManager->GetSignature(_entity)[mComponentArrayManager->GetComponentType<T>()];
 	}
 
+	Signature GetEntitySignature(EntityID _e) {
+		return mEntityManager->GetSignature(_e);
+	}
+
 	// From System Manager
 	/*!*****************************************************************************
 	Register a system
