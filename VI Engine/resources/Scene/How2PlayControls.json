@@ -60,9 +60,9 @@
         },
         "SheetAnimation": {
             "frameCount": 5,
-            "currFrameIndex": 1,
+            "currFrameIndex": 3,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 3.725290298461914e-9
+            "timeToFrameSwap": 0.016666671261191368
         }
     },
     {
@@ -96,9 +96,9 @@
         },
         "SheetAnimation": {
             "frameCount": 5,
-            "currFrameIndex": 1,
+            "currFrameIndex": 3,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 0.05000000447034836
+            "timeToFrameSwap": 0.06666667014360428
         }
     },
     {
@@ -143,21 +143,21 @@
                 "X": 150.0,
                 "Y": 150.0
             },
-            "rotation": 0.0,
+            "rotation": 0.01745329238474369,
             "translation": {
-                "X": 712.0,
+                "X": 706.0,
                 "Y": 0.0
             }
         },
         "Sprite": {
             "color": {
-                "r": 255,
-                "g": 255,
+                "r": 215,
+                "g": 161,
                 "b": 255,
                 "a": 255
             },
             "sprite": 2,
-            "texture": "Textures\\BackButton.png",
+            "texture": "Textures\\Join.png",
             "layer": 4
         },
         "Script": {

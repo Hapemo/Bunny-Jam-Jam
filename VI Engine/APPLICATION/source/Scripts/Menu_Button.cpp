@@ -28,6 +28,10 @@ namespace {
 
 
 	bool firstLoad_ = true;
+
+	int clickCount{};
+	bool atControls{ false };
+
 }
 
 
@@ -189,20 +193,19 @@ void Menu_Button::Update(Entity const& _e) {
 
 
 	//Controls -> Objectives
-	if (!VI::iScene::IsPaused("How2PlayControls"))
+
+	if (toObjectives.GetComponent<Button>().isHover)
 	{
-		if (toObjectives.GetComponent<Button>().isHover)
+		if (toObjectives.GetComponent<Button>().isClick)
 		{
-			if (toObjectives.GetComponent<Button>().isClick)
-			{
-				VI::iScene::Pause("How2PlayControls");
-				VI::iScene::Play("How2PlayObjectives");
-				toObjectives.GetComponent<Button>().isClick = false;
+			
+			VI::iScene::Pause("How2PlayControls");
+			VI::iScene::Play("How2PlayObjectives");
+			toObjectives.GetComponent<Button>().isClick = false;
 
-
-			}
 		}
 	}
+	
 
 
 
@@ -211,11 +214,18 @@ void Menu_Button::Update(Entity const& _e) {
 	if (toControls.GetComponent<Button>().isHover)
 	{
 		if (toControls.GetComponent<Button>().isClick)
-		{
+		{			
 			VI::iScene::Pause("How2PlayObjectives");
 			VI::iScene::Play("How2PlayControls");
 			toControls.GetComponent<Button>().isClick = false;
+
+
 		}
+	}
+
+	if (!VI::iScene::IsPaused("How2PlayControls")) 
+	{
+		//toControls.GetComponent<Button>().isClick = false;
 	}
 
 
