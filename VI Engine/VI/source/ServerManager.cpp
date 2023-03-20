@@ -177,35 +177,27 @@ void ServerManager::serverClose()
 }
 
 //== Sends the message to a particular client
-bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string const& msg)
+bool ServerManager::SendMsg(CLIENT_INFO const& receiver, std::string Data)
 {
-    char buffer[1024];
-    strcpy(buffer, msg.c_str());
-    char* pBuffer = buffer;
-
-    int msgLength = sizeof(pBuffer);
-    int nCntSend{};
+    int nSendCnt = 0;
+    int nLength = strlen(Data.c_str());
+    char* pBuffer = (char*)Data.c_str();
     
-    while ((nCntSend = sendto(m_ServerSocket, pBuffer, msgLength, 0, (sockaddr*)&receiver.clientAddr, sizeof(receiver.clientAddr)) != msgLength))
+    while ((nSendCnt = sendto(m_ServerSocket, pBuffer, nLength, 0, (sockaddr*)&receiver.clientAddr, sizeof(receiver.clientAddr))) != nLength)
     {
-        if (nCntSend == -1) {
-            std::cout << "Error sending the data to " << inet_ntoa(receiver.clientAddr.sin_addr) << std::endl;
-            break;
-        }
-
-        if (nCntSend == msgLength)
+        if (nSendCnt == nLength)
             break;
         
         // error sending data
-        if (nCntSend == SOCKET_ERROR) {
+        if (nSendCnt == SOCKET_ERROR) {
             std::cout << "Error sending the data to " << inet_ntoa(receiver.clientAddr.sin_addr) << std::endl;
             closesocket(receiver.hClientSocket);
             WSACleanup();
             return false;
         }
 
-        pBuffer += nCntSend;
-        msgLength -= nCntSend;
+        pBuffer += nSendCnt;
+        nLength -= nSendCnt;
     }
 
     return true;

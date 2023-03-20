@@ -32,7 +32,7 @@ public:
 	void serverClose();
 
 	// Helper functions
-	bool SendMsg(CLIENT_INFO const& receiver, std::string const& msg);
+	bool SendMsg(CLIENT_INFO const& receiver, std::string msg);
 	void BroadcastMessage(CLIENT_INFO const& sender, std::string const& msg);
 	
 //private:
