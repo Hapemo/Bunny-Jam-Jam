@@ -65,6 +65,7 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(serverPortNumber);
 	serverAddr.sin_addr.s_addr = inet_addr(ipstr);
+	//serverAddr.sin_addr.s_addr = inet_addr(std::string("172.28.139.212").c_str());
     
     //m_ServerInstance.m_ServerInfo = *(struct sockaddr_in*)info->ai_addr;
     //m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);
@@ -113,6 +114,8 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 //== Batch send to all connected clients
 bool ServerManager::serverSendData(std::string data)
 {
+    std::cout << "ClientList Size: " << m_ClientList.size() << "\n";
+    
     // Broadcast data to all clients
     for (auto const& c : m_ClientList) {
         if (SendMsg(c.second, data) == false)

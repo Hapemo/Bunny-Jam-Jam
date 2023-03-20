@@ -80,8 +80,8 @@ void Application::SystemInit() {
 
       // Part 1.1 (Networking init)
 #ifdef _CLIENT
-  //std::string tempServerAdd = "127.0.0.1";
-    std::string tempServerAdd = "192.168.50.178";
+    std::string tempServerAdd = "172.28.136.35";
+    //std::string tempServerAdd = "172.28.137.119";
     u_short tempServerPort = 5051;
     std::string tempClientName = "Client1";
     if(!ClientManager::GetInstance()->clientInit(tempServerAdd, tempServerPort, tempClientName)) {
