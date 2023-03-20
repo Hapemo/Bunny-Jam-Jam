@@ -1,7 +1,7 @@
 [
     {
         "General": {
-            "name": "Background",
+            "name": "BackgroundControls",
             "tag": 4,
             "subtag": 0,
             "isActive": true
@@ -27,6 +27,12 @@
             "sprite": 0,
             "texture": "",
             "layer": 0
+        },
+        "Script": {
+            "name": "Menu_Button"
+        },
+        "Button": {
+            "interactable": true
         },
         "LightSource": {
             "centerOffset": {
@@ -258,7 +264,7 @@
                 "r": 255,
                 "g": 255,
                 "b": 255,
-                "a": 255
+                "a": 0
             },
             "sprite": 1,
             "texture": "",

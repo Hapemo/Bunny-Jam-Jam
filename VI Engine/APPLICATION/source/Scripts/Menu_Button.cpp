@@ -17,7 +17,11 @@ REGISTER_SCRIPT(ScriptComponent, Menu_Button);
 
 namespace {
 	Entity playButton; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
+	Entity h2pButton;
+	Entity toObjectives;
+	Entity toControls;
 	Entity loadicon_;
+
 
 	float acc_ = 300;
 	float scaling_ = 1000;
@@ -130,6 +134,10 @@ void Menu_Button::Update(Entity const& _e) {
 	{
 		playButton = VI::iEntity::GetEntity("Play_Button", "");
 		loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
+		h2pButton = VI::iEntity::GetEntity("H2P_Button", "");
+		toObjectives = VI::iEntity::GetEntity("toObjectives", "");
+		toControls = VI::iEntity::GetEntity("toControls", "");
+
 		updateOne = true;
 
 	}
@@ -137,6 +145,12 @@ void Menu_Button::Update(Entity const& _e) {
 
 	playButton = VI::iEntity::GetEntity("Play_Button", "");
 	loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
+	h2pButton = VI::iEntity::GetEntity("H2P_Button", "");
+	toObjectives = VI::iEntity::GetEntity("toObjectives", "");
+	toControls = VI::iEntity::GetEntity("toControls", "");
+
+
+
 	//If PlayButton is clicked
 	if (playButton.GetComponent<Button>().isHover) {
 
@@ -163,11 +177,65 @@ void Menu_Button::Update(Entity const& _e) {
 	}
 
 
+	//Main Menu -> Controls
+	if (h2pButton.GetComponent<Button>().isHover) 
+	{
+		if (h2pButton.GetComponent<Button>().isClick) 
+		{
+			VI::iScene::Play("How2PlayControls");
+			VI::iScene::Pause("Bunny_Menu");
+		}
+	}
+
+
+	//Controls -> Objectives
+	if (!VI::iScene::IsPaused("How2PlayControls"))
+	{
+		if (toObjectives.GetComponent<Button>().isHover)
+		{
+			if (toObjectives.GetComponent<Button>().isClick)
+			{
+				VI::iScene::Pause("How2PlayControls");
+				VI::iScene::Play("How2PlayObjectives");
+				toObjectives.GetComponent<Button>().isClick = false;
+
+
+			}
+		}
+	}
+
+
+
+
+	//Controls <- Objectives
+	if (toControls.GetComponent<Button>().isHover)
+	{
+		if (toControls.GetComponent<Button>().isClick)
+		{
+			VI::iScene::Pause("How2PlayObjectives");
+			VI::iScene::Play("How2PlayControls");
+			toControls.GetComponent<Button>().isClick = false;
+		}
+	}
+
+
+	//Back to main menu
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
+	{
+
+		//Back to menu
+		if (VI::iScene::IsPaused("Bunny_Menu"))
+		{
+			VI::iScene::Pause("How2PlayObjectives");
+			VI::iScene::Pause("How2PlayControls");
+			VI::iScene::Play("Bunny_Menu");
+		}
+	}
+
 
 	if (startMenu_ ==-1 && loadicon_.GetComponent<Transform>().scale.x >=2000) {
 		VI::iGameState::ChangeGameState("Connection_Menu");
 	}
-	//std::cout << startMenu_ << "fkkkkkkkkk\n";
 	startMenu_ = Transit(startMenu_, loadicon_, acc_, scaling_);
 	
 	
