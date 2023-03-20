@@ -125,8 +125,8 @@
         },
         "Transform": {
             "scale": {
-                "X": 99.75970458984375,
-                "Y": 84.0
+                "X": 170.0,
+                "Y": 150.0
             },
             "rotation": 0.0,
             "translation": {
@@ -136,13 +136,13 @@
         },
         "Sprite": {
             "color": {
-                "r": 0,
+                "r": 255,
                 "g": 255,
-                "b": 0,
+                "b": 255,
                 "a": 255
             },
-            "sprite": 0,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\Join.png",
             "layer": 5
         },
         "Animation": {
@@ -287,7 +287,7 @@
             "name": "BunnyLoad",
             "tag": 8,
             "subtag": 0,
-            "isActive": true
+            "isActive": false
         },
         "Transform": {
             "scale": {
@@ -321,24 +321,24 @@
         },
         "Transform": {
             "scale": {
-                "X": 150.0,
-                "Y": 150.0
+                "X": 100.0,
+                "Y": 110.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": 683.2972412109375,
+                "X": 695.265869140625,
                 "Y": 347.50543212890625
             }
         },
         "Sprite": {
             "color": {
-                "r": 0,
+                "r": 255,
                 "g": 255,
-                "b": 0,
+                "b": 255,
                 "a": 255
             },
-            "sprite": 1,
-            "texture": "",
+            "sprite": 2,
+            "texture": "Textures\\BackButton.png",
             "layer": 7
         },
         "Button": {
