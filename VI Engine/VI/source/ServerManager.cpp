@@ -18,6 +18,7 @@ ServerManager::~ServerManager() {
 //== Create and bind Server Socket
 bool ServerManager::serverInit(u_short serverPortNumber)
 {
+    std::cout << "Enter server Init\n";
     WSADATA wsaData;
     WORD wVersion = MAKEWORD(2, 0);
     if (WSAStartup(wVersion, &wsaData))
@@ -35,8 +36,9 @@ bool ServerManager::serverInit(u_short serverPortNumber)
         return false;
     }
     else {
-		std::cout << "Chat Server Socket Initialized\n";
+		    std::cout << "Chat Server Socket Initialized\n";
     }
+    std::cout << "Preparing host name\n";
 
     //!<== Obtaining hostname
     char hostname[256];
@@ -51,6 +53,7 @@ bool ServerManager::serverInit(u_short serverPortNumber)
     hints.ai_socktype   = SOCK_DGRAM;
     hints.ai_protocol   = IPPROTO_UDP;
 
+    std::cout << "Preparing to getaddrinfo\n";
     if (getaddrinfo(hostname, NULL, &hints, &info) != 0) {
         std::cout << "SERVER:: getaddrinfo failed with an error.\n";
         WSACleanup();
@@ -95,7 +98,8 @@ bool ServerManager::serverInit(u_short serverPortNumber)
    // } while (bind(m_ServerSocket, (struct sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR);
     
     
-    if (bind(m_ServerSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+  std::cout << "Preparing to bind\n";
+  if (bind(m_ServerSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
     {
         std::cout << "Error Code: " << WSAGetLastError() << " - ";
         std::cout << "Unable to connect to " << inet_ntoa(serverAddr.sin_addr) << " port " << ntohs(serverAddr.sin_port) << std::endl;
@@ -103,11 +107,14 @@ bool ServerManager::serverInit(u_short serverPortNumber)
         WSACleanup();
         return false;
     }
+  std::cout << "Successfully binded\n";
 
     std::cout << ">> [SERVER]:: Server Connected. Information: " << inet_ntoa(serverAddr.sin_addr) << " port " << htons(serverAddr.sin_port) << std::endl;
 
     // start the constant running thread
+    std::cout << "Preparing server recv thread\n";
     m_ServerRecvThread = std::thread(serverRecvData);
+    std::cout << "Successfully created server recv thread\n";
 
     return true;
 }

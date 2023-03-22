@@ -18,6 +18,7 @@ bool ClientManager::clientInit(std::string serverIPAddress, u_short serverPortNu
 {
     WSADATA wsaData;
     WORD wVersion = MAKEWORD(2, 0);
+    std::cout << "Enter client init\n";
 
     if (WSAStartup(wVersion, &wsaData)) {
         std::cout << "Unable to Initialize Windows Socket environment" << WSAGetLastError() << std::endl;
@@ -27,31 +28,34 @@ bool ClientManager::clientInit(std::string serverIPAddress, u_short serverPortNu
     // Create the Client UDP Socket 
     m_ClientInstance.clientSocket = socket(AF_INET, SOCK_DGRAM, 0);
     m_ClientInstance.username = name;
-	if (m_ClientInstance.clientSocket == INVALID_SOCKET) {
-		std::cout << "Unable to create Client UDP Socket. Error Code: " << WSAGetLastError() << std::endl;
-        WSACleanup();
-		return false;
-	}
-    else {
+	  if (m_ClientInstance.clientSocket == INVALID_SOCKET) {
+		  std::cout << "Unable to create Client UDP Socket. Error Code: " << WSAGetLastError() << std::endl;
+      WSACleanup();
+		  return false;
+	  } else {
         std::cout << "Client Socket created successfully\n";
     }
 
-	//!< Everything past here means that it is a valid socket
+	  //!< Everything past here means that it is a valid socket
     m_ServerInstance.m_ServerInfo.sin_family         = AF_INET;
     m_ServerInstance.m_ServerInfo.sin_addr.s_addr    = inet_addr(serverIPAddress.c_str());
     m_ServerInstance.m_ServerInfo.sin_port           = htons(serverPortNumber);
 
     //!! == EXPERIMENT SENDING CLIENT STRUCT TO SERVER HERE AS A CONNECTION REQUEST
+    std::cout << "Preparing to fo first data sending\n";
+
     std::string sConnectionSetup = "Client Connected";
     int nLength = strlen(sConnectionSetup.c_str());
-    if (sendto(m_ClientInstance.clientSocket, sConnectionSetup.c_str(), nLength, 0, (sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR)
-    {
+    if (sendto(m_ClientInstance.clientSocket, sConnectionSetup.c_str(), nLength, 0, (sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR) {
         std::cout << "ERROR: Unable to send initial connection request message\n";
         return false;
     }
+    std::cout << "Successfully sent first data, going to create thread now\n";
+
     
     // ======= THREADS =======
     m_ClientRecvThread = std::thread(clientRecvData);
+    std::cout << "Successfully created client recv thread\n";
 
     return true;
 }
