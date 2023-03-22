@@ -346,6 +346,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         //}
         if (join_.GetComponent<Button>().isClick) {
             textin_ = true;
+            if(!isConnected)
             VI::iScene::Play("RequestIP");
         }
     }
