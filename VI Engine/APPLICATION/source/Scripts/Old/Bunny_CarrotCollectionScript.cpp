@@ -23,6 +23,7 @@ REGISTER_SCRIPT(ScriptComponent, Bunny_CarrotCollectionScript);
 
 namespace {
 	Entity BUNNY_Player; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
+	Entity INGAMESTATEMANAGER;
 }
 
 void Bunny_CarrotCollectionScript::Alive(const Entity& _e) {
@@ -32,7 +33,8 @@ void Bunny_CarrotCollectionScript::Alive(const Entity& _e) {
 void Bunny_CarrotCollectionScript::Init(const Entity& _e) {
 	(void)_e;
 	BUNNY_Player = VI::iEntity::GetEntity("Bunny", "");
-	
+	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER", "");
+
 }
 
 void Bunny_CarrotCollectionScript::EarlyUpdate(Entity const& _e) {
@@ -41,10 +43,15 @@ void Bunny_CarrotCollectionScript::EarlyUpdate(Entity const& _e) {
 
 void Bunny_CarrotCollectionScript::Update(const Entity& _e) {
 
-	if (VI::iPhysics::CheckCollision(BUNNY_Player, _e, false))
+	BUNNY_Player = VI::iEntity::GetEntity("Bunny", "");
+	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER", "");
+	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_INGAME)
 	{
-		BUNNY_Player.GetComponent<Bunny>().carrots++;
-		_e.Deactivate();
+		if (VI::iPhysics::CheckCollision(BUNNY_Player, _e, false))
+		{
+			BUNNY_Player.GetComponent<Bunny>().carrots++;
+			_e.Deactivate();
+		}
 	}
 }
 
