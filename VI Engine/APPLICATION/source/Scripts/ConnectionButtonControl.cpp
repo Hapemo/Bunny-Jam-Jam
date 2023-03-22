@@ -24,6 +24,9 @@ namespace {
 	Entity bgeff2_;
 	Entity loadicon_;
 	Entity back_;
+	Entity p1_;
+	Entity p2_;
+	Entity you_;
 
 	// menu effect variables
 	bool posap_ = false;
@@ -113,8 +116,11 @@ Function will run on initialisation of the entity.
 void ConnectionButtonControl::Init(Entity const& _e) {
 	// acc_ = 1;
 	// scaling_ = 1000;
+	you_ = VI::iEntity::GetEntity("You", "Game");
 	loadicon_ = VI::iEntity::GetEntity("BunnyLoad", "Game");
 	back_ = VI::iEntity::GetEntity("Back", "Game");
+	p1_ = VI::iEntity::GetEntity("Player1", "Game");
+	p2_ = VI::iEntity::GetEntity("Player2", "Game");
 
 	//if (zoom_ == 1) {
 
@@ -123,6 +129,12 @@ void ConnectionButtonControl::Init(Entity const& _e) {
 	//}
 	//else if (zoom_ == 0) {
 		zoom_ = 0;
+		you_.GetComponent<Transform>().scale.x = 0.f;
+		you_.GetComponent<Transform>().scale.y = 0.f;
+		p1_.GetComponent<Transform>().scale.x = 0.f;
+		p1_.GetComponent<Transform>().scale.y = 0.f;
+		p2_.GetComponent<Transform>().scale.x = 0.f;
+		p2_.GetComponent<Transform>().scale.y = 0.f;
 		loadicon_.GetComponent<Transform>().scale.x = 2000.f;
 		loadicon_.GetComponent<Transform>().scale.y = 2000.f;
 	//}
@@ -147,6 +159,9 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 	if (!updateOnce)
 	{
+		you_ =VI::iEntity::GetEntity("You", "Game");
+		p1_ = VI::iEntity::GetEntity("Player1", "Game");
+		p2_ = VI::iEntity::GetEntity("Player2", "Game");
 		loadicon_ = VI::iEntity::GetEntity("BunnyLoad", "Game");
 		back_ = VI::iEntity::GetEntity("Back", "Game");
 		bgeff_ = VI::iEntity::GetEntity("BGEffect", "Game");
@@ -156,12 +171,41 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	}
 
 
+	// default p1 pos -400 / 8
+	// default p2 pos -400 / 220
+	// default you_ size 335 / 150
+	// default player1/2 button size 260 / 180
 
-	//std::cout << zoom_ << "zoom\n";
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W) == true) {
+		you_.GetComponent<Transform>().translation.x = -400.f;
+		you_.GetComponent<Transform>().translation.y = 220.f;
+	}
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S) == true) {
+		you_.GetComponent<Transform>().translation.x = -400.f;
+		you_.GetComponent<Transform>().translation.y = 8.f;
+	}
 
-	
-	//VI::iGameState::ChangeGameState("Connection_Menu");
 
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::Q) == true) {
+		player1_ = true;
+	}
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::E) == true) {
+		player2_ = true;
+	}
+
+
+	if (player1_ == true) {
+		you_.GetComponent<Transform>().scale.x =335.f;
+		you_.GetComponent<Transform>().scale.y = 150.f;
+		p1_.GetComponent<Transform>().scale.x = 260.f;
+		p1_.GetComponent<Transform>().scale.y = 180.f;
+	}
+	if (player2_ == true) {
+		you_.GetComponent<Transform>().scale.x = 335.f;
+		you_.GetComponent<Transform>().scale.y = 150.f;
+		p2_.GetComponent<Transform>().scale.x = 260.f;
+		p2_.GetComponent<Transform>().scale.y = 180.f;
+	}
 
 	//2764 position 
 

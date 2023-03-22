@@ -62,7 +62,7 @@
             "frameCount": 5,
             "currFrameIndex": 3,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 0.016666671261191368
+            "timeToFrameSwap": 3.725290298461914e-9
         }
     },
     {
@@ -98,7 +98,7 @@
             "frameCount": 5,
             "currFrameIndex": 3,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 0.06666667014360428
+            "timeToFrameSwap": 0.05000000447034836
         }
     },
     {
@@ -143,7 +143,7 @@
                 "X": 150.0,
                 "Y": 150.0
             },
-            "rotation": 0.01745329238474369,
+            "rotation": 0.0,
             "translation": {
                 "X": 706.0,
                 "Y": 0.0
@@ -151,13 +151,13 @@
         },
         "Sprite": {
             "color": {
-                "r": 215,
-                "g": 161,
+                "r": 255,
+                "g": 255,
                 "b": 255,
                 "a": 255
             },
             "sprite": 2,
-            "texture": "Textures\\Join.png",
+            "texture": "Textures\\FrontButton.png",
             "layer": 4
         },
         "Script": {

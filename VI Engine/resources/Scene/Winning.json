@@ -1,7 +1,7 @@
 [
     {
         "General": {
-            "name": "Board",
+            "name": "BG",
             "tag": 8,
             "subtag": 0,
             "isActive": true
@@ -14,7 +14,7 @@
             "rotation": 0.0,
             "translation": {
                 "X": 0.0,
-                "Y": 0.44999992847442627
+                "Y": 1.526580810546875
             }
         },
         "Sprite": {
@@ -24,66 +24,9 @@
                 "b": 255,
                 "a": 255
             },
-            "sprite": 2,
-            "texture": "Textures\\ConnectMenu.png",
-            "layer": 2
-        },
-        "Physics2D": {
-            "dynamicsEnabled": true,
-            "mass": 1.0,
-            "inertia": 1.0,
-            "restitution": 0.0,
-            "friction": 0.0,
-            "damping": 0.8999999761581421,
-            "accumulatedForce": {
-                "X": 0.0,
-                "Y": 0.0
-            },
-            "velocity": {
-                "X": 0.0,
-                "Y": 1.1088161500083515e-7
-            },
-            "acceleration": {
-                "X": 0.0,
-                "Y": 0.0
-            },
-            "angularVelocity": 0.0,
-            "angularTorque": 0.0,
-            "forceList": [],
-            "renderFlag": false
-        },
-        "Script": {
-            "name": "PlayerMovement"
-        }
-    },
-    {
-        "General": {
-            "name": "Player1",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 260.0,
-                "Y": 180.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": 0.0,
-                "Y": 220.0
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 2,
-            "texture": "Textures\\Button1.png",
-            "layer": 3
+            "sprite": 0,
+            "texture": "",
+            "layer": 0
         }
     },
     {
@@ -95,13 +38,13 @@
         },
         "Transform": {
             "scale": {
-                "X": 260.0,
-                "Y": 180.0
+                "X": 100.0,
+                "Y": 100.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": 0.0,
-                "Y": 0.0
+                "X": -185.36964416503906,
+                "Y": 325.1614685058594
             }
         },
         "Sprite": {
@@ -112,199 +55,13 @@
                 "a": 255
             },
             "sprite": 2,
-            "texture": "Textures\\Button2.png",
-            "layer": 5
-        }
-    },
-    {
-        "General": {
-            "name": "Join",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 170.0,
-                "Y": 150.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": -0.30722618103027344,
-                "Y": -200.77467346191406
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 2,
-            "texture": "Textures\\Join.png",
-            "layer": 5
-        },
-        "Button": {
-            "interactable": true
-        }
-    },
-    {
-        "General": {
-            "name": "ButtonControl",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 150.0,
-                "Y": 150.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": -120.66580963134766,
-                "Y": -637.85400390625
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 1,
-            "texture": "",
-            "layer": 5
-        },
-        "Script": {
-            "name": "ConnectionButtonControl"
-        }
-    },
-    {
-        "General": {
-            "name": "BG",
-            "tag": 4,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 1600.0,
-                "Y": 900.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": 0.0,
-                "Y": 0.0
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 238,
-                "g": 238,
-                "b": 238,
-                "a": 255
-            },
-            "sprite": 0,
-            "texture": "",
-            "layer": 0
-        }
-    },
-    {
-        "General": {
-            "name": "BGEffect",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 3200.0,
-                "Y": 1900.0
-            },
-            "rotation": 5.497786998748779,
-            "translation": {
-                "X": -360.2200927734375,
-                "Y": 360.2200927734375
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 2,
-            "texture": "Textures\\BGeffect.png",
+            "texture": "Textures\\p1_end.png",
             "layer": 1
         }
     },
     {
         "General": {
-            "name": "BGEffect2",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 3200.0,
-                "Y": 1900.0
-            },
-            "rotation": 5.497786998748779,
-            "translation": {
-                "X": -2624.41845703125,
-                "Y": 2624.41845703125
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 2,
-            "texture": "Textures\\BGeffect.png",
-            "layer": 1
-        }
-    },
-    {
-        "General": {
-            "name": "BunnyLoad",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 2000.0,
-                "Y": 2000.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": 0.0,
-                "Y": 0.0
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 1,
-            "texture": "",
-            "layer": 6
-        }
-    },
-    {
-        "General": {
-            "name": "Back",
+            "name": "Player1",
             "tag": 8,
             "subtag": 0,
             "isActive": true
@@ -312,12 +69,12 @@
         "Transform": {
             "scale": {
                 "X": 100.0,
-                "Y": 110.0
+                "Y": 100.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": 695.265869140625,
-                "Y": 347.50543212890625
+                "X": -184.12454223632813,
+                "Y": 325.1615295410156
             }
         },
         "Sprite": {
@@ -328,29 +85,26 @@
                 "a": 255
             },
             "sprite": 2,
-            "texture": "Textures\\BackButton.png",
-            "layer": 7
-        },
-        "Button": {
-            "interactable": true
+            "texture": "Textures\\p2_end.png",
+            "layer": 2
         }
     },
     {
         "General": {
-            "name": "You",
+            "name": "Win",
             "tag": 8,
             "subtag": 0,
             "isActive": true
         },
         "Transform": {
             "scale": {
-                "X": 335.0,
-                "Y": 150.0
+                "X": 300.0,
+                "Y": 100.0
             },
             "rotation": 0.0,
             "translation": {
-                "X": -400.0,
-                "Y": 8.0
+                "X": 57.74318313598633,
+                "Y": 324.2120666503906
             }
         },
         "Sprite": {
@@ -361,8 +115,188 @@
                 "a": 255
             },
             "sprite": 2,
-            "texture": "Textures\\You.png",
-            "layer": 8
+            "texture": "Textures\\wins.png",
+            "layer": 3
+        }
+    },
+    {
+        "General": {
+            "name": "JAM1",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 300.0,
+                "Y": 300.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -433.4630432128906,
+                "Y": -28.579998016357422
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Jam.png",
+            "layer": 4
+        }
+    },
+    {
+        "General": {
+            "name": "JAM2",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 300.0,
+                "Y": 300.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 305.87481689453125,
+                "Y": -25.711593627929688
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Jam.png",
+            "layer": 4
+        }
+    },
+    {
+        "General": {
+            "name": "Player1",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 100.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 306.10693359375,
+                "Y": 206.53672790527344
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\p2_end.png",
+            "layer": 2
+        }
+    },
+    {
+        "General": {
+            "name": "Player2",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 100.0,
+                "Y": 100.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -437.66412353515625,
+                "Y": 195.90809631347656
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\p1_end.png",
+            "layer": 6
+        }
+    },
+    {
+        "General": {
+            "name": "Exit",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 255.0,
+                "Y": 135.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 186.4591827392578,
+                "Y": -327.00970458984375
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\RestartButton.png",
+            "layer": 5
+        }
+    },
+    {
+        "General": {
+            "name": "Exit",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 255.0,
+                "Y": 135.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -185.4474334716797,
+                "Y": -327.36419677734375
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\RestartButton.png",
+            "layer": 5
         }
     }
 ]
