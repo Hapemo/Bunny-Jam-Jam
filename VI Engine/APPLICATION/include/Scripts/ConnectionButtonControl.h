@@ -20,6 +20,10 @@ private:
 	std::string name = "ConnectionButtonControl";
 	bool activate = false;
 public:
+
+	//static bool startMenu_;
+	int Transit(int zoom, Entity loadicon, float& acc, float& scaling);
+
 	ConnectionButtonControl() = default;
 	~ConnectionButtonControl() override = default;
 

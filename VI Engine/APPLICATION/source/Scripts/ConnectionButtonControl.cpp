@@ -11,8 +11,10 @@ Updates the fps count, for the fps printer in entity
 
 
 #include "ConnectionButtonControl.h"
-static bool updateOnce{ false };
+#include "Menu_Button.h"
 
+static bool updateOnce{ false };
+//bool ConnectionButtonControl::startMenu_{ false };
 REGISTER_SCRIPT(ScriptComponent, ConnectionButtonControl);
 
 namespace {
@@ -20,28 +22,87 @@ namespace {
 	Entity ip_;
 	Entity bgeff_;
 	Entity bgeff2_;
+	Entity loadicon_;
+	Entity back_;
 
+	// menu effect variables
 	bool posap_ = false;
-
-	bool textin_ = false;
-	int iplen_ = 0;
-
 
 	bool player1_ = false;
 	bool player2_ = false;
 	
+	// scene transition variables
+	float acc_ = 300;
+	float scaling_ = 1000;
+	int zoom_ = 0;
 
-
-
-	//Scene textinput_;
+	// text input variables
 	std::string ipstring_ = "";
+	bool textin_ = false;
+	int iplen_ = 0;
+
+	//int counter = 0;
 }
+
+
+int ConnectionButtonControl::Transit(int zoom, Entity loadicon, float& acc, float& scaling) {
+
+
+	if (zoom == 1) {
+		loadicon.GetComponent<Transform>().scale.x += scaling * (float)FUNC->GetDeltaTime();
+		loadicon.GetComponent<Transform>().scale.y += scaling * (float)FUNC->GetDeltaTime();
+		if (scaling < 5000) {
+			acc += 2000.f * (float)FUNC->GetDeltaTime();
+			scaling += acc * (float)FUNC->GetDeltaTime() * 60;
+		}
+	//	counter++;
+	//	std::cout << counter << " counter for menu_button \n";
+
+	}
+
+	else if (zoom == 0 && loadicon.GetComponent<Transform>().scale.x >= 0) {
+
+
+		//std::cout << acc_ << " acceleration \n";
+		//std::cout << scaling_ << " scaling \n";
+		//std::cout << loadicon_.GetComponent<Transform>().scale.x << " scale \n";
+
+		loadicon.GetComponent<Transform>().scale.x -= scaling * (float)FUNC->GetDeltaTime();
+		loadicon.GetComponent<Transform>().scale.y -= scaling * (float)FUNC->GetDeltaTime();
+
+
+		if (scaling < 5000) {
+			acc += 2000.f * (float)FUNC->GetDeltaTime();
+			scaling += acc * (float)FUNC->GetDeltaTime() * 60;
+		}
+	}
+
+	if (loadicon.GetComponent<Transform>().scale.x <= 0) {
+		loadicon.GetComponent<Sprite>().color.a = 0;
+	}
+	else {
+		loadicon.GetComponent<Sprite>().color.a = 255;
+	}
+
+	if (loadicon_.GetComponent<Transform>().scale.x > 2000 && zoom == 1) {
+		return -1;
+	}
+
+	if (loadicon_.GetComponent<Transform>().scale.x <= 0 && zoom == 0) {
+		return -1;
+	}
+
+	return zoom;
+}
+
+
 
 /*!*****************************************************************************
 \brief
 Function will run when the gamestate of the entity is activated.
 *******************************************************************************/
 void ConnectionButtonControl::Alive(Entity const& _e) {
+
 	(void)_e;
 }
 
@@ -50,6 +111,21 @@ void ConnectionButtonControl::Alive(Entity const& _e) {
 Function will run on initialisation of the entity.
 *******************************************************************************/
 void ConnectionButtonControl::Init(Entity const& _e) {
+	// acc_ = 1;
+	// scaling_ = 1000;
+	loadicon_ = VI::iEntity::GetEntity("BunnyLoad", "Game");
+	back_ = VI::iEntity::GetEntity("Back", "Game");
+
+	//if (zoom_ == 1) {
+
+	//	loadicon_.GetComponent<Transform>().scale.x =0.f;
+	//	loadicon_.GetComponent<Transform>().scale.y =0.f;
+	//}
+	//else if (zoom_ == 0) {
+		zoom_ = 0;
+		loadicon_.GetComponent<Transform>().scale.x = 2000.f;
+		loadicon_.GetComponent<Transform>().scale.y = 2000.f;
+	//}
 	(void)_e;
 }
 
@@ -69,16 +145,27 @@ EarlyUpdate functions from all other active scripts.
 void ConnectionButtonControl::Update(Entity const& _e) {
 	//(void)_e;
 
-
-	//2764 position 
-
 	if (!updateOnce)
 	{
-		bgeff_ = VI::iEntity::GetEntity("BGEffect", "");
-		bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "");
+		loadicon_ = VI::iEntity::GetEntity("BunnyLoad", "Game");
+		back_ = VI::iEntity::GetEntity("Back", "Game");
+		bgeff_ = VI::iEntity::GetEntity("BGEffect", "Game");
+		bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "Game");
 		ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
 		join_ = VI::iEntity::GetEntity("Join", "");
 	}
+
+
+
+	//std::cout << zoom_ << "zoom\n";
+
+	
+	//VI::iGameState::ChangeGameState("Connection_Menu");
+
+
+	//2764 position 
+
+
 	if (bgeff_.GetComponent<Transform>().translation.x >= -500 && posap_ == false) {
 		bgeff2_.GetComponent<Transform>().translation.x = -2764;
 		bgeff2_.GetComponent<Transform>().translation.y = 2764;
@@ -96,21 +183,6 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	bgeff2_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
 	bgeff2_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
 
-	//if (join_.GetComponent<Transform>().scale.x < 100 && enlarge == false) {
-	//	enlarge = true;
-	//}
-	//if (join_.GetComponent<Transform>().scale.x > 200 && enlarge == true) {
-	//	enlarge = false;
-	//}
-
-	//if (enlarge == true) {
-	//	join_.GetComponent<Transform>().scale.x += 100.f* (float)FUNC->GetDeltaTime();
-	//}
-	//else {
-	//	join_.GetComponent<Transform>().scale.x -= 100.f * (float)FUNC->GetDeltaTime();
-	//}
-
-	//_e.GetComponent<Text>().text = "sgdsdadas"; 
 
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
 	{
@@ -160,6 +232,28 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 	}
 
 
+	
+
+	if (zoom_ == -1 && loadicon_.GetComponent<Transform>().scale.x >= 2000) {
+		VI::iGameState::ChangeGameState("Bunny_MainMenu");
+	}
+
+	//------------------------------------------------------------------------// Buttons
+
+
+	if (back_.GetComponent<Button>().isHover) {
+		//if (join_.GetComponent<Transform>().scale.x < 200) {
+		//	join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
+		//}
+		if (back_.GetComponent<Button>().isClick) {
+			//std::cout << "bitchhhhhhhhhhhhhhhhhhhh\n";
+			zoom_ = 1;
+			Menu_Button::startMenu_ = 0;
+		}
+	}
+	//std::cout << zoom_ << "bitchhhhhhhhhhhhhhhhhhhh\n";
+	zoom_ = Transit(zoom_, loadicon_, acc_, scaling_);
+
 	if (join_.GetComponent<Button>().isHover) {
 		//if (join_.GetComponent<Transform>().scale.x < 200) {
 		//	join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
@@ -174,6 +268,8 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 		//	join_.GetComponent<Transform>().scale.x -= 1000.f * (float)FUNC->GetDeltaTime();
 		//}
 	}
+
+	(void)_e;
 }
 
 /*!*****************************************************************************
@@ -199,6 +295,9 @@ void ConnectionButtonControl::LateUpdate(Entity const& _e) {
 Function will run on exit or when the entity is destroyed.
 *******************************************************************************/
 void ConnectionButtonControl::Exit(Entity const& _e) {
+
+	acc_ = 300;
+	scaling_ = 1000;
 	(void)_e;
 	//LOG_INFO("How to Play button script end works!!!");
 }
@@ -208,5 +307,10 @@ void ConnectionButtonControl::Exit(Entity const& _e) {
 Function will run when the gamestate of the entity exits.
 *******************************************************************************/
 void ConnectionButtonControl::Dead(Entity const& _e) {
+	loadicon_.GetComponent<Transform>().scale.x = 0;
+	loadicon_.GetComponent<Transform>().scale.y = 0;
+	zoom_ = true;
+	acc_ = 1;
+	scaling_ = 1000;
 	(void)_e;
 }

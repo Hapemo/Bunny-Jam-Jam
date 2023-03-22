@@ -23,6 +23,10 @@ private:
 	Entity player;
 	size_t visible = 0;
 public:
+	static int startMenu_;
+
+	int Transit(int zoom, Entity loadicon, float& acc, float& scaling);
+
 	Menu_Button() = default;
 	~Menu_Button() override = default;
 

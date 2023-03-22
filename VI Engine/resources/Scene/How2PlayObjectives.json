@@ -1,0 +1,71 @@
+[
+    {
+        "General": {
+            "name": "bgObjectives",
+            "tag": 4,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1600.0,
+                "Y": 900.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\HowtoPlayObjectives.png",
+            "layer": 0
+        },
+        "Script": {
+            "name": "Menu_Button"
+        }
+    },
+    {
+        "General": {
+            "name": "toControls",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -708.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\BackButton.png",
+            "layer": 1
+        },
+        "Script": {
+            "name": "Menu_Button"
+        },
+        "Button": {
+            "interactable": true
+        }
+    }
+]

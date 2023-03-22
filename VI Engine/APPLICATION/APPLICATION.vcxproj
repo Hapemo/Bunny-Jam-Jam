@@ -72,7 +72,7 @@
     <ClInclude Include="include\Scripts\ExitGameButton.h" />
     <ClInclude Include="include\Scripts\HowToPlayButton.h" />
     <ClInclude Include="include\Scripts\PauseButton.h" />
-    <ClInclude Include="include\Scripts\Connection.h" />
+    <ClInclude Include="include\Scripts\BackBunny.h" />
     <ClInclude Include="include\Scripts\PlayerMovementScript.h" />
     <ClInclude Include="include\Scripts\PlayGameButton.h" />
     <ClInclude Include="include\Scripts\RotateScript.h" />
@@ -93,7 +93,7 @@
     <ClCompile Include="source\Scripts\Old\Bunny_PlayerMovement.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_Timer.cpp" />
     <ClCompile Include="source\Scripts\Old\PlayGameButton.cpp" />
-    <ClCompile Include="source\Scripts\Connection.cpp" />
+    <ClCompile Include="source\Scripts\BackBunny.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
