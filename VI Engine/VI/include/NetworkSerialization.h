@@ -19,6 +19,7 @@ public:
 
 		// Server to Client 
 		ServerDataTypes, // This mark the beginning of server data types
+
 		S2CNumOfClientConnected,
 		S2CGamePlayData,
 		S2CEntityDetail, // For player and jam
@@ -41,7 +42,7 @@ public:
 	int SerialiseMultipleEntities(char*&, std::set<Entity>);	// same
 	int SerialiseEntityDetail(char*&, Entity);								// same
 	int SerialisePlayAgainCount();														// After play again number changes. If gamestate is asking for play again and compare mPlayAgainCount with mPrevPlayAgainCount
-	
+
 	int SerialiseData(); // Serialise a string and int to send over
 
 	void DeserialisePlayerControls();													// App::FirstUpdate(), since it's before logic system
@@ -53,6 +54,7 @@ public:
 	void DeserialiseEntityDetail(char* currBuff);							// App::FirstUpdate(), since it's before logic system
 	void DeserialisePlayAgainCount();													// App::FirstUpdate(), since it's before logic system
 
+	// To use the data bank, firstly input the data using PrepareData(). Secondly, send the data using SerialiseAndSend(C2SData or S2CData)
 	void PrepareData(std::string, int);
 	bool GetFromBank(std::string, int*);
 	void DeserialiseData();
@@ -76,11 +78,24 @@ public:
 	int mPrevPlayAgainCount;
 	int mPlayAgainCount; // if -1, quit. if 0, no data yet. if 1, 1 person play again. if 2, all player want to play again
 
+	int mJam;
+	float mTimeRemaining;
+	int mRound;
 
+#ifndef _SERVER //If client
+	char prevInput;
+#endif
 
-
-
-
+#ifndef _CLIENT //If server
+	bool mP1InputW;
+	bool mP1InputA;
+	bool mP1InputS;
+	bool mP1InputD;
+	bool mP2InputW;
+	bool mP2InputA;
+	bool mP2InputS;
+	bool mP2InputD;
+#endif
 
 
 	std::map<std::string, int> dataBank;
