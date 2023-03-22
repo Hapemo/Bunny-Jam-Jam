@@ -54,6 +54,24 @@ public:
 
 	char* mSendBuff;
 	char* mRecvBuff;
+
+
+	//---------------
+	// All Game Data
+	//---------------
+	int mNumberOfClientConnected;
+	int mPlayerID;
+
+
+
+
+
+
+
+
+
+
+
 private:
 	size_t mSize;
 

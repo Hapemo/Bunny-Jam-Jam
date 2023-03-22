@@ -18,7 +18,10 @@ namespace {
 
 
 NetworkSerializationManager::NetworkSerializationManager() : 
-	mSendBuff(new char[MAX_UDP_PACKET_SIZE]), mRecvBuff(new char[MAX_UDP_PACKET_SIZE]), mSize(0) {
+	mSendBuff(new char[MAX_UDP_PACKET_SIZE]), mRecvBuff(new char[MAX_UDP_PACKET_SIZE]), mSize(0),
+	mNumberOfClientConnected()
+
+{
 	
 }
 
@@ -35,6 +38,7 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		break;
 		
 	case NETWORKDATATYPE::C2SPlayAgain:
+		dataSize = SerialisePlayAgain();
 		break;
 		
 	case NETWORKDATATYPE::ServerDataTypes:
@@ -45,15 +49,19 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		break;
 		
 	case NETWORKDATATYPE::S2CGamePlayData:
+		dataSize = SerialiseGamePlayData();
 		break;
 		
 	case NETWORKDATATYPE::S2CEntityDetail:
+		//dataSize = SerialiseEntityDetail();
 		break;
 		
 	case NETWORKDATATYPE::S2CGameStats:
+		//dataSize = SerialiseGameStats();
 		break;
 		
 	case NETWORKDATATYPE::S2CNumOfPlayerReplay:
+		//dataSize = SerialiseNumOfPlayerReplay();
 		break;
 	}
 
@@ -61,15 +69,21 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 
 	if (isServer) {
 		*reinterpret_cast<unsigned long*>(mSendBuff + dataSize) = ++ServerManager::GetInstance()->serverPacketNum;
+#if DEBUGPRINT
 		std::cout << "ServerManager::GetInstance()->serverPacketNum: " << ServerManager::GetInstance()->serverPacketNum << '\n';
-		ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
+#endif
+		ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize + sizeof(unsigned long));
 	} else {
 		*reinterpret_cast<unsigned long*>(mSendBuff + dataSize) = ++ClientManager::GetInstance()->clientPacketNum;
+#if DEBUGPRINT
 		std::cout << "ClientManager::GetInstance()->clientPacketNum: " << ClientManager::GetInstance()->clientPacketNum << '\n';
-		ClientManager::GetInstance()->clientSendData(mSendBuff, dataSize);
+#endif
+		ClientManager::GetInstance()->clientSendData(mSendBuff, dataSize + sizeof(unsigned long));
 	}
 
+#if DEBUGPRINT
 	std::cout << "*reinterpret_cast<unsigned long*>(mSendBuff + dataSize): " << *reinterpret_cast<unsigned long*>(mSendBuff + dataSize) << '\n';
+#endif
 	//ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
 }
 
@@ -134,8 +148,6 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 }
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
-	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::C2SPlayerControls)
-		std::cout << "NETWORKDATATYPE::C2SPlayerControls\n";
 	bool up{static_cast<bool>(mRecvBuff[1])};
 	bool down{static_cast<bool>(mRecvBuff[2])};
 	bool left{static_cast<bool>(mRecvBuff[3])};
@@ -191,7 +203,12 @@ void NetworkSerializationManager::DeserialiseNumberOfClientConnected() {
 	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CNumOfClientConnected)
 		std::cout << "NETWORKDATATYPE::S2CNumOfClientConnected\n";
 
-	int clientsConnected{ static_cast<int>(mRecvBuff[1]) };
+	mNumberOfClientConnected = static_cast<int>(mRecvBuff[1]);
+	if (!mNumberOfClientConnected) mPlayerID = mNumberOfClientConnected;
+
+#if DEBUGPRINT
+	std::cout << "mNumberOfClientConnected: " << mNumberOfClientConnected << '\n';
+#endif
 }
 
 int NetworkSerializationManager::SerialiseGamePlayData() {
