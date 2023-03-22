@@ -23,7 +23,7 @@ public:
 		S2CGamePlayData,
 		S2CEntityDetail, // For player and jam
 		S2CGameStats, // TODO What game stats are there
-		S2CNumOfPlayerReplay
+		S2CPlayAgainCount
 	};
 
 	NetworkSerializationManager();
@@ -32,21 +32,23 @@ public:
 	void SerialiseAndSend(NETWORKDATATYPE);
 	void DeserialiseAndLoad();
 
-	int SerialisePlayerControls();
-	int SerialisePlayAgain();
-	int SerialiseNumberOfClientConnected();
-	int SerialiseGamePlayData();
-	int SerialiseGameStats(char*&);
-	int SerialiseMultipleEntities(char*&, std::set<Entity>);
-	int SerialiseEntityDetail(char*&, Entity);
+	int SerialisePlayerControls();														// App::FirstUpdate(), after glfwinputpoll
+	int SerialisePlayAgain();																	// App::SecondUpdate(), since it'll be after the button update
+	int SerialiseNumberOfClientConnected();										// ServerManager when a client joined and initialised in the server
+	int SerialiseGamePlayData();															// App::SecondUpdate(), since it's after all the logic and collision systems
+	int SerialiseGameStats(char*&);														// same
+	int SerialiseMultipleEntities(char*&, std::set<Entity>);	// same
+	int SerialiseEntityDetail(char*&, Entity);								// same
+	int SerialisePlayAgainCount();														// After play again number changes. If gamestate is asking for play again and compare mPlayAgainCount with mPrevPlayAgainCount
 
-	int SerialiseNumberOfPlayerReplay();
-
-	void DeserialisePlayerControls();
-	void DeserialisePlayAgain();
-	void DeserialiseNumberOfClientConnected();
-	void DeserialiseMultipleEntities();
-	void DeserialiseEntityDetail(char* currBuff);
+	void DeserialisePlayerControls();													// App::FirstUpdate(), since it's before logic system
+	void DeserialisePlayAgain();															// App::FirstUpdate(), since it's before logic system
+	void DeserialiseNumberOfClientConnected();								// App::FirstUpdate(), since it's before logic system
+	void DeserialiseGamePlayData();														// App::FirstUpdate(), since it's before logic system
+	void DeserialiseGameStats(char*&);												// App::FirstUpdate(), since it's before logic system
+	void DeserialiseMultipleEntities(char*&);									// App::FirstUpdate(), since it's before logic system
+	void DeserialiseEntityDetail(char* currBuff);							// App::FirstUpdate(), since it's before logic system
+	void DeserialisePlayAgainCount();													// App::FirstUpdate(), since it's before logic system
 
 	void PrintSendBuff();
 	void TestTransferData();
@@ -63,6 +65,8 @@ public:
 	int mNumberOfClientConnected;
 	int mPlayerID;
 
+	bool mPlayAgain;
+	int mPrevPlayAgainCount;
 	int mPlayAgainCount; // if -1, quit. if 0, no data yet. if 1, 1 person play again. if 2, all player want to play again
 
 	int mJam;
