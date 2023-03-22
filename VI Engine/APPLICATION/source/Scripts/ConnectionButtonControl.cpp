@@ -14,6 +14,8 @@ Updates the fps count, for the fps printer in entity
 #include "Menu_Button.h"
 #include "../../../VI/include/ServerManager.h" 
 #include "../../../VI/include/ClientManager.h" 
+#include "NetworkSerialization.h"
+
 
 static bool updateOnce{ false };
 //bool ConnectionButtonControl::startMenu_{ false };
@@ -35,7 +37,7 @@ namespace {
 
     bool player1_ = false;
     bool player2_ = false;
-
+    bool isConnected{ false };
     // scene transition variables
     float acc_ = 300;
     float scaling_ = 1000;
@@ -177,14 +179,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
     // default you_ size 335 / 150
     // default player1/2 button size 260 / 180
 
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W) == true) {
-        you_.GetComponent<Transform>().translation.x = -400.f;
-        you_.GetComponent<Transform>().translation.y = 220.f;
-    }
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S) == true) {
-        you_.GetComponent<Transform>().translation.x = -400.f;
-        you_.GetComponent<Transform>().translation.y = 8.f;
-    }
+
 
 
     if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::Q) == true) {
@@ -237,6 +232,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         VI::iScene::Pause("RequestIP");
         textin_ = false;
     }
+    
 
     if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::L)) {
 
@@ -280,8 +276,8 @@ void ConnectionButtonControl::Update(Entity const& _e) {
             //Connected Successfully
             VI::iScene::Pause("RequestIP");
             //Pop up P1 based on Connection.size
-            VI::iGameState::ChangeGameState("Bunny_GameLevel1");
-
+            //VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+           
                
         }
         else
@@ -291,8 +287,23 @@ void ConnectionButtonControl::Update(Entity const& _e) {
             //Pop up error Message
         }
     }
-
-    
+    if (!isConnected)
+    {
+        if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
+        {
+            player1_ = true;
+            isConnected = true;
+            you_.GetComponent<Transform>().translation.x = -400.f;
+            you_.GetComponent<Transform>().translation.y = 220.f;
+        }
+        else if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
+        {
+            player2_ = true;
+            isConnected = true;
+            you_.GetComponent<Transform>().translation.x = -400.f;
+            you_.GetComponent<Transform>().translation.y = 8.f;
+        }
+    }
 
 
 

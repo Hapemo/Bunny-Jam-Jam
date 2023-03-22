@@ -183,6 +183,8 @@ void serverRecvData()
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
+            NetworkSerializationManager::GetInstance()->mNumberOfClientConnected++;
+            NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
 		    }
         else {
