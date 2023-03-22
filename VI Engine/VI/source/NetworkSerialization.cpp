@@ -62,13 +62,15 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 	if (isServer) {
 		*reinterpret_cast<unsigned long*>(mSendBuff + dataSize) = ++ServerManager::GetInstance()->serverPacketNum;
 		std::cout << "ServerManager::GetInstance()->serverPacketNum: " << ServerManager::GetInstance()->serverPacketNum << '\n';
+		ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
 	} else {
 		*reinterpret_cast<unsigned long*>(mSendBuff + dataSize) = ++ClientManager::GetInstance()->clientPacketNum;
 		std::cout << "ClientManager::GetInstance()->clientPacketNum: " << ClientManager::GetInstance()->clientPacketNum << '\n';
+		ClientManager::GetInstance()->clientSendData(mSendBuff, dataSize);
 	}
 
 	std::cout << "*reinterpret_cast<unsigned long*>(mSendBuff + dataSize): " << *reinterpret_cast<unsigned long*>(mSendBuff + dataSize) << '\n';
-	ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
+	//ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
 }
 
 void NetworkSerializationManager::DeserialiseAndLoad() {

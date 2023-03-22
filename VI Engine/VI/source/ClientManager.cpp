@@ -86,7 +86,7 @@ void clientRecvData()
 
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long)));
 
-        if (nLength > 0) std::cout << ">> [C] Received data from server!";
+        if (nLength > 0) std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
 
         if (nLength == SOCKET_ERROR) {
           std::cout << "RECV SOCKET ERROR\n";

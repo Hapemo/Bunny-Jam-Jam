@@ -164,7 +164,7 @@ void serverRecvData()
         
         if (nLength >= 0) {
             //cBuffer[nLength] = '\0';
-            std::cout << ">> [S] Data received!\n";
+            std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
         }
 
         if (nLength == SOCKET_ERROR) {
