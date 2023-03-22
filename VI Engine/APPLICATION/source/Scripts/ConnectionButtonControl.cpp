@@ -309,7 +309,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
                 you_.GetComponent<Transform>().translation.y = 8.f;
             }
         }
-    }
+    
 
 
 
