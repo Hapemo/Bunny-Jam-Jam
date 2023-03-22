@@ -32,6 +32,8 @@ namespace {
 	int clickCount{};
 	bool atControls{ false };
 
+	int counter = 0;
+
 }
 
 
@@ -39,32 +41,39 @@ int Menu_Button::Transit(int zoom, Entity loadicon, float& acc, float& scaling) 
 
 
 	if (zoom == 1) {
+		
 		loadicon.GetComponent<Transform>().scale.x += scaling * (float)FUNC->GetDeltaTime();
 		loadicon.GetComponent<Transform>().scale.y += scaling * (float)FUNC->GetDeltaTime();
-		if (scaling < 5000) {
+		if (scaling < 3000) {
 			acc += 2000.f * (float)FUNC->GetDeltaTime();
 			scaling += acc * (float)FUNC->GetDeltaTime() * 60;
 		}
+
+
+	//	counter++;
+		//std::cout << counter << " counter for menu_button \n";
 
 
 	}
 
 	else if (zoom == 0 && loadicon.GetComponent<Transform>().scale.x >= 0) {
 
+			
 
-		//std::cout << acc_ << " acceleration \n";
-		//std::cout << scaling_ << " scaling \n";
-		//std::cout << loadicon_.GetComponent<Transform>().scale.x << " scale \n";
 
 		loadicon.GetComponent<Transform>().scale.x -= scaling * (float)FUNC->GetDeltaTime();
 		loadicon.GetComponent<Transform>().scale.y -= scaling * (float)FUNC->GetDeltaTime();
 
 
-		if (scaling < 5000) {
+		if (scaling < 3000) {
 			acc += 2000.f * (float)FUNC->GetDeltaTime();
 			scaling += acc * (float)FUNC->GetDeltaTime() * 60;
 		}
 	}
+
+	//std::cout << acc_ << " acceleration \n";
+	//std::cout << scaling_ << " scaling \n";
+	//std::cout << loadicon_.GetComponent<Transform>().scale.x << " scale \n";
 
 	if (loadicon.GetComponent<Transform>().scale.x <= 0) {
 		loadicon.GetComponent<Sprite>().color.a = 0;

@@ -40,19 +40,24 @@ namespace {
 	std::string ipstring_ = "";
 	bool textin_ = false;
 	int iplen_ = 0;
+
+	//int counter = 0;
 }
 
 
 int ConnectionButtonControl::Transit(int zoom, Entity loadicon, float& acc, float& scaling) {
 
 
-	if (zoom_ == 1) {
+	if (zoom == 1) {
 		loadicon.GetComponent<Transform>().scale.x += scaling * (float)FUNC->GetDeltaTime();
 		loadicon.GetComponent<Transform>().scale.y += scaling * (float)FUNC->GetDeltaTime();
 		if (scaling < 5000) {
 			acc += 2000.f * (float)FUNC->GetDeltaTime();
 			scaling += acc * (float)FUNC->GetDeltaTime() * 60;
 		}
+	//	counter++;
+	//	std::cout << counter << " counter for menu_button \n";
+
 	}
 
 	else if (zoom == 0 && loadicon.GetComponent<Transform>().scale.x >= 0) {
@@ -246,7 +251,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 			Menu_Button::startMenu_ = 0;
 		}
 	}
-	std::cout << zoom_ << "bitchhhhhhhhhhhhhhhhhhhh\n";
+	//std::cout << zoom_ << "bitchhhhhhhhhhhhhhhhhhhh\n";
 	zoom_ = Transit(zoom_, loadicon_, acc_, scaling_);
 
 	if (join_.GetComponent<Button>().isHover) {
