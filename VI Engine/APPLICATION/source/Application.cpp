@@ -415,9 +415,11 @@ bool Application::FirstUpdate() {
 void Application::SecondUpdate() {
   PrintTitleBar(0.3);
 
+#ifdef _CLIENT
   // Close the window if the close flag is triggered
   if (glfwWindowShouldClose(Application::getWindow())) GameStateManager::mGSMState = GameStateManager::E_GSMSTATE::EXIT;
   /////audioManager->UpdateSound();
+#endif
 
 #if NETWORKSERIALISETEST
   NetworkSerializationManager::GetInstance()->TestTransferData();
@@ -429,8 +431,10 @@ void Application::SecondUpdate() {
   Input::UpdatePrevKeyStates();
   buttonManager->ResetAllButtons();
 
+#ifdef _CLIENT
   // Part 2: swap buffers: front <-> back
   glfwSwapBuffers(Application::getWindow());
+#endif
 
   FPSManager::LimitFPS();
   FPSManager::CalcDeltaTime();
@@ -477,7 +481,7 @@ void Application::MainUpdate() {
     END_TRACK("Shadow");
 
 
-
+#ifdef _CLIENT
     TRACK_PERFORMANCE("Graphics");
     //--------------------- Drawing and rendering ---------------------
     renderManager->Render();
@@ -488,6 +492,7 @@ void Application::MainUpdate() {
     //TRACK_PERFORMANCE("Audio");
     audioManager->UpdateSound(); 
     //END_TRACK("Audio");
+#endif
 
     // If it changes, it should've came from when updaing game logic
     //if (Input::CheckKey(PRESS, ESCAPE)) GameStateManager::GetInstance()->GameStateExit();

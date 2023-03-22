@@ -115,7 +115,7 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 //== Batch send to all connected clients
 bool ServerManager::serverSendData(const char* data, int size)
 {
-    std::cout << "ClientList Size: " << m_ClientList.size() << "\n";
+    //std::cout << "ClientList Size: " << m_ClientList.size() << "\n";
     
     // Broadcast data to all clients
     for (auto const& c : m_ClientList) {
