@@ -93,7 +93,10 @@ void clientRecvData()
           return;
         }
 
+        std::cout << "ClientManager::GetInstance()->serverPacketNum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
+        std::cout << "newPacketNum: " << newPacketNum << '\n';
         if (ClientManager::GetInstance()->serverPacketNum < newPacketNum) {
+          std::cout << "Successful, going to deserialise\n";
           ClientManager::GetInstance()->serverPacketNum = newPacketNum;
           // tell jazz to deserialize
           NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();

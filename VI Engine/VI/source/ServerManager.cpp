@@ -187,7 +187,10 @@ void serverRecvData()
 		    }
         else {
           // wrong instnace
+          std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
+          std::cout << "newPacketNum: " << newPacketNum << '\n';
           if (clientinstance->second.clientPacketNum < newPacketNum) {
+            std::cout << "Successful, going to deserialise\n";
             clientinstance->second.clientPacketNum = newPacketNum;
             // tell jazz to deserialize
             NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
