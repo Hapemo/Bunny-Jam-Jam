@@ -62,6 +62,7 @@ void BunnyChef_PlayerMovement::EarlyUpdate(Entity const& _e) {
 void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 		(void)_e;
 
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) { BunnyOrChef = !BunnyOrChef; }
 
 
 		if (BunnyOrChef)
