@@ -15,6 +15,7 @@ public:
 		// Client to Server
 		C2SPlayerControls = 1,
 		C2SPlayAgain,
+		C2SData,
 
 		// Server to Client 
 		ServerDataTypes, // This mark the beginning of server data types
@@ -23,7 +24,8 @@ public:
 		S2CGamePlayData,
 		S2CEntityDetail, // For player and jam
 		S2CGameStats, // TODO What game stats are there
-		S2CPlayAgainCount
+		S2CPlayAgainCount,
+		S2CData
 	};
 
 	NetworkSerializationManager();
@@ -40,6 +42,8 @@ public:
 	int SerialiseMultipleEntities(char*&, std::set<Entity>);	// same
 	int SerialiseEntityDetail(char*&, Entity);								// same
 	int SerialisePlayAgainCount();														// After play again number changes. If gamestate is asking for play again and compare mPlayAgainCount with mPrevPlayAgainCount
+	
+	int SerialiseData(); // Serialise a string and int to send over
 
 	void DeserialisePlayerControls();													// App::FirstUpdate(), since it's before logic system
 	void DeserialisePlayAgain();															// App::FirstUpdate(), since it's before logic system
@@ -49,6 +53,10 @@ public:
 	void DeserialiseMultipleEntities(char*&);									// App::FirstUpdate(), since it's before logic system
 	void DeserialiseEntityDetail(char* currBuff);							// App::FirstUpdate(), since it's before logic system
 	void DeserialisePlayAgainCount();													// App::FirstUpdate(), since it's before logic system
+
+	void PrepareData(std::string, int);
+	bool GetFromBank(std::string, int*);
+	void DeserialiseData();
 
 	void PrintSendBuff();
 	void TestTransferData();
@@ -89,9 +97,12 @@ public:
 #endif
 
 
-
+	std::map<std::string, int> dataBank;
 
 private:
+
+	std::string dataBankBuffStr;
+	int dataBankBuffInt;
 	size_t mSize;
 
 };

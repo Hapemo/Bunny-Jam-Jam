@@ -64,6 +64,11 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 	case NETWORKDATATYPE::S2CPlayAgainCount:
 		//dataSize = SerialiseNumOfPlayerReplay();
 		break;
+
+	case NETWORKDATATYPE::C2SData:
+	case NETWORKDATATYPE::S2CData:
+
+		break;
 	}
 
 	if (dataSize == 0) return; // No point sending any data with 0 bytes
@@ -119,6 +124,11 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 		break;
 
 	case NETWORKDATATYPE::S2CPlayAgainCount:
+		break;
+
+	case NETWORKDATATYPE::C2SData:
+	case NETWORKDATATYPE::S2CData:
+
 		break;
 	}
 }
@@ -513,12 +523,51 @@ void NetworkSerializationManager::DeserialisePlayAgainCount() {
 }
 
 
+void NetworkSerializationManager::PrepareData(std::string str, int i) {
+	dataBankBuffStr = str;
+	dataBankBuffInt = i;
+}
 
+int NetworkSerializationManager::SerialiseData() {
+	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
+	char* currBuff{ mSendBuff + 1 };
+	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::C2SData);
 
+	memcpy(currBuff, dataBankBuffStr.c_str(), dataBankBuffStr.size() + 1);
+	currBuff += dataBankBuffStr.size() + 1;
 
+	*reinterpret_cast<int*>(currBuff) = dataBankBuffInt;
+	currBuff += sizeof(int);
 
+	return static_cast<int>(currBuff - mSendBuff);
+	
+	// Doesn't matter what the data type is, just save it as C2SData
+	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CPlayAgainCount)
+	//	std::cout << "NETWORKDATATYPE::S2CPlayAgainCount\n";
+}
 
+void NetworkSerializationManager::DeserialiseData() {
+	// Doesn't matter what the data type is, just save it as C2SData
+	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::C2SData || static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CData)
+		std::cout << "NETWORKDATATYPE::C2SData or NETWORKDATATYPE::S2CData\n";
 
+	char* currBuff{ mRecvBuff + 1 };
+	std::string tempStr = currBuff;
+	currBuff += tempStr.size() + 1;
+
+	int tempInt = *reinterpret_cast<int*>(currBuff);
+
+	dataBank[tempStr] = tempInt;
+}
+
+bool NetworkSerializationManager::GetFromBank(std::string name, int* intPtr) {
+	try {
+		*intPtr = std::move(dataBank.at(name));
+		return true;
+	} catch (std::out_of_range()) {
+		return false;
+	}
+}
 
 //---------------------------------------
 // Helper functions
