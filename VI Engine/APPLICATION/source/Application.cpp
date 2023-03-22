@@ -386,7 +386,9 @@ bool Application::FirstUpdate() {
   glfwPollEvents();
 
 #ifdef _CLIENT
-  NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::C2SPlayerControls);
+
+  if (GameStateManager::GetInstance()->mCurrentGameState->mName == "Bunny_GameLevel1")
+    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::C2SPlayerControls);
 #endif
 
 
