@@ -21,16 +21,23 @@ Press "ESC" to toggle the pause menu.
 
 REGISTER_SCRIPT(ScriptComponent, Bunny_PlayerMovement);
 
+static BUNNY_PLAYER_DIRECTION sPLAYERDIRECTION;
+
 
 void Bunny_PlayerMovement::Alive(const Entity& _e) {
 	(void)_e;
 }
-
+void Bunny_PlayerMovement::stopPlayer(Entity const& _e)
+{
+	sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_NONE;
+	_e.GetComponent<Physics2D>().velocity.x = 0;
+	_e.GetComponent<Physics2D>().velocity.y = 0;
+}
 void Bunny_PlayerMovement::Init(const Entity& _e) {
 	(void)_e;
 	inited = false;
 	sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_NONE;
-	 Carrots = 0;
+	Carrots = 0;
 	/* if (!_e.HasComponent<Bunny>())
 		 _e.AddComponent(Bunny{});*/
 }

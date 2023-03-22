@@ -31,13 +31,14 @@ private:
 	std::string name{ "Bunny_PlayerMovement" };
 	Scene* currScene;
 	Transform* currCamera;
-	BUNNY_PLAYER_DIRECTION sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_NONE;
 	unsigned int Carrots = 0;
 	bool inited;
 	Math::Vec2 originalTranslate;
 	Math::Vec2 originalScale;
 
 public:
+
+	static void stopPlayer(Entity const& _e);
 	/*!*****************************************************************************
 	\brief
 	Default constructor

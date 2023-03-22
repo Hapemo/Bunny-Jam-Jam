@@ -20,6 +20,10 @@ Press "ESC" to toggle the pause menu.
 #include "Bunny_Timer.h"
 
 REGISTER_SCRIPT(ScriptComponent, Bunny_Timer);
+namespace {
+	Entity INGAMESTATEMANAGER;
+	Entity countdown;
+}
 
 
 void Bunny_Timer::Alive(const Entity& _e) {
@@ -29,8 +33,12 @@ void Bunny_Timer::Alive(const Entity& _e) {
 void Bunny_Timer::Init(const Entity& _e) {
 	(void)_e;
 	timer = 60;
+	countdowntimer = 4.0f;
 	if (_e.HasComponent<Text>())
 		_e.GetComponent<Text>().text = "00:60";
+	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER", "");
+	countdown = VI::iEntity::GetEntity("BUNNYCOUNTDOWN","");
+
 }
 
 void Bunny_Timer::EarlyUpdate(Entity const& _e) {
@@ -38,14 +46,45 @@ void Bunny_Timer::EarlyUpdate(Entity const& _e) {
 }
 
 void Bunny_Timer::Update(const Entity& _e) {
-	if (timer > 0)
-		timer -= VI::GetDeltaTime();
-	if (_e.HasComponent<Text>())
+
+	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER", "");
+	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_COUNTDOWN)
 	{
-		_e.GetComponent<Text>().text = "00:";
-		_e.GetComponent<Text>().text += std::to_string(static_cast<int>(timer));
+		if (countdowntimer > 0)
+		{
+			if (countdown.HasComponent<Text>())
+				countdown.GetComponent<Text>().color.a = 255;
+			countdowntimer -= VI::GetDeltaTime();
+		}
+		else
+		{
+			if (countdown.HasComponent<Text>())
+				countdown.GetComponent<Text>().color.a = 0;
+			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_INGAME;
+		}
+
+		if (countdown.HasComponent<Text>())
+		{
+			countdown.GetComponent<Text>().text = std::to_string(static_cast<int>(countdowntimer));
+			if (countdowntimer < 1)
+				countdown.GetComponent<Text>().text = "GO!";
+		}
+
 	}
-	
+	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_INGAME)
+	{
+		if (timer > 0)
+			timer -= VI::GetDeltaTime();
+		if (_e.HasComponent<Text>())
+		{
+			_e.GetComponent<Text>().text = "00:";
+			if (timer < 10.0f)
+			{
+				_e.GetComponent<Text>().text += "0";
+			}
+			_e.GetComponent<Text>().text += std::to_string(static_cast<int>(timer));
+		}
+	}
 }
 
 void Bunny_Timer::FixedUpdate(const Entity& _e) {

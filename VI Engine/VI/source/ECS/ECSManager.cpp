@@ -197,6 +197,7 @@ void ECSManager::RegisterMovementAIManager()
 	movementAIManager = ECS::RegisterSystem<MovementAIManager>();
 	ECS::SetSystemSignature<MovementAIManager>(signature);
 }
+
 //----------------------------------------------------------------
 // ECSManager Functions
 //----------------------------------------------------------------
@@ -250,6 +251,7 @@ void ECSManager::RegisterAllComponents() {
 	ECS::RegisterComponent<MovementAI>();
 	ECS::RegisterComponent<ParticleSystem>();
 	ECS::RegisterComponent<Bunny>();
+	ECS::RegisterComponent<Bunny_InGameStateComponent>();
 
 	// More to come
 }

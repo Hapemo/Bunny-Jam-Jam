@@ -21,7 +21,7 @@ REGISTER_SCRIPT(ScriptComponent, Bunny_GameSceneTransition);
 
 namespace {
 	Entity loadicon_;
-
+	Entity INGAMESTATEMANAGER;
 	// menu effect variables
 	bool posap_ = false;
 
@@ -37,6 +37,7 @@ namespace {
 	std::string ipstring_ = "";
 	bool textin_ = false;
 	int iplen_ = 0;
+
 }
 
 
@@ -77,10 +78,12 @@ int Bunny_GameSceneTransition::Transit(int zoom, Entity loadicon, float& acc, fl
 	}
 
 	if (loadicon_.GetComponent<Transform>().scale.x > 2000 && zoom == 1) {
+
 		return -1;
 	}
 
 	if (loadicon_.GetComponent<Transform>().scale.x <= 0 && zoom == 0) {
+		INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_COUNTDOWN;
 		return -1;
 	}
 
@@ -106,8 +109,13 @@ void Bunny_GameSceneTransition::Init(Entity const& _e) {
 	// acc_ = 1;
 	// scaling_ = 1000;
 	loadicon_ = VI::iEntity::GetEntity("BunnyLoadGame", "");
-
+	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER","");
 	//if (zoom_ == 1) {
+	{
+		if (!INGAMESTATEMANAGER.HasComponent<Bunny_InGameStateComponent>())
+			INGAMESTATEMANAGER.AddComponent(Bunny_InGameStateComponent{});
+		INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_ZOOMING;
+	}
 
 	//	loadicon_.GetComponent<Transform>().scale.x =0.f;
 	//	loadicon_.GetComponent<Transform>().scale.y =0.f;

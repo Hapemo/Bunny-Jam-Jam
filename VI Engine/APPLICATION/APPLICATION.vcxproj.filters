@@ -31,6 +31,7 @@
     <ClInclude Include="include\Scripts\Bunny_Timer.h" />
     <ClInclude Include="include\Scripts\Menu_Button.h" />
     <ClInclude Include="include\Scripts\Bunny_GameSceneTransition.h" />
+    <ClInclude Include="include\Scripts\Bunny_MatchOver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -46,5 +47,6 @@
     <ClCompile Include="source\Scripts\Old\Bunny_PlayerMovement.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_Timer.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_GameSceneTransition.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_MatchOver.cpp" />
   </ItemGroup>
 </Project>
