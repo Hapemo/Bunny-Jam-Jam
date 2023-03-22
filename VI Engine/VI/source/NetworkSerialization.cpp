@@ -35,6 +35,7 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 	switch (dataType) {
 	case NETWORKDATATYPE::C2SPlayerControls:
 		dataSize = SerialisePlayerControls();
+		if (dataSize == 0) return;
 		break;
 		
 	case NETWORKDATATYPE::C2SPlayAgain:
@@ -64,6 +65,8 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		//dataSize = SerialiseNumOfPlayerReplay();
 		break;
 	}
+
+	if (dataSize == 0) return; // No point sending any data with 0 bytes
 
 	bool isServer = static_cast<char>(dataType) > static_cast<char>(NETWORKDATATYPE::ServerDataTypes);
 
@@ -120,7 +123,7 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 	}
 }
 
-// TODO Do you want me to check if there is input update here before sending?
+// Only send input if there is change in data
 int NetworkSerializationManager::SerialisePlayerControls() {
 	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
 	char* currBuff{ mSendBuff };
@@ -133,22 +136,30 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	*reinterpret_cast<int*>(currBuff) = mPlayerID;
 	currBuff += sizeof(int);
 
-	E_KEY up = E_KEY::W;
-	E_KEY down = E_KEY::S;
-	E_KEY left = E_KEY::A;
-	E_KEY right = E_KEY::D;
+	E_KEY up = E_KEY::W;		// 0001
+	E_KEY down = E_KEY::S;	// 0010
+	E_KEY left = E_KEY::A;	// 0100
+	E_KEY right = E_KEY::D;	// 1000
 
-	if (Input::CheckKey(PRESS, up) || Input::CheckKey(HOLD, up)) 
-		*currBuff = 1;
-	++currBuff;
-	if (Input::CheckKey(PRESS, down) || Input::CheckKey(HOLD, down)) 
-		*currBuff = 1;
-	++currBuff;
-	if (Input::CheckKey(PRESS, left) || Input::CheckKey(HOLD, left)) 
-		*currBuff = 1;
-	++currBuff;
-	if (Input::CheckKey(PRESS, right) || Input::CheckKey(HOLD, right)) 
-		*currBuff = 1;
+	char currInput{};
+
+	if (Input::CheckKey(PRESS, up) || Input::CheckKey(HOLD, up)) {
+		currInput |= (1L << 0);
+	}
+	if (Input::CheckKey(PRESS, down) || Input::CheckKey(HOLD, down)) {
+		currInput |= (1L << 1);
+	}
+	if (Input::CheckKey(PRESS, left) || Input::CheckKey(HOLD, left)) {
+		currInput |= (1L << 2);
+	}
+	if (Input::CheckKey(PRESS, right) || Input::CheckKey(HOLD, right)) {
+		currInput |= (1L << 3);
+	}
+
+	if (currInput == prevInput) return 0;
+	prevInput = currInput;
+
+	currBuff[0] = currInput;
 	++currBuff;
 
 	return static_cast<int>(currBuff - mSendBuff);
@@ -156,29 +167,30 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
 	int playerID{ *reinterpret_cast<int*>(mRecvBuff) };
-	bool up{static_cast<bool>(mRecvBuff[5])};
-	bool down{static_cast<bool>(mRecvBuff[6])};
-	bool left{static_cast<bool>(mRecvBuff[7])};
-	bool right{static_cast<bool>(mRecvBuff[8])};
+	char input{ mRecvBuff[5] };
+	//bool up{static_cast<bool>(mRecvBuff[5])};
+	//bool down{static_cast<bool>(mRecvBuff[6])};
+	//bool left{static_cast<bool>(mRecvBuff[7])};
+	//bool right{static_cast<bool>(mRecvBuff[8])};
 
 	if (playerID == 1) {
-		mP1InputW = up;
-		mP1InputA = down;
-		mP1InputS = left;
-		mP1InputD = right;
+		mP1InputW = static_cast<bool>((input & (1L << 0)));
+		mP1InputA = static_cast<bool>((input & (1L << 1)));
+		mP1InputS = static_cast<bool>((input & (1L << 2)));
+		mP1InputD = static_cast<bool>((input & (1L << 3)));
 	} else if (playerID == 2) {
-		mP2InputW = up;
-		mP2InputA = down;
-		mP2InputS = left;
-		mP2InputD = right;
+		mP2InputW = static_cast<bool>((input & (1L << 0)));
+		mP2InputA = static_cast<bool>((input & (1L << 1)));
+		mP2InputS = static_cast<bool>((input & (1L << 2)));
+		mP2InputD = static_cast<bool>((input & (1L << 3)));
 	}
 
 #if DEBUGPRINT
 	std::cout << "Player " << playerID;
-	std::cout << "up: " << up << '\n';
-	std::cout << "down: " << down << '\n';
-	std::cout << "left: " << left << '\n';
-	std::cout << "right: " << right << '\n';
+	std::cout << "up: " << static_cast<bool>(input & (1L << 0)) << '\n';
+	std::cout << "down: " << static_cast<bool>(input & (1L << 1)) << '\n';
+	std::cout << "left: " << static_cast<bool>(input & (1L << 2)) << '\n';
+	std::cout << "right: " << static_cast<bool>(input & (1L << 3)) << '\n';
 #endif
 	//PrintSendBuff();
 }
@@ -249,15 +261,11 @@ int NetworkSerializationManager::SerialiseGamePlayData() {
 
 int NetworkSerializationManager::SerialiseGameStats(char*& currBuff) {
 	// int jam collected, float time remaining, bool swap
-	int jam{};
-	float timeRemain{};
-	bool swap{};
-
-	*(reinterpret_cast<int*>(currBuff)) = jam;
+	*(reinterpret_cast<int*>(currBuff)) = mJam;
 	currBuff += sizeof(int);
-	*(reinterpret_cast<int*>(currBuff)) = timeRemain;
+	*(reinterpret_cast<int*>(currBuff)) = mTimeRemaining;
 	currBuff += sizeof(float);
-	*(reinterpret_cast<bool*>(currBuff)) = swap;
+	*(reinterpret_cast<bool*>(currBuff)) = mRound;
 	currBuff += sizeof(bool);
 	
 	return static_cast<int>(currBuff - mSendBuff);

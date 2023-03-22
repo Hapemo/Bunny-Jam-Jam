@@ -65,6 +65,14 @@ public:
 
 	int mPlayAgainCount; // if -1, quit. if 0, no data yet. if 1, 1 person play again. if 2, all player want to play again
 
+	int mJam;
+	float mTimeRemaining;
+	int mRound;
+
+#ifndef _SERVER //If client
+	char prevInput;
+#endif
+
 #ifndef _CLIENT //If server
 	bool mP1InputW;
 	bool mP1InputA;
