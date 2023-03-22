@@ -11,7 +11,7 @@ struct CLIENT_INFO
 	struct sockaddr_in	clientAddr;
 	char				username[516];
 	HANDLE				semaphore;
-	unsigned long	clientPacketNum;
+	unsigned long	clientPacketNum = 0;
 };
 
 
@@ -48,7 +48,7 @@ public:
 	int											player1Score;
 	int											player2Score;
 	int											time;
-	unsigned long						serverPacketNum;
+	unsigned long						serverPacketNum = 0;
 };
 
 void serverRecvData();

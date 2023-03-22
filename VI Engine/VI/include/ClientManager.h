@@ -37,8 +37,8 @@ public:
 	C_SERVER			m_ServerInstance;
 	bool					m_StopReceive;
 	char					playerNum;
-	unsigned long serverPacketNum;
-	unsigned long clientPacketNum;
+	unsigned long serverPacketNum = 0;
+	unsigned long clientPacketNum = 0;
 };
 
 void clientRecvData();

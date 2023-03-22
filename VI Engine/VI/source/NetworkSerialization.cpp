@@ -41,6 +41,7 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		break;// DO NOTHING HERE PLEASE
 
 	case NETWORKDATATYPE::S2CNumOfClientConnected:
+		dataSize = SerialiseNumberOfClientConnected();
 		break;
 		
 	case NETWORKDATATYPE::S2CGamePlayData:
@@ -79,6 +80,7 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 		break;
 
 	case NETWORKDATATYPE::S2CNumOfClientConnected:
+		DeserialiseNumberOfClientConnected();
 		break;
 
 	case NETWORKDATATYPE::S2CGamePlayData:
@@ -174,7 +176,7 @@ int NetworkSerializationManager::SerialiseNumberOfClientConnected() {
 	char* currBuff{ mSendBuff + 1 };
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CNumOfClientConnected);
 
-	int numOfClients{ 0 };
+	int numOfClients{ 123 };
 	currBuff[0] = static_cast<char>(numOfClients);
 
 	return static_cast<int>(currBuff - mSendBuff);

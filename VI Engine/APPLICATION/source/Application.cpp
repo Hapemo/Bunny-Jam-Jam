@@ -389,9 +389,11 @@ bool Application::FirstUpdate() {
   NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::C2SPlayerControls);
 #endif
 
-//#ifdef _SERVER
-//
-//#endif
+
+#ifdef _SERVER
+  if (Input::CheckKey(PRESS, SPACE))
+    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+#endif
 
 
 #if NETWORKSERIALISETEST
