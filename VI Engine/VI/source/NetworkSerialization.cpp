@@ -5,7 +5,7 @@
 #include "ServerManager.h"
 #include "ClientManager.h"
 
-#define DEBUGPRINT 0
+#define DEBUGPRINT 1
 
 
 namespace {
@@ -192,9 +192,8 @@ int NetworkSerializationManager::SerialiseNumberOfClientConnected() {
 	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
 	char* currBuff{ mSendBuff + 1 };
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CNumOfClientConnected);
-
-	int numOfClients{ 123 };
-	currBuff[0] = static_cast<char>(numOfClients);
+	
+	currBuff[0] = static_cast<char>(mNumberOfClientConnected);
 
 	return static_cast<int>(currBuff - mSendBuff);
 }

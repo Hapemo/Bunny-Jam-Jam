@@ -15,6 +15,7 @@ ServerManager::~ServerManager() {
     serverClose();
 }
 
+int stupidserver = 0;
 //== Create and bind Server Socket
 bool ServerManager::serverInit(u_short serverPortNumber)
 {
@@ -164,7 +165,7 @@ void serverRecvData()
         
         if (nLength >= 0) {
             //cBuffer[nLength] = '\0';
-            std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
+            //std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
         }
 
         if (nLength == SOCKET_ERROR) {
@@ -179,20 +180,27 @@ void serverRecvData()
         
         // check and update clientlist
         auto clientinstance = ServerManager::GetInstance()->m_ClientList.find(clientdata);
-        if(clientinstance == ServerManager::GetInstance()->m_ClientList.end()) {
+        if (clientinstance == ServerManager::GetInstance()->m_ClientList.end()) {
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
+
+            std::cout << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected<< "serv";
             NetworkSerializationManager::GetInstance()->mNumberOfClientConnected++;
+
+            //for (int i{ 0 }; i < 60; i++) {
+            //    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+            //}
             NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+  
             std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
 		    }
         else {
           // wrong instnace
-          std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
-          std::cout << "newPacketNum: " << newPacketNum << '\n';
+        //  std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
+          //std::cout << "newPacketNum: " << newPacketNum << '\n';
           if (clientinstance->second.clientPacketNum < newPacketNum) {
-            std::cout << "Successful, going to deserialise\n";
+         //   std::cout << "Successful, going to deserialise\n";
             clientinstance->second.clientPacketNum = newPacketNum;
             // tell jazz to deserialize
             NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();

@@ -38,6 +38,7 @@ namespace {
     bool player1_ = false;
     bool player2_ = false;
     bool isConnected{ false };
+    bool bothPlayers{ false };
     // scene transition variables
     float acc_ = 300;
     float scaling_ = 1000;
@@ -270,30 +271,36 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 
     //Connect Address
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) {
-        if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay")) 
+    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) 
+    {
+        if (!isConnected)
         {
-            //Connected Successfully
-            VI::iScene::Pause("RequestIP");
-            //Pop up P1 based on Connection.size
-            //VI::iGameState::ChangeGameState("Bunny_GameLevel1");
-           
-               
-        }
-        else
-        {
-            //Connection failed
-            VI::iScene::Pause("RequestIP");
-            //Pop up error Message
+            if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay"))
+            {
+                //Connected Successfully
+                VI::iScene::Pause("RequestIP");
+                isConnected = true;
+
+                //Pop up P1 based on Connection.size
+                //VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+
+
+            }
+            else
+            {
+                //Connection failed
+                VI::iScene::Pause("RequestIP");
+                //Pop up error Message
+            }
         }
     }
    
         if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
         {
             player1_ = true;
-            if (!isConnected)
+            if (!bothPlayers)
             {
-                isConnected = true;
+                bothPlayers = true;
                 you_.GetComponent<Transform>().translation.x = -400.f;
                 you_.GetComponent<Transform>().translation.y = 220.f;
             }
@@ -302,9 +309,9 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         {
             player1_ = true;
             player2_ = true;
-            if (!isConnected)
+            if (!bothPlayers)
             {
-                isConnected = true;
+                bothPlayers = true;
                 you_.GetComponent<Transform>().translation.x = -400.f;
                 you_.GetComponent<Transform>().translation.y = 8.f;
             }
