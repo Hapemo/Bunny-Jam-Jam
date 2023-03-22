@@ -287,21 +287,27 @@ void ConnectionButtonControl::Update(Entity const& _e) {
             //Pop up error Message
         }
     }
-    if (!isConnected)
-    {
+   
         if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
         {
             player1_ = true;
-            isConnected = true;
-            you_.GetComponent<Transform>().translation.x = -400.f;
-            you_.GetComponent<Transform>().translation.y = 220.f;
+            if (!isConnected)
+            {
+                isConnected = true;
+                you_.GetComponent<Transform>().translation.x = -400.f;
+                you_.GetComponent<Transform>().translation.y = 220.f;
+            }
         }
         else if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
         {
+            player1_ = true;
             player2_ = true;
-            isConnected = true;
-            you_.GetComponent<Transform>().translation.x = -400.f;
-            you_.GetComponent<Transform>().translation.y = 8.f;
+            if (!isConnected)
+            {
+                isConnected = true;
+                you_.GetComponent<Transform>().translation.x = -400.f;
+                you_.GetComponent<Transform>().translation.y = 8.f;
+            }
         }
     }
 
