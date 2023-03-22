@@ -479,7 +479,7 @@ void Application::MainUpdate() {
     if (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, F)) Helper::SetFullScreen(toggle = !toggle);
 
     TRACK_PERFORMANCE("Shadow");
-    shadowManager->Update();
+    //shadowManager->Update();
     END_TRACK("Shadow");
 
 

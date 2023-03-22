@@ -1,15 +1,13 @@
-#pragma once
 /*!*****************************************************************************
-\file AttackScript.cpp
+\file BackToGameButton.h
 \author Chen Jia Wen
 \par DP email: c.jiawen\@digipen.edu
 \par Course: GAM200
 \par Group: Memory Leak Studios
-\date 25-11-2022
+\date 24-11-2022
 \brief
-The AttackScript handles the detection of when the player is nearby the enemy,
-causing the enemy's rising out of the water animation to run and then run the
-attacking animation.
+The BackToGameButton script returns the scene to the gameplay on button press.
+Press "ESC" to toggle the pause menu.
 *******************************************************************************/
 
 #pragma once
@@ -17,18 +15,17 @@ attacking animation.
 #include "ScriptManager.h"
 #include "ScriptComponent.h"
 
-class Menu_Button : public ScriptComponent {
+class Bunny_GameSceneTransition : public ScriptComponent {
 private:
-	Entity enemy;
-	Entity player;
-	size_t visible = 0;
+	std::string name = "Bunny_GameSceneTransition";
+	bool activate = false;
 public:
-	static int startMenu_;
 
+	//static bool startMenu_;
 	int Transit(int zoom, Entity loadicon, float& acc, float& scaling);
 
-	Menu_Button() = default;
-	~Menu_Button() override = default;
+	Bunny_GameSceneTransition() = default;
+	~Bunny_GameSceneTransition() override = default;
 
 	/*!*****************************************************************************
 	\brief

@@ -12,13 +12,87 @@ Updates the fps count, for the fps printer in entity
 
 #include "Menu_Button.h"
 static bool updateOne{ false };
-
+int Menu_Button::startMenu_{ -1 };
 REGISTER_SCRIPT(ScriptComponent, Menu_Button);
 
 namespace {
 	Entity playButton; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
+	Entity h2pButton;
+	Entity toObjectives;
+	Entity toControls;
+	Entity loadicon_;
+
+
+	float acc_ = 300;
+	float scaling_ = 1000;
+
+
+	bool firstLoad_ = true;
+
+	int clickCount{};
+	bool atControls{ false };
+
+	int counter = 0;
 
 }
+
+
+int Menu_Button::Transit(int zoom, Entity loadicon, float& acc, float& scaling) {
+
+
+	if (zoom == 1) {
+		
+		loadicon.GetComponent<Transform>().scale.x += scaling * (float)FUNC->GetDeltaTime();
+		loadicon.GetComponent<Transform>().scale.y += scaling * (float)FUNC->GetDeltaTime();
+		if (scaling < 3000) {
+			acc += 2000.f * (float)FUNC->GetDeltaTime();
+			scaling += acc * (float)FUNC->GetDeltaTime() * 60;
+		}
+
+
+	//	counter++;
+		//std::cout << counter << " counter for menu_button \n";
+
+
+	}
+
+	else if (zoom == 0 && loadicon.GetComponent<Transform>().scale.x >= 0) {
+
+			
+
+
+		loadicon.GetComponent<Transform>().scale.x -= scaling * (float)FUNC->GetDeltaTime();
+		loadicon.GetComponent<Transform>().scale.y -= scaling * (float)FUNC->GetDeltaTime();
+
+
+		if (scaling < 3000) {
+			acc += 2000.f * (float)FUNC->GetDeltaTime();
+			scaling += acc * (float)FUNC->GetDeltaTime() * 60;
+		}
+	}
+
+	//std::cout << acc_ << " acceleration \n";
+	//std::cout << scaling_ << " scaling \n";
+	//std::cout << loadicon_.GetComponent<Transform>().scale.x << " scale \n";
+
+	if (loadicon.GetComponent<Transform>().scale.x <= 0) {
+		loadicon.GetComponent<Sprite>().color.a = 0;
+	}
+	else {
+		loadicon.GetComponent<Sprite>().color.a = 255;
+	}
+
+	if (loadicon_.GetComponent<Transform>().scale.x > 2000 && zoom == 1) {
+		return -1;
+	}
+
+	if (loadicon_.GetComponent<Transform>().scale.x <= 0 && zoom == 0) {
+		return -1;
+	}
+
+	return zoom;
+}
+
 
 /*!*****************************************************************************
 \brief
@@ -34,6 +108,21 @@ void Menu_Button::Alive(Entity const& _e) {
 Function will run on initialisation of the entity.
 *******************************************************************************/
 void Menu_Button::Init(Entity const& _e) {
+
+
+	loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
+
+
+	if (startMenu_ == 1) {
+
+		loadicon_.GetComponent<Transform>().scale.x = 0.f;
+		loadicon_.GetComponent<Transform>().scale.y = 0.f;
+	}
+	else if (startMenu_ == 0) {
+
+		loadicon_.GetComponent<Transform>().scale.x = 2000.f;
+		loadicon_.GetComponent<Transform>().scale.y = 2000.f;
+	}
 	(void)_e;
 }
 
@@ -57,18 +146,117 @@ void Menu_Button::Update(Entity const& _e) {
 	if (!updateOne)
 	{
 		playButton = VI::iEntity::GetEntity("Play_Button", "");
+		loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
+		h2pButton = VI::iEntity::GetEntity("H2P_Button", "");
+		toObjectives = VI::iEntity::GetEntity("toObjectives", "");
+		toControls = VI::iEntity::GetEntity("toControls", "");
+
 		updateOne = true;
 
 	}
+
+
+	playButton = VI::iEntity::GetEntity("Play_Button", "");
+	loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
+	h2pButton = VI::iEntity::GetEntity("H2P_Button", "");
+	toObjectives = VI::iEntity::GetEntity("toObjectives", "");
+	toControls = VI::iEntity::GetEntity("toControls", "");
+
+
 
 	//If PlayButton is clicked
 	if (playButton.GetComponent<Button>().isHover) {
 
 		if (playButton.GetComponent<Button>().isClick) {
-			VI::iScene::Play("Game");
+			//VI::iScene::Play("Game");
+			//VI::iScene::Pause("Bunny_Menu");
+
+			
+			startMenu_ = 1;
+		//	if (startMenu_ == 1) {
+			loadicon_.GetComponent<Transform>().scale.x = 0.f;
+			loadicon_.GetComponent<Transform>().scale.y = 0.f;
+
+			//std::cout << "lMAMEEEEEEEEEEEEEEEE\n";
+
+		//	}
+			/*else if (startMenu_ == 0) {
+
+				loadicon_.GetComponent<Transform>().scale.x = 2000.f;
+				loadicon_.GetComponent<Transform>().scale.y = 2000.f;
+			}*/
+
+		}
+	}
+
+
+	//Main Menu -> Controls
+	if (h2pButton.GetComponent<Button>().isHover) 
+	{
+		if (h2pButton.GetComponent<Button>().isClick) 
+		{
+			VI::iScene::Play("How2PlayControls");
 			VI::iScene::Pause("Bunny_Menu");
 		}
 	}
+
+
+	//Controls -> Objectives
+
+	if (toObjectives.GetComponent<Button>().isHover)
+	{
+		if (toObjectives.GetComponent<Button>().isClick)
+		{
+			
+			VI::iScene::Pause("How2PlayControls");
+			VI::iScene::Play("How2PlayObjectives");
+			toObjectives.GetComponent<Button>().isClick = false;
+
+		}
+	}
+	
+
+
+
+
+	//Controls <- Objectives
+	if (toControls.GetComponent<Button>().isHover)
+	{
+		if (toControls.GetComponent<Button>().isClick)
+		{			
+			VI::iScene::Pause("How2PlayObjectives");
+			VI::iScene::Play("How2PlayControls");
+			toControls.GetComponent<Button>().isClick = false;
+
+
+		}
+	}
+
+	if (!VI::iScene::IsPaused("How2PlayControls")) 
+	{
+		//toControls.GetComponent<Button>().isClick = false;
+	}
+
+
+	//Back to main menu
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
+	{
+
+		//Back to menu
+		if (VI::iScene::IsPaused("Bunny_Menu"))
+		{
+			VI::iScene::Pause("How2PlayObjectives");
+			VI::iScene::Pause("How2PlayControls");
+			VI::iScene::Play("Bunny_Menu");
+		}
+	}
+
+
+	if (startMenu_ ==-1 && loadicon_.GetComponent<Transform>().scale.x >=2000) {
+		VI::iGameState::ChangeGameState("Connection_Menu");
+	}
+	startMenu_ = Transit(startMenu_, loadicon_, acc_, scaling_);
+	
 	
 }
 

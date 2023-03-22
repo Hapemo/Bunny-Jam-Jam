@@ -17,7 +17,7 @@
         "order": 0
     },
     {
-        "SceneName": "Game",
+        "SceneName": "How2PlayControls",
         "Transform": {
             "scale": {
                 "X": 1600.0,
@@ -34,7 +34,7 @@
         "order": 0
     },
     {
-        "SceneName": "RequestIP",
+        "SceneName": "How2PlayObjectives",
         "Transform": {
             "scale": {
                 "X": 1600.0,
