@@ -78,3 +78,9 @@ C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\VI Engine\Scripting\obj\E
 C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorRelease\SCRIPTING.csproj.CoreCompileInputs.cache
 C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorRelease\Scripting.dll
 C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorRelease\Scripting.pdb
+C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\Bunny-Jam-Jam\VI Engine\bin\EditorRelease\x64\SCRIPTING\Scripting.dll
+C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\Bunny-Jam-Jam\VI Engine\bin\EditorRelease\x64\SCRIPTING\Scripting.pdb
+C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorRelease\SCRIPTING.csproj.AssemblyReference.cache
+C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorRelease\SCRIPTING.csproj.CoreCompileInputs.cache
+C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorRelease\Scripting.dll
+C:\Users\icygo\OneDrive\Documents\GitHub\Bunny-Jam-Jam\Bunny-Jam-Jam\VI Engine\Scripting\obj\EditorRelease\Scripting.pdb

@@ -417,7 +417,7 @@ bool Application::FirstUpdate() {
 void Application::SecondUpdate() {
   PrintTitleBar(0.3);
 
-#ifdef _CLIENT
+#ifndef _SERVER
   // Close the window if the close flag is triggered
   if (glfwWindowShouldClose(Application::getWindow())) GameStateManager::mGSMState = GameStateManager::E_GSMSTATE::EXIT;
   /////audioManager->UpdateSound();
@@ -433,7 +433,7 @@ void Application::SecondUpdate() {
   Input::UpdatePrevKeyStates();
   buttonManager->ResetAllButtons();
 
-#ifdef _CLIENT
+#ifndef _SERVER
   // Part 2: swap buffers: front <-> back
   glfwSwapBuffers(Application::getWindow());
 #endif
@@ -483,7 +483,7 @@ void Application::MainUpdate() {
     END_TRACK("Shadow");
 
 
-#ifdef _CLIENT
+#ifndef _SERVER
     TRACK_PERFORMANCE("Graphics");
     //--------------------- Drawing and rendering ---------------------
     renderManager->Render();
