@@ -21,7 +21,7 @@ if 2, all the players wants to play again.
 There are 4 movement keys for each player and there are 2 players, so total of 8 variables. <br>
 mP1InputW, mP1InputA, mP1InputS, mP1InputD for player 1. <br>
 mP2InputW, mP2InputA, mP2InputS, mP2InputD for player 2. <br>
-These variables will only be available on **server side code**.
+These variables will be available on **client side code** for the purpose of interpolation. It will be on server side for logic calculation.
 
 <br>
 

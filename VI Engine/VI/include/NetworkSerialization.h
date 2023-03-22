@@ -73,7 +73,6 @@ public:
 	char prevInput;
 #endif
 
-#ifndef _CLIENT //If server
 	bool mP1InputW;
 	bool mP1InputA;
 	bool mP1InputS;
@@ -82,7 +81,6 @@ public:
 	bool mP2InputA;
 	bool mP2InputS;
 	bool mP2InputD;
-#endif
 
 
 
