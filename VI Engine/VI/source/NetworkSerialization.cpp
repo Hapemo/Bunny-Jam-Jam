@@ -19,7 +19,7 @@ namespace {
 
 NetworkSerializationManager::NetworkSerializationManager() : 
 	mSendBuff(new char[MAX_UDP_PACKET_SIZE]), mRecvBuff(new char[MAX_UDP_PACKET_SIZE]), mSize(0),
-	mNumberOfClientConnected(), mPlayerID()
+	mNumberOfClientConnected(), mPlayerID(), mPlayAgainCount()
 
 {
 	
@@ -96,7 +96,11 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 		break;
 
 	case NETWORKDATATYPE::C2SPlayAgain:
+		DeserialisePlayAgain();
 		break;
+
+	case NETWORKDATATYPE::ServerDataTypes:
+		break;// DO NOTHING HERE PLEASE
 
 	case NETWORKDATATYPE::S2CNumOfClientConnected:
 		DeserialiseNumberOfClientConnected();
@@ -124,7 +128,10 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	++currBuff; // 1 space in
 	
 	// Data consists of 4 keys, each key has 1 state (1 bytes each).
-	// So 4 bytes in total.
+	// So 4 bytes in total. plus another 4 bytes at the front for mPlayerID
+
+	*reinterpret_cast<int*>(currBuff) = mPlayerID;
+	currBuff += sizeof(int);
 
 	E_KEY up = E_KEY::W;
 	E_KEY down = E_KEY::S;
@@ -148,12 +155,26 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 }
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
-	bool up{static_cast<bool>(mRecvBuff[1])};
-	bool down{static_cast<bool>(mRecvBuff[2])};
-	bool left{static_cast<bool>(mRecvBuff[3])};
-	bool right{static_cast<bool>(mRecvBuff[4])};
+	int playerID{ *reinterpret_cast<int*>(mRecvBuff) };
+	bool up{static_cast<bool>(mRecvBuff[5])};
+	bool down{static_cast<bool>(mRecvBuff[6])};
+	bool left{static_cast<bool>(mRecvBuff[7])};
+	bool right{static_cast<bool>(mRecvBuff[8])};
+
+	if (playerID == 1) {
+		mP1InputW = up;
+		mP1InputA = down;
+		mP1InputS = left;
+		mP1InputD = right;
+	} else if (playerID == 2) {
+		mP2InputW = up;
+		mP2InputA = down;
+		mP2InputS = left;
+		mP2InputD = right;
+	}
 
 #if DEBUGPRINT
+	std::cout << "Player " << playerID;
 	std::cout << "up: " << up << '\n';
 	std::cout << "down: " << down << '\n';
 	std::cout << "left: " << left << '\n';
@@ -182,6 +203,9 @@ void NetworkSerializationManager::DeserialisePlayAgain() {
 	bool playAgain{ static_cast<bool>(mRecvBuff[1]) };
 	//std::cout << "playAgain: " << playAgain << '\n';
 
+	if (mPlayAgainCount != -1)
+	if (playAgain) { ++mPlayAgainCount; } 
+	else mPlayAgainCount = -1;
 }
 
 //-------------------------------
@@ -193,8 +217,7 @@ int NetworkSerializationManager::SerialiseNumberOfClientConnected() {
 	char* currBuff{ mSendBuff + 1 };
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CNumOfClientConnected);
 
-	int numOfClients{ 123 };
-	currBuff[0] = static_cast<char>(numOfClients);
+	currBuff[0] = static_cast<char>(mNumberOfClientConnected);
 
 	return static_cast<int>(currBuff - mSendBuff);
 }

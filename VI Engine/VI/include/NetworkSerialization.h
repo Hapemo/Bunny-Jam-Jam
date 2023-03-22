@@ -18,6 +18,7 @@ public:
 
 		// Server to Client 
 		ServerDataTypes, // This mark the beginning of server data types
+
 		S2CNumOfClientConnected,
 		S2CGamePlayData,
 		S2CEntityDetail, // For player and jam
@@ -62,12 +63,18 @@ public:
 	int mNumberOfClientConnected;
 	int mPlayerID;
 
+	int mPlayAgainCount; // if -1, quit. if 0, no data yet. if 1, 1 person play again. if 2, all player want to play again
 
-
-
-
-
-
+#ifndef _CLIENT //If server
+	bool mP1InputW;
+	bool mP1InputA;
+	bool mP1InputS;
+	bool mP1InputD;
+	bool mP2InputW;
+	bool mP2InputA;
+	bool mP2InputS;
+	bool mP2InputD;
+#endif
 
 
 
