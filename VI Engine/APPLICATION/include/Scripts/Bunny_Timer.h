@@ -24,6 +24,7 @@ private:
 	Scene* currScene;
 	Transform* currCamera;
 	double timer = 60.0f;
+	double countdowntimer = 4.0f;
 	Math::Vec2 originalTranslate;
 	Math::Vec2 originalScale;
 
