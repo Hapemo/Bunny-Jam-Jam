@@ -275,7 +275,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
     //Connect Address
     if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) {
-        if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay")) 
+        if (!ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay")) 
         {
             //Connected Successfully
             VI::iScene::Pause("RequestIP");
