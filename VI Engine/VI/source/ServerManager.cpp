@@ -153,9 +153,15 @@ void serverRecvData()
             break;
         }
         int temp{ MAX_UDP_PACKET_SIZE };
-        nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket, 
-                           NetworkSerializationManager::GetInstance()->mRecvBuff, 
+        char localBuff[MAX_UDP_PACKET_SIZE];
+
+        nLength = recvfrom(ServerManager::GetInstance()->m_ServerSocket,
+                           localBuff, 
                            MAX_UDP_PACKET_SIZE, 0, (sockaddr*)&clientAddr, &temp);
+        
+        memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
+        memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
+        
         if (nLength >= 0) {
             //cBuffer[nLength] = '\0';
             std::cout << ">> [S] Data received!\n";

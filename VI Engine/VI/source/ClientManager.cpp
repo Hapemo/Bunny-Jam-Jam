@@ -72,11 +72,17 @@ void clientRecvData()
             return;
 
         int temp{ MAX_UDP_PACKET_SIZE };
+
+        char localBuff[MAX_UDP_PACKET_SIZE];
+
         int nLength = recvfrom(ClientManager::GetInstance()->m_ClientInstance.clientSocket, 
-                               NetworkSerializationManager::GetInstance()->mRecvBuff,
+                               localBuff,
                                MAX_UDP_PACKET_SIZE, 0, 
                                (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, 
                                &temp);
+
+        memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
+        memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
 
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long)));
 
