@@ -24,6 +24,13 @@
     <ClInclude Include="include\Scripts\FPSPrint.h" />
     <ClInclude Include="include\Scripts\BackBunny.h" />
     <ClInclude Include="include\Scripts\ConnectionButtonControl.h" />
+    <ClInclude Include="include\Scripts\BunnyChef_PlayerMovement.h" />
+    <ClInclude Include="include\Scripts\Bunny_CarrotCollectionScript.h" />
+    <ClInclude Include="include\Scripts\Bunny_CarrotCount.h" />
+    <ClInclude Include="include\Scripts\Bunny_PlayerMovement.h" />
+    <ClInclude Include="include\Scripts\Bunny_Timer.h" />
+    <ClInclude Include="include\Scripts\Menu_Button.h" />
+    <ClInclude Include="include\Scripts\Bunny_GameSceneTransition.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -32,6 +39,12 @@
     <ClCompile Include="source\Scripts\FPSPrint.cpp" />
     <ClCompile Include="source\Scripts\BackBunny.cpp" />
     <ClCompile Include="source\Scripts\ConnectionButtonControl.cpp" />
-    <ClCompile Include="source\Scripts\Old\PlayerMovementScript.cpp" />
+    <ClCompile Include="source\Scripts\Menu_Button.cpp" />
+    <ClCompile Include="source\Scripts\Old\BunnyChef_PlayerMovement.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_CarrotCollectionScript.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_CarrotCount.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_PlayerMovement.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_Timer.cpp" />
+    <ClCompile Include="source\Scripts\Old\Bunny_GameSceneTransition.cpp" />
   </ItemGroup>
 </Project>
