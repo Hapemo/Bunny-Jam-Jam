@@ -19,7 +19,7 @@ namespace {
 
 NetworkSerializationManager::NetworkSerializationManager() : 
 	mSendBuff(new char[MAX_UDP_PACKET_SIZE]), mRecvBuff(new char[MAX_UDP_PACKET_SIZE]), mSize(0),
-	mNumberOfClientConnected()
+	mNumberOfClientConnected(), mPlayerID()
 
 {
 	
