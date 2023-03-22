@@ -21,9 +21,23 @@ ComponentType starts from 0.
 #include "AnimationVariable.h"
 
 class Prefab;
-
+enum BUNNY_INGAMESTATE
+{
+	
+	BUNNY_INGAME = 0,
+	BUNNY_ZOOMING,
+	BUNNY_COUNTDOWN,
+	BUNNY_COLLIDED,
+	BUNNY_MATCHOVER,
+	BUNNY_NEXT,
+	BUNNY_SWAP
+};
 struct Bunny {
 	unsigned int carrots = 0;
+};
+struct Bunny_InGameStateComponent
+{
+	BUNNY_INGAMESTATE bigs = BUNNY_INGAMESTATE::BUNNY_ZOOMING;
 };
 /*!*****************************************************************************
 \brief
