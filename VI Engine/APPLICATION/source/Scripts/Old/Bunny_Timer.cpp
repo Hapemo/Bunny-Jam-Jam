@@ -48,7 +48,6 @@ void Bunny_Timer::EarlyUpdate(Entity const& _e) {
 void Bunny_Timer::Update(const Entity& _e) {
 
 	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER", "");
-	std::cout << "state: " << INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs << std::endl;
 	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_COUNTDOWN)
 	{
 		if (countdowntimer > 0)
