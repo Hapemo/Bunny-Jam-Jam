@@ -38,11 +38,13 @@ namespace {
     bool player1_ = false;
     bool player2_ = false;
     bool isConnected{ false };
+    bool ifFound{ false };
     bool bothPlayers{ false };
     // scene transition variables
     float acc_ = 300;
     float scaling_ = 1000;
     int zoom_ = 0;
+    int* numClients{};
 
     // text input variables
     std::string ipstring_ = "";
@@ -294,28 +296,34 @@ void ConnectionButtonControl::Update(Entity const& _e) {
             }
         }
     }
-   
-        if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
+    //if (!ifFound)
+    //{
+    //    if (NetworkSerializationManager::GetInstance()->GetFromBank("mNumberOfClientConnected", &NetworkSerializationManager::GetInstance()->mNumberOfClientConnected))
+    //    {
+    //        ifFound = true;
+    //    }
+    //}
+    if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
+    {
+        player1_ = true;
+        if (!bothPlayers)
         {
-            player1_ = true;
-            if (!bothPlayers)
-            {
-                bothPlayers = true;
-                you_.GetComponent<Transform>().translation.x = -400.f;
-                you_.GetComponent<Transform>().translation.y = 220.f;
-            }
+            bothPlayers = true;
+            you_.GetComponent<Transform>().translation.x = -400.f;
+            you_.GetComponent<Transform>().translation.y = 220.f;
         }
-        else if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
+    }
+    else if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
+    {
+        player1_ = true;
+        player2_ = true;
+        if (!bothPlayers)
         {
-            player1_ = true;
-            player2_ = true;
-            if (!bothPlayers)
-            {
-                bothPlayers = true;
-                you_.GetComponent<Transform>().translation.x = -400.f;
-                you_.GetComponent<Transform>().translation.y = 8.f;
-            }
+            bothPlayers = true;
+            you_.GetComponent<Transform>().translation.x = -400.f;
+            you_.GetComponent<Transform>().translation.y = 8.f;
         }
+    }
     
 
 
