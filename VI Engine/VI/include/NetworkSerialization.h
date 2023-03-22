@@ -53,7 +53,6 @@ public:
 	void DeserialiseEntityDetail(char* currBuff);							// App::FirstUpdate(), since it's before logic system
 	void DeserialisePlayAgainCount();													// App::FirstUpdate(), since it's before logic system
 
-	// To use the data bank, firstly input the data using PrepareData(). Secondly, send the data using SerialiseAndSend(C2SData or S2CData)
 	void PrepareData(std::string, int);
 	bool GetFromBank(std::string, int*);
 	void DeserialiseData();
