@@ -60,8 +60,13 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		//dataSize = SerialiseGameStats();
 		break;
 		
-	case NETWORKDATATYPE::S2CNumOfPlayerReplay:
+	case NETWORKDATATYPE::S2CPlayAgainCount:
 		//dataSize = SerialiseNumOfPlayerReplay();
+		break;
+
+	case NETWORKDATATYPE::C2SData:
+	case NETWORKDATATYPE::S2CData:
+
 		break;
 	}
 
@@ -111,7 +116,12 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 	case NETWORKDATATYPE::S2CGameStats:
 		break;
 
-	case NETWORKDATATYPE::S2CNumOfPlayerReplay:
+	case NETWORKDATATYPE::S2CPlayAgainCount:
+		break;
+
+	case NETWORKDATATYPE::C2SData:
+	case NETWORKDATATYPE::S2CData:
+
 		break;
 	}
 }
@@ -169,8 +179,7 @@ int NetworkSerializationManager::SerialisePlayAgain() {
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::C2SPlayAgain);
 	
 	// TODO In script, get the bool value of play again or not.
-	bool playAgain{ false };
-	currBuff[0] = static_cast<char>(playAgain);
+	currBuff[0] = static_cast<char>(mPlayAgain);
 
 	return static_cast<int>(++currBuff - mSendBuff);
 }
@@ -182,6 +191,11 @@ void NetworkSerializationManager::DeserialisePlayAgain() {
 	bool playAgain{ static_cast<bool>(mRecvBuff[1]) };
 	//std::cout << "playAgain: " << playAgain << '\n';
 
+	if (mPlayAgainCount != -1)
+	if (playAgain) { ++mPlayAgainCount; } 
+	else mPlayAgainCount = -1;
+
+	mPrevPlayAgainCount = mPlayAgainCount;
 }
 
 //-------------------------------
@@ -223,6 +237,16 @@ int NetworkSerializationManager::SerialiseGamePlayData() {
 	return currBuff - mSendBuff;
 }
 
+void NetworkSerializationManager::DeserialiseGamePlayData() {
+	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGamePlayData)
+		std::cout << "NETWORKDATATYPE::S2CGamePlayData\n";
+
+	char* currBuff{ mRecvBuff + 1 };
+
+	DeserialiseGameStats(currBuff);
+	DeserialiseMultipleEntities(currBuff);
+}
+
 int NetworkSerializationManager::SerialiseGameStats(char*& currBuff) {
 	// int jam collected, float time remaining, bool swap
 	int jam{};
@@ -237,6 +261,15 @@ int NetworkSerializationManager::SerialiseGameStats(char*& currBuff) {
 	currBuff += sizeof(bool);
 	
 	return static_cast<int>(currBuff - mSendBuff);
+}
+
+void NetworkSerializationManager::DeserialiseGameStats(char*& currBuff) {
+	mJam = *(reinterpret_cast<int*>(currBuff));
+	currBuff += sizeof(int);
+	mTimeRemaining = *(reinterpret_cast<int*>(currBuff));
+	currBuff += sizeof(float);
+	mRound = *(reinterpret_cast<bool*>(currBuff));
+	currBuff += sizeof(bool);
 }
 
 int NetworkSerializationManager::SerialiseMultipleEntities(char*& currBuff, std::set<Entity> entities) {
@@ -261,11 +294,7 @@ int NetworkSerializationManager::SerialiseMultipleEntities(char*& currBuff, std:
 	return currBuff - mSendBuff;
 }
 
-void NetworkSerializationManager::DeserialiseMultipleEntities() {
-	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CEntityDetail)
-		std::cout << "NETWORKDATATYPE::S2CEntityDetail\n";
-
-	char* currBuff{ mRecvBuff + 1 };
+void NetworkSerializationManager::DeserialiseMultipleEntities(char*& currBuff) {
 	int* entityPosition{ reinterpret_cast<int*>(currBuff) };
 	int entityCount{ *entityPosition };
 	++entityPosition;
@@ -447,26 +476,69 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 
 
 
-int NetworkSerializationManager::SerialiseNumberOfPlayerReplay() {
+int NetworkSerializationManager::SerialisePlayAgainCount() {
 	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
 	char* currBuff{ mSendBuff + 1 };
-	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CNumOfClientConnected);
+	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CPlayAgainCount);
 
-	int numOfClients{ 0 };
-	currBuff[0] = static_cast<char>(numOfClients);
+	*reinterpret_cast<int*>(currBuff) = mPlayAgainCount;
 
 	return static_cast<int>(++currBuff - mSendBuff);
 }
 
+void NetworkSerializationManager::DeserialisePlayAgainCount() {
+	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CPlayAgainCount)
+		std::cout << "NETWORKDATATYPE::S2CPlayAgainCount\n";
+
+	mPlayAgainCount = *reinterpret_cast<int*>(mRecvBuff + 1);
+}
 
 
+void NetworkSerializationManager::PrepareData(std::string str, int i) {
+	dataBankBuffStr = str;
+	dataBankBuffInt = i;
+}
 
+int NetworkSerializationManager::SerialiseData() {
+	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
+	char* currBuff{ mSendBuff + 1 };
+	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::C2SData);
 
+	memcpy(currBuff, dataBankBuffStr.c_str(), dataBankBuffStr.size() + 1);
+	currBuff += dataBankBuffStr.size() + 1;
 
+	*reinterpret_cast<int*>(currBuff) = dataBankBuffInt;
+	currBuff += sizeof(int);
 
+	return static_cast<int>(currBuff - mSendBuff);
+	
+	// Doesn't matter what the data type is, just save it as C2SData
+	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CPlayAgainCount)
+	//	std::cout << "NETWORKDATATYPE::S2CPlayAgainCount\n";
+}
 
+void NetworkSerializationManager::DeserialiseData() {
+	// Doesn't matter what the data type is, just save it as C2SData
+	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::C2SData || static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CData)
+		std::cout << "NETWORKDATATYPE::C2SData or NETWORKDATATYPE::S2CData\n";
 
+	char* currBuff{ mRecvBuff + 1 };
+	std::string tempStr = currBuff;
+	currBuff += tempStr.size() + 1;
 
+	int tempInt = *reinterpret_cast<int*>(currBuff);
+
+	dataBank[tempStr] = tempInt;
+}
+
+bool NetworkSerializationManager::GetFromBank(std::string name, int* intPtr) {
+	try {
+		*intPtr = std::move(dataBank.at(name));
+		return true;
+	} catch (std::out_of_range()) {
+		return false;
+	}
+}
 
 //---------------------------------------
 // Helper functions
