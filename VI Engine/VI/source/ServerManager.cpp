@@ -178,12 +178,13 @@ void serverRecvData()
 
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long)));
 
-        // get the client's IP address
+        // get the receiving client's IP address
         std::string clientdata = inet_ntoa(clientAddr.sin_addr);
         
-        // check and update clientlist
+        // check the clientinstance
         auto clientinstance = ServerManager::GetInstance()->m_ClientList.find(clientdata);
-        if (clientinstance == ServerManager::GetInstance()->m_ClientList.end()) {
+        if (clientinstance == ServerManager::GetInstance()->m_ClientList.end()) 
+        {
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
@@ -194,17 +195,27 @@ void serverRecvData()
             //for (int i{ 0 }; i < 60; i++) {
             //    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             //}
-            NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+            // NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
   
             std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
 		    }
-        else {
+        else 
+        {
           // wrong instnace
-        //  std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
-          //std::cout << "newPacketNum: " << newPacketNum << '\n';
-          if (clientinstance->second.clientPacketNum < newPacketNum) {
-         //   std::cout << "Successful, going to deserialise\n";
+            // std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
+            // std::cout << "newPacketNum: " << newPacketNum << '\n';
+          if (clientinstance->second.clientPacketNum < newPacketNum) 
+          {
+            // std::cout << "Successful, going to deserialise\n";
             clientinstance->second.clientPacketNum = newPacketNum;
+
+            // get playerID
+            int playerID = std::distance(ServerManager::GetInstance()->m_ClientList.begin(), clientinstance) + 1;
+            if (playerID != 0) {
+                std::cout << "\n\n[S] RECEIVED DATA FROM ID " << playerID << ":\n\n";
+                NetworkSerializationManager::GetInstance()->mPlayerID = playerID;
+            }
+
             // tell jazz to deserialize
             NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
           }

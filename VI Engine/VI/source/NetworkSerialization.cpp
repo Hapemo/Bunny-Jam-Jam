@@ -104,7 +104,7 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 		break;
 
 	case NETWORKDATATYPE::S2CNumOfClientConnected:
-		DeserialiseNumberOfClientConnected();
+		//DeserialiseNumberOfClientConnected();
 		break;
 
 	case NETWORKDATATYPE::S2CGamePlayData:
@@ -169,8 +169,10 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 }
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
-	int playerID{ *reinterpret_cast<int*>(mRecvBuff) };
+	//char playerID{ *reinterpret_cast<char*>(mRecvBuff) };
+	char playerID = mPlayerID;
 	char input{ mRecvBuff[5] };
+	//int playerID{ *reinterpret_cast<int*>(mRecvBuff) };
 	//bool up{static_cast<bool>(mRecvBuff[5])};
 	//bool down{static_cast<bool>(mRecvBuff[6])};
 	//bool left{static_cast<bool>(mRecvBuff[7])};

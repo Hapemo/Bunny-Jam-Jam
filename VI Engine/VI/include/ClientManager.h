@@ -33,12 +33,12 @@ public:
 	//!< Private Client Variable
 	std::thread		m_ClientRecvThread;
 
-	C_CLIENT			m_ClientInstance;
-	C_SERVER			m_ServerInstance;
-	bool					m_StopReceive;
-	char					playerNum;
-	unsigned long serverPacketNum = 0;
-	unsigned long clientPacketNum = 0;
+	C_CLIENT		m_ClientInstance;
+	C_SERVER		m_ServerInstance;
+	bool			m_StopReceive;
+	char			playerNum;
+	unsigned long	serverPacketNum = 0;
+	unsigned long	clientPacketNum = 0;
 };
 
 void clientRecvData();

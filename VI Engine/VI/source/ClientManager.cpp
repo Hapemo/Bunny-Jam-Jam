@@ -84,9 +84,11 @@ void clientRecvData()
         memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
         memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
 
-        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long)));
+        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - sizeof(char)));
+        ClientManager::GetInstance()->playerNum = *reinterpret_cast<char*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(char)));
 
-        if (nLength > 0) std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
+        if (nLength > 0) std::cout << ">> [S] ID" << ClientManager::GetInstance()->playerNum << ": Data received!\n" << "nLength: " << nLength << '\n';
+        
 
         if (nLength == SOCKET_ERROR) {
           std::cout << "RECV SOCKET ERROR\n";
