@@ -108,6 +108,7 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 		break;
 
 	case NETWORKDATATYPE::S2CGamePlayData:
+		DeserialiseGamePlayData();
 		break;
 
 	case NETWORKDATATYPE::S2CEntityDetail:
@@ -121,6 +122,7 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 
 	case NETWORKDATATYPE::C2SData:
 	case NETWORKDATATYPE::S2CData:
+		DeserialiseData();
 
 		break;
 	}
