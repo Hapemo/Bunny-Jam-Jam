@@ -332,6 +332,12 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         VI::iGameState::ChangeGameState("Bunny_MainMenu");
     }
 
+
+    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE) == true)
+    {
+        VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+    }
+
     //------------------------------------------------------------------------// Buttons
 
 
