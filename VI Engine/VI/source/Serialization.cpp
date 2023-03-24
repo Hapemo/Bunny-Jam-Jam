@@ -16,6 +16,7 @@ TODO: take note not to change the component registration order. It will break pr
 #include <GameState.h>
 #include "GameStateManager.h"
 #include "ResourceManager.h"
+#include "NetworkSerialization.h"
 
 using namespace rapidjson;
 /*!*****************************************************************************
@@ -99,6 +100,7 @@ void SerializationManager::LoadScene(Scene& _sceneData, std::filesystem::path _f
 			if (entity[index].HasMember("General"))
 			{
 				e.AddComponent<General>(getGeneral(entity[index]));
+				if (e.GetComponent<General>().tag == TAG::OTHERS) NetworkSerializationManager::GetInstance()->mEntitiesToSerialise.insert(e);
 			}
 			if (entity[index].HasMember("Lifespan"))
 			{

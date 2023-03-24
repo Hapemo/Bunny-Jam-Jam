@@ -397,8 +397,6 @@ bool Application::FirstUpdate() {
 #ifdef _SERVER
   if (Input::CheckKey(PRESS, SPACE))
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
-  if (gamestateName == "Bunny_GameLevel1")
-    manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
 #endif
 
 
@@ -427,6 +425,11 @@ void Application::SecondUpdate() {
   // Close the window if the close flag is triggered
   if (glfwWindowShouldClose(Application::getWindow())) GameStateManager::mGSMState = GameStateManager::E_GSMSTATE::EXIT;
   /////audioManager->UpdateSound();
+#endif
+
+#ifdef _SERVER
+  if (gamestateName == "Bunny_GameLevel1")
+    manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
 #endif
 
 #if NETWORKSERIALISETEST

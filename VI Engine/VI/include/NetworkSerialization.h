@@ -36,6 +36,7 @@ public:
 
 	int SerialisePlayerControls();														// App::FirstUpdate(), after glfwinputpoll
 	int SerialisePlayAgain();																	// App::SecondUpdate(), since it'll be after the button update
+	
 	int SerialiseNumberOfClientConnected();										// ServerManager when a client joined and initialised in the server
 	int SerialiseGamePlayData();															// App::SecondUpdate(), since it's after all the logic and collision systems
 	int SerialiseGameStats(char*&);														// same
