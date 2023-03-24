@@ -128,9 +128,10 @@ bool ServerManager::serverSendData(char* data, int size)
     // Broadcast data to all clients
     for (auto const& c : m_ClientList) 
     {
-        data[size + 1] = ++ClientID;
+        data[size] = ++ClientID;
+        std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << static_cast<int>(ClientID) << "\n";
         
-        if (SendMsg(c.second, data, size + 1) == false)
+        if (SendMsg(c.second, data, size + sizeof(char)) == false)
             return false;
     }
 
@@ -144,8 +145,6 @@ void serverRecvData()
     while (1)
     {
         int nLength = 0;
-        //char cBuffer[1024];
-        //int fromlength = sizeof(cBuffer);
 
         CLIENT_INFO localClient{};
         struct sockaddr_in clientAddr;
@@ -183,35 +182,41 @@ void serverRecvData()
         
         // check and update clientlist
         auto clientinstance = ServerManager::GetInstance()->m_ClientList.find(clientdata);
-        if (clientinstance == ServerManager::GetInstance()->m_ClientList.end()) {
+        if (clientinstance == ServerManager::GetInstance()->m_ClientList.end()) 
+        {
+            //!< New IP address -- Adding it to list
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
 
-            std::cout << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected<< "serv";
-            NetworkSerializationManager::GetInstance()->mNumberOfClientConnected++;
+            ++NetworkSerializationManager::GetInstance()->mNumberOfClientConnected;
+            std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
 
             //for (int i{ 0 }; i < 60; i++) {
             //    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             //}
-            NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+            
+            //NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             
             if (ServerManager::GetInstance()->m_ClientList.size() > 1) {
               std::cout << "More than 1 player, starting game\n";
               NetworkSerializationManager::GetInstance()->mGameStarted = true;
             }
             std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
-		    }
-        else {
-          // wrong instnace
-        //  std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
-          //std::cout << "newPacketNum: " << newPacketNum << '\n';
-          if (clientinstance->second.clientPacketNum < newPacketNum) {
-         //   std::cout << "Successful, going to deserialise\n";
-            clientinstance->second.clientPacketNum = newPacketNum;
-            // tell jazz to deserialize
-            NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
-          }
+		}
+        else 
+        {
+            // wrong instance
+            // std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
+            // std::cout << "newPacketNum: " << newPacketNum << '\n';
+            if (clientinstance->second.clientPacketNum < newPacketNum) 
+            {
+                // std::cout << "Successful, going to deserialise\n";
+                clientinstance->second.clientPacketNum = newPacketNum;
+                NetworkSerializationManager::GetInstance()->mPlayerID = std::distance(ServerManager::GetInstance()->m_ClientList.begin(), clientinstance) + 1;
+                std::cout << "[SERVER] :: mPlayerID within recvServerData -> " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
+                NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
+            }
         }
     }
 }
