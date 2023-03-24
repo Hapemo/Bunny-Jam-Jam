@@ -252,16 +252,6 @@ void NetworkSerializationManager::DeserialiseGameStarted() {
 	mGameStarted = static_cast<bool>(mRecvBuff[1]);
 }
 
-int NetworkSerializationManager::SerialiseGameStarted() {
-	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
-	char* currBuff{ mSendBuff + 1 };
-	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGameStarted);
-
-	currBuff[0] = static_cast<char>(mGameStarted);
-
-	return static_cast<int>(currBuff - mSendBuff);
-}
-
 int NetworkSerializationManager::SerialiseNumberOfClientConnected() {
 	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
 	char* currBuff{ mSendBuff + 1 };
