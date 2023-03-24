@@ -341,6 +341,12 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         VI::iGameState::ChangeGameState("Bunny_GameLevel1");
     }
 
+
+    //if (NetworkSerializationManager::GetInstance()->mGameStarted) {
+    //    VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+    //}
+
+
     //------------------------------------------------------------------------// Buttons
 
 

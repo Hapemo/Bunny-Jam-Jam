@@ -433,7 +433,7 @@ void Application::SecondUpdate() {
 #ifdef _SERVER
   if (gamestateName == "Bunny_GameLevel1")
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
-  if (gamestateName == "Bunny_MainMenu")
+  else if (manager->mGameStarted)
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGameStarted);
 #endif
 
