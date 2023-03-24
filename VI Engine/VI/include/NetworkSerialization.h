@@ -82,6 +82,8 @@ public:
 	float mTimeRemaining;
 	int mRound;
 
+	std::set<Entity> mEntitiesToSerialise;
+
 #ifndef _SERVER //If client
 	char prevInput;
 #endif

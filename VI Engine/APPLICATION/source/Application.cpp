@@ -385,6 +385,8 @@ bool Application::FirstUpdate() {
   // Part 1
   glfwPollEvents();
 
+  NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
+
 #ifdef _CLIENT
   NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::C2SPlayerControls);
 #endif
