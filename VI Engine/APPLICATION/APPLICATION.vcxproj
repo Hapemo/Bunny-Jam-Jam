@@ -65,6 +65,7 @@
     <ClInclude Include="include\Scripts\AttackScript.h" />
     <ClInclude Include="include\Scripts\BackToGameButton.h" />
     <ClInclude Include="include\Scripts\ExitConfirmationButton.h" />
+    <ClInclude Include="include\Scripts\GameOverScript.h" />
     <ClInclude Include="include\Scripts\Menu_Button.h" />
     <ClInclude Include="include\Scripts\MoveMinimapScript.h" />
     <ClInclude Include="include\Scripts\PassengerScript.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Scripts\ConnectionButtonControl.cpp" />
     <ClCompile Include="source\Scripts\FPSPrint.cpp" />
+    <ClCompile Include="source\Scripts\GameOverScript.cpp" />
     <ClCompile Include="source\Scripts\Menu_Button.cpp" />
     <ClCompile Include="source\Scripts\Old\BunnyChef_PlayerMovement.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_CarrotCollectionScript.cpp" />
