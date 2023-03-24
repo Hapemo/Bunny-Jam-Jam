@@ -144,6 +144,13 @@ void Bunny_MatchOver::Update(Entity const& _e) {
 			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_MATCHOVER;
 	}
 	
+	// jh here
+	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_MATCHOVER)
+	{
+
+	}
+
+	
 
 }
 
