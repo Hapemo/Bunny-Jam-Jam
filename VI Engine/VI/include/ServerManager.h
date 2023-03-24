@@ -29,7 +29,7 @@ public:
 	~ServerManager();
 
 	bool serverInit(u_short serverPortNumber);
-	bool serverSendData(const char* data, int size);
+	bool serverSendData(char* data, int size);
 	void serverClose();
 
 	// Helper functions
