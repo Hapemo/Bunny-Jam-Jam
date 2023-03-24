@@ -121,13 +121,16 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 }
 
 //== Batch send to all connected clients
-bool ServerManager::serverSendData(const char* data, int size)
+bool ServerManager::serverSendData(char* data, int size)
 {
-    //std::cout << "ClientList Size: " << m_ClientList.size() << "\n";
-    
+    char ClientID = 0;
+
     // Broadcast data to all clients
-    for (auto const& c : m_ClientList) {
-        if (SendMsg(c.second, data, size) == false)
+    for (auto const& c : m_ClientList) 
+    {
+        data[size + 1] = ++ClientID;
+        
+        if (SendMsg(c.second, data, size + 1) == false)
             return false;
     }
 
