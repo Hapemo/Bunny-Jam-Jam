@@ -195,7 +195,11 @@ void serverRecvData()
             //    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             //}
             NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
-  
+            
+            if (ServerManager::GetInstance()->m_ClientList.size() > 1) {
+              std::cout << "More than 1 player, starting game\n";
+              NetworkSerializationManager::GetInstance()->mGameStarted = true;
+            }
             std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
 		    }
         else {

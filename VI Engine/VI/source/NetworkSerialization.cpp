@@ -44,6 +44,10 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 	case NETWORKDATATYPE::ServerDataTypes:
 		break;// DO NOTHING HERE PLEASE
 
+	case NETWORKDATATYPE::S2CGameStarted:
+		dataSize = SerialiseGameStarted();
+		break;
+
 	case NETWORKDATATYPE::S2CNumOfClientConnected:
 		dataSize = SerialiseNumberOfClientConnected();
 		break;
@@ -103,6 +107,10 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 		break;
 
 	case NETWORKDATATYPE::C2SPlayAgain:
+		break;
+
+	case NETWORKDATATYPE::S2CGameStarted:
+		DeserialiseGameStarted();
 		break;
 
 	case NETWORKDATATYPE::S2CNumOfClientConnected:
@@ -231,6 +239,23 @@ void NetworkSerializationManager::DeserialisePlayAgain() {
 //-------------------------------
 // Server to client
 //-------------------------------
+
+int NetworkSerializationManager::SerialiseGameStarted() {
+	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
+	char* currBuff{ mSendBuff + 1 };
+	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGameStarted);
+
+	currBuff[0] = static_cast<char>(mGameStarted);
+
+	return static_cast<int>(currBuff - mSendBuff);
+}
+
+void NetworkSerializationManager::DeserialiseGameStarted() {
+	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGameStarted)
+		std::cout << "NETWORKDATATYPE::S2CGameStarted\n";
+
+	mGameStarted = static_cast<bool>(mRecvBuff[1]);
+}
        
 int NetworkSerializationManager::SerialiseNumberOfClientConnected() {
 	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
