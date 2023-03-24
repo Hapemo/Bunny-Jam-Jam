@@ -80,7 +80,6 @@ public:
 
 	int mJam;
 	float mTimeRemaining;
-	int mRound;
 
 	std::set<Entity> mEntitiesToSerialise;
 
