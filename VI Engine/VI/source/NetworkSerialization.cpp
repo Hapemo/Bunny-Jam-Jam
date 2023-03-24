@@ -533,14 +533,11 @@ void NetworkSerializationManager::DeserialiseData() {
 
 bool NetworkSerializationManager::GetFromBank(std::string name, int* intPtr) {
 	try {
-		std::cout << "1111111\n";
 		*intPtr = dataBank.at(name);
-		std::cout << "22222222\n";
 		dataBank.erase(dataBank.find(name));
 		return true;
 
 	} catch (const std::out_of_range& err) {
-		std::cout << "222333333333322222\n";
 		return false;
 	}
 }
