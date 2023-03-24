@@ -70,6 +70,8 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		break;
 	}
 
+	if (dataSize == 0) return;
+
 	bool isServer = static_cast<char>(dataType) > static_cast<char>(NETWORKDATATYPE::ServerDataTypes);
 
 	if (isServer) {
@@ -108,6 +110,7 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 		break;
 
 	case NETWORKDATATYPE::S2CGamePlayData:
+		DeserialiseGamePlayData();
 		break;
 
 	case NETWORKDATATYPE::S2CEntityDetail:
@@ -121,6 +124,7 @@ void NetworkSerializationManager::DeserialiseAndLoad() {
 
 	case NETWORKDATATYPE::C2SData:
 	case NETWORKDATATYPE::S2CData:
+		DeserialiseData();
 
 		break;
 	}
