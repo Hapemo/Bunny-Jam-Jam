@@ -429,11 +429,10 @@ void Application::SecondUpdate() {
 
   std::string gamestateName = GameStateManager::GetInstance()->mCurrentGameState->mName;
   NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
-  std::cout << gamestateName << '\n';
 #ifdef _SERVER
   if (gamestateName == "Bunny_GameLevel1")
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
-  if (gamestateName == "Bunny_MainMenu")
+  else if (manager->mGameStarted)
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGameStarted);
 #endif
 

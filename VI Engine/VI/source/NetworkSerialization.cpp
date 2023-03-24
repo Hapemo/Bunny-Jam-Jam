@@ -20,9 +20,8 @@ namespace {
 NetworkSerializationManager::NetworkSerializationManager() : 
 	mSendBuff(new char[MAX_UDP_PACKET_SIZE]), mRecvBuff(new char[MAX_UDP_PACKET_SIZE]), mSize(0),
 	mNumberOfClientConnected(), mPlayerID()
-
 {
-	
+	std::cout << "mRecvBuff: " << mRecvBuff << '\n';
 }
 
 NetworkSerializationManager::~NetworkSerializationManager() {
@@ -598,6 +597,15 @@ bool NetworkSerializationManager::GetFromBank(std::string name, int* intPtr) {
 
 
 void NetworkSerializationManager::PrintSendBuff() {
+	std::cout << "Printing SendBuff\n";
+	for (int i{}; i < MAX_UDP_PACKET_SIZE; ++i) {
+		std::cout << (mSendBuff[i] != '\0' ? mSendBuff[i] : '*');
+
+	}
+	std::cout << "End Printing SendBuff\n";
+}
+
+void NetworkSerializationManager::PrintRecvBuff() {
 	std::cout << "Printing SendBuff\n";
 	for (int i{}; i < MAX_UDP_PACKET_SIZE; ++i) {
 		std::cout << (mSendBuff[i] != '\0' ? mSendBuff[i] : '*');
