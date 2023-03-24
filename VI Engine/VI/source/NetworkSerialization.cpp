@@ -165,6 +165,7 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 
 	if (currInput == prevInput) return 0;
 	prevInput = currInput;
+	std::cout << "player ID before sending: " << mPlayerID << '\n';
 
 	currBuff[0] = currInput;
 	++currBuff;
@@ -233,7 +234,34 @@ void NetworkSerializationManager::DeserialisePlayAgain() {
 //-------------------------------
 // Server to client
 //-------------------------------
-       
+
+int NetworkSerializationManager::SerialiseGameStarted() {
+	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
+	char* currBuff{ mSendBuff + 1 };
+	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGameStarted);
+
+	currBuff[0] = static_cast<char>(mGameStarted);
+
+	return static_cast<int>(currBuff - mSendBuff);
+}
+
+void NetworkSerializationManager::DeserialiseGameStarted() {
+	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGameStarted)
+		std::cout << "NETWORKDATATYPE::S2CGameStarted\n";
+
+	mGameStarted = static_cast<bool>(mRecvBuff[1]);
+}
+
+int NetworkSerializationManager::SerialiseGameStarted() {
+	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
+	char* currBuff{ mSendBuff + 1 };
+	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGameStarted);
+
+	currBuff[0] = static_cast<char>(mGameStarted);
+
+	return static_cast<int>(currBuff - mSendBuff);
+}
+
 int NetworkSerializationManager::SerialiseNumberOfClientConnected() {
 	memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
 	char* currBuff{ mSendBuff + 1 };

@@ -421,6 +421,7 @@ bool Application::FirstUpdate() {
 void Application::SecondUpdate() {
   PrintTitleBar(0.3);
 
+  std::cout << "555\n";
 #ifndef _SERVER
   // Close the window if the close flag is triggered
   if (glfwWindowShouldClose(Application::getWindow())) GameStateManager::mGSMState = GameStateManager::E_GSMSTATE::EXIT;
@@ -430,8 +431,11 @@ void Application::SecondUpdate() {
   std::string gamestateName = GameStateManager::GetInstance()->mCurrentGameState->mName;
   NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
 #ifdef _SERVER
+  std::cout << "current gamestate: " << gamestateName << '\n';
   if (gamestateName == "Bunny_GameLevel1")
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
+  else if (gamestateName == "Bunny_MainMenu")
+    manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGameStarted);
 #endif
 
 #if NETWORKSERIALISETEST
@@ -471,6 +475,7 @@ void Application::MainUpdate() {
       audioManager->SetALLVolume(0.f);   //need pause all the audio... and resume properly
       continue;
     }
+    std::cout << "111\n";
     TRACK_PERFORMANCE("MainLoop");
 #ifdef _EDITOR
     TRACK_PERFORMANCE("Editor");
@@ -486,6 +491,7 @@ void Application::MainUpdate() {
     SystemUpdate();
 
 #endif
+    std::cout << "222\n";
     static bool toggle{ false };
     if (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, F)) Helper::SetFullScreen(toggle = !toggle);
 
@@ -493,6 +499,7 @@ void Application::MainUpdate() {
     //shadowManager->Update();
     END_TRACK("Shadow");
 
+    std::cout << "333\n";
 
 #ifndef _SERVER
     TRACK_PERFORMANCE("Graphics");
@@ -511,6 +518,7 @@ void Application::MainUpdate() {
     //if (Input::CheckKey(PRESS, ESCAPE)) GameStateManager::GetInstance()->GameStateExit();
     GameStateManager::GetInstance()->UpdateNextGSMState();
 
+    std::cout << "444\n";
     SecondUpdate(); // This should always be the last
     END_TRACK("MainLoop");
   }

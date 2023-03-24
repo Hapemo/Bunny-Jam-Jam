@@ -36,7 +36,8 @@ public:
 
 	int SerialisePlayerControls();														// App::FirstUpdate(), after glfwinputpoll
 	int SerialisePlayAgain();																	// App::SecondUpdate(), since it'll be after the button update
-	
+
+	int Serialise
 	int SerialiseNumberOfClientConnected();										// ServerManager when a client joined and initialised in the server
 	int SerialiseGamePlayData();															// App::SecondUpdate(), since it's after all the logic and collision systems
 	int SerialiseGameStats(char*&);														// same
@@ -78,6 +79,7 @@ public:
 	bool mPlayAgain;
 	int mPrevPlayAgainCount;
 	int mPlayAgainCount; // if -1, quit. if 0, no data yet. if 1, 1 person play again. if 2, all player want to play again
+	bool gameStarted;
 
 	int mJam;
 	float mTimeRemaining;
