@@ -81,17 +81,19 @@ void clientRecvData()
                                (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, 
                                &temp);
 
-        memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
-        memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
-
-        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - 1));
-
         if (nLength > 0) std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
 
         if (nLength == SOCKET_ERROR) {
           std::cout << "RECV SOCKET ERROR\n";
+          std::cout << "WSAGetLastError: " << WSAGetLastError() <<'\n';
           return;
         }
+
+        memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
+        memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
+        NetworkSerializationManager::GetInstance()->PrintRecvBuff();
+        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - 1));
+
 
         std::cout << "ClientManager::GetInstance()->serverPacketNum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
         std::cout << "newPacketNum: " << newPacketNum << '\n';

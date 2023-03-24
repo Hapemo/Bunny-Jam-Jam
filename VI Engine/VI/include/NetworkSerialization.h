@@ -64,6 +64,7 @@ public:
 	void DeserialiseData();
 
 	void PrintSendBuff();
+	void PrintRecvBuff();
 	void TestTransferData();
 
 	char* FindSubStringEnd(char*& str, const char* findee, int strLen = 30000);
