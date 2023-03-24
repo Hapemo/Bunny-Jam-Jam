@@ -427,6 +427,8 @@ void Application::SecondUpdate() {
   /////audioManager->UpdateSound();
 #endif
 
+  std::string gamestateName = GameStateManager::GetInstance()->mCurrentGameState->mName;
+  NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
 #ifdef _SERVER
   if (gamestateName == "Bunny_GameLevel1")
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
