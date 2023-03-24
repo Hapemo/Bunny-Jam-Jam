@@ -70,6 +70,8 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		break;
 	}
 
+	if (dataSize == 0) return;
+
 	bool isServer = static_cast<char>(dataType) > static_cast<char>(NETWORKDATATYPE::ServerDataTypes);
 
 	if (isServer) {

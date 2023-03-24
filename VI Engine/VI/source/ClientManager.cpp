@@ -84,7 +84,7 @@ void clientRecvData()
         memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
         memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
 
-        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long)));
+        unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - 1));
 
         if (nLength > 0) std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
 
@@ -101,7 +101,7 @@ void clientRecvData()
           // tell jazz to deserialize
           NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
           NetworkSerializationManager::GetInstance()->mPlayerID = *reinterpret_cast<int*>(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength);
-          std::cout << "playerID: " << NetworkSerializationManager::GetInstance()->mPlayerID << " received data\n";
+          std::cout << "server sent to player playerID: " << NetworkSerializationManager::GetInstance()->mPlayerID << " received data\n";
         }
     }
 
