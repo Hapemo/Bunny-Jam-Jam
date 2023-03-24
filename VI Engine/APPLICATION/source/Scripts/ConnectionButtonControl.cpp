@@ -341,7 +341,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         }
 
 
-        if (NetworkSerializationManager::GetInstance()->gameStarted)
+        if (NetworkSerializationManager::GetInstance()->mGameStarted)
         {
             BUNNY_MENUSTATE = 1;
 
