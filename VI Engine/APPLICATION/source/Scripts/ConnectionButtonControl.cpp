@@ -16,7 +16,7 @@ Updates the fps count, for the fps printer in entity
 #include "../../../VI/include/ClientManager.h" 
 #include "NetworkSerialization.h"
 
-
+int BUNNY_MENUSTATE = 0;
 static bool updateOnce{ false };
 //bool ConnectionButtonControl::startMenu_{ false };
 REGISTER_SCRIPT(ScriptComponent, ConnectionButtonControl);
@@ -31,7 +31,8 @@ namespace {
     Entity p1_;
     Entity p2_;
     Entity you_;
-
+    Entity timer;
+    double starttime = 4.0;
     // menu effect variables
     bool posap_ = false;
 
@@ -128,7 +129,9 @@ void ConnectionButtonControl::Init(Entity const& _e) {
     back_ = VI::iEntity::GetEntity("Back", "Game");
     p1_ = VI::iEntity::GetEntity("Player1", "Game");
     p2_ = VI::iEntity::GetEntity("Player2", "Game");
-
+    timer = VI::iEntity::GetEntity("starttimer", "Game");
+    starttime = 4.0;
+    BUNNY_MENUSTATE = 0;
     //if (zoom_ == 1) {
 
     //  loadicon_.GetComponent<Transform>().scale.x =0.f;
@@ -174,6 +177,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         bgeff2_ = VI::iEntity::GetEntity("BGEffect2", "Game");
         ip_ = VI::iEntity::GetEntity("IP", "RequestIP");
         join_ = VI::iEntity::GetEntity("Join", "");
+        timer = VI::iEntity::GetEntity("starttimer", "Game");
     }
 
 
@@ -184,195 +188,211 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 
 
-
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::Q) == true) {
-        player1_ = true;
-    }
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::E) == true) {
-        player2_ = true;
-    }
-
-
-    if (player1_ == true) {
-        you_.GetComponent<Transform>().scale.x = 335.f;
-        you_.GetComponent<Transform>().scale.y = 150.f;
-        p1_.GetComponent<Transform>().scale.x = 260.f;
-        p1_.GetComponent<Transform>().scale.y = 180.f;
-    }
-    if (player2_ == true) {
-        you_.GetComponent<Transform>().scale.x = 335.f;
-        you_.GetComponent<Transform>().scale.y = 150.f;
-        p2_.GetComponent<Transform>().scale.x = 260.f;
-        p2_.GetComponent<Transform>().scale.y = 180.f;
-    }
-
-    //2764 position 
-
-
-    if (bgeff_.GetComponent<Transform>().translation.x >= -500 && posap_ == false) {
-        bgeff2_.GetComponent<Transform>().translation.x = -2764;
-        bgeff2_.GetComponent<Transform>().translation.y = 2764;
-        posap_ = true;
-    }
-    if (bgeff2_.GetComponent<Transform>().translation.x >= -500 && posap_ == true) {
-        bgeff_.GetComponent<Transform>().translation.x = -2764;
-        bgeff_.GetComponent<Transform>().translation.y = 2764;
-        posap_ = false;
-    }
-
-    bgeff_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
-    bgeff_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
-
-    bgeff2_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
-    bgeff2_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
-
-
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
+    if (BUNNY_MENUSTATE == 0)
     {
-        iplen_ = 0;
-        ipstring_ = "";
-        ip_.GetComponent<Text>().text = ipstring_;
-        VI::iScene::Pause("RequestIP");
-        textin_ = false;
-    }
-    
+        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::Q) == true) {
+            player1_ = true;
+        }
+        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::E) == true) {
+            player2_ = true;
+        }
 
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::L)) {
 
-    }
+        if (player1_ == true) {
+            you_.GetComponent<Transform>().scale.x = 335.f;
+            you_.GetComponent<Transform>().scale.y = 150.f;
+            p1_.GetComponent<Transform>().scale.x = 260.f;
+            p1_.GetComponent<Transform>().scale.y = 180.f;
 
-    if (textin_ == true && iplen_ < 16) {
-        for (int i = 48, j = 0; i < 59; ++i, ++j) {
+        }
+        if (player2_ == true) {
+            you_.GetComponent<Transform>().scale.x = 335.f;
+            you_.GetComponent<Transform>().scale.y = 150.f;
+            p2_.GetComponent<Transform>().scale.x = 260.f;
+            p2_.GetComponent<Transform>().scale.y = 180.f;
+        }
 
-            if (j > 9) {
-                j = 0;
+        //2764 position 
+
+
+        if (bgeff_.GetComponent<Transform>().translation.x >= -500 && posap_ == false) {
+            bgeff2_.GetComponent<Transform>().translation.x = -2764;
+            bgeff2_.GetComponent<Transform>().translation.y = 2764;
+            posap_ = true;
+        }
+        if (bgeff2_.GetComponent<Transform>().translation.x >= -500 && posap_ == true) {
+            bgeff_.GetComponent<Transform>().translation.x = -2764;
+            bgeff_.GetComponent<Transform>().translation.y = 2764;
+            posap_ = false;
+        }
+
+        bgeff_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
+        bgeff_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
+
+        bgeff2_.GetComponent<Transform>().translation.x += 100.f * (float)FUNC->GetDeltaTime();
+        bgeff2_.GetComponent<Transform>().translation.y -= 100.f * (float)FUNC->GetDeltaTime();
+
+
+        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE))
+        {
+            iplen_ = 0;
+            ipstring_ = "";
+            ip_.GetComponent<Text>().text = ipstring_;
+            VI::iScene::Pause("RequestIP");
+            textin_ = false;
+        }
+
+
+        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::L)) {
+
+        }
+
+        if (textin_ == true && iplen_ < 16) {
+            for (int i = 48, j = 0; i < 59; ++i, ++j) {
+
+                if (j > 9) {
+                    j = 0;
+                }
+                if (VI::iInput::CheckKey(E_STATE::PRESS, static_cast<E_KEY>(i)) == true) {
+
+                    ++iplen_;
+                    ipstring_ += std::to_string(j);
+                    ip_.GetComponent<Text>().text = ipstring_;
+                }
             }
-            if (VI::iInput::CheckKey(E_STATE::PRESS, static_cast<E_KEY>(i)) == true) {
 
+            if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::PERIOD) == true) {
                 ++iplen_;
-                ipstring_ += std::to_string(j);
+                ipstring_ += ".";
                 ip_.GetComponent<Text>().text = ipstring_;
             }
         }
-
-        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::PERIOD) == true) {
-            ++iplen_;
-            ipstring_ += ".";
-            ip_.GetComponent<Text>().text = ipstring_;
-        }
-    }
-    if (iplen_ > 0) {
-        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::BACKSPACE) == true) {
-            --iplen_;
-            ipstring_.pop_back();
-            ip_.GetComponent<Text>().text = ipstring_;
-
-        }
-    }
-
-
-
-    //Connect Address
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) 
-    {
-        if (!isConnected)
-        {
-            if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay"))
-            {
-                //Connected Successfully
-                VI::iScene::Pause("RequestIP");
-                isConnected = true;
-
-                //Pop up P1 based on Connection.size
-                //VI::iGameState::ChangeGameState("Bunny_GameLevel1");
-
+        if (iplen_ > 0) {
+            if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::BACKSPACE) == true) {
+                --iplen_;
+                ipstring_.pop_back();
+                ip_.GetComponent<Text>().text = ipstring_;
 
             }
-            else
+        }
+
+
+
+        //Connect Address
+        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true)
+        {
+            if (!isConnected)
             {
-                //Connection failed
-                VI::iScene::Pause("RequestIP");
-                //Pop up error Message
+                if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay"))
+                {
+                    //Connected Successfully
+                    VI::iScene::Pause("RequestIP");
+                    isConnected = true;
+
+                    //Pop up P1 based on Connection.size
+                    //VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+
+
+                }
+                else
+                {
+                    //Connection failed
+                    VI::iScene::Pause("RequestIP");
+                    //Pop up error Message
+                }
             }
         }
-    }
-    //if (!ifFound)
-    //{
-    //    if (NetworkSerializationManager::GetInstance()->GetFromBank("mNumberOfClientConnected", &NetworkSerializationManager::GetInstance()->mNumberOfClientConnected))
-    //    {
-    //        ifFound = true;
-    //    }
-    //}
-    if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
-    {
-        player1_ = true;
-        if (!bothPlayers)
+        //if (!ifFound)
+        //{
+        //    if (NetworkSerializationManager::GetInstance()->GetFromBank("mNumberOfClientConnected", &NetworkSerializationManager::GetInstance()->mNumberOfClientConnected))
+        //    {
+        //        ifFound = true;
+        //    }
+        //}
+        if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
         {
-            bothPlayers = true;
-            you_.GetComponent<Transform>().translation.x = -400.f;
-            you_.GetComponent<Transform>().translation.y = 220.f;
+            player1_ = true;
+            if (!bothPlayers)
+            {
+                bothPlayers = true;
+                you_.GetComponent<Transform>().translation.x = -400.f;
+                you_.GetComponent<Transform>().translation.y = 220.f;
+            }
+        }
+        else if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
+        {
+            player1_ = true;
+            player2_ = true;
+            if (!bothPlayers)
+            {
+                bothPlayers = true;
+                you_.GetComponent<Transform>().translation.x = -400.f;
+                you_.GetComponent<Transform>().translation.y = 8.f;
+            }
+        }
+
+      /*  if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE) == true) {
+            NetworkSerializationManager::GetInstance()->mNumberOfClientConnected = 2;
+        }*/
+
+
+        if (zoom_ == -1 && loadicon_.GetComponent<Transform>().scale.x >= 2000) {
+            VI::iGameState::ChangeGameState("Bunny_MainMenu");
+        }
+
+
+        if (NetworkSerializationManager::GetInstance()->gameStarted)
+        {
+            BUNNY_MENUSTATE = 1;
+
+        }
+
+        //------------------------------------------------------------------------// Buttons
+
+
+        if (back_.GetComponent<Button>().isHover) {
+            //if (join_.GetComponent<Transform>().scale.x < 200) {
+            //  join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
+            //}
+            if (back_.GetComponent<Button>().isClick) {
+                //std::cout << "bitchhhhhhhhhhhhhhhhhhhh\n";
+                zoom_ = 1;
+                Menu_Button::startMenu_ = 0;
+            }
+        }
+        //std::cout << zoom_ << "bitchhhhhhhhhhhhhhhhhhhh\n";
+        zoom_ = Transit(zoom_, loadicon_, acc_, scaling_);
+
+        if (join_.GetComponent<Button>().isHover) {
+            //if (join_.GetComponent<Transform>().scale.x < 200) {
+            //  join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
+            //}
+            if (join_.GetComponent<Button>().isClick) {
+                textin_ = true;
+                if (!isConnected)
+                    VI::iScene::Play("RequestIP");
+            }
+        }
+        else {
+            //if (join_.GetComponent<Transform>().scale.x > 100) {
+            //  join_.GetComponent<Transform>().scale.x -= 1000.f * (float)FUNC->GetDeltaTime();
+            //}
         }
     }
-    else if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
+    else if (BUNNY_MENUSTATE == 1)
     {
-        player1_ = true;
-        player2_ = true;
-        if (!bothPlayers)
-        {
-            bothPlayers = true;
-            you_.GetComponent<Transform>().translation.x = -400.f;
-            you_.GetComponent<Transform>().translation.y = 8.f;
-        }
+    starttime -= VI::GetDeltaTime();
+    if (starttime > 1.0)
+    {
+        timer.GetComponent<Text>().text = std::to_string(static_cast<int>(starttime));
     }
-    
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE) == true) {
-        NetworkSerializationManager::GetInstance()->mNumberOfClientConnected = 2;
+    else
+    {
+
         VI::iGameState::ChangeGameState("Bunny_GameLevel1");
     }
 
-
-    if (zoom_ == -1 && loadicon_.GetComponent<Transform>().scale.x >= 2000) {
-        VI::iGameState::ChangeGameState("Bunny_MainMenu");
     }
-
-
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE) == true)
-    {
-        VI::iGameState::ChangeGameState("Bunny_GameLevel1");
-    }
-
-    //------------------------------------------------------------------------// Buttons
-
-
-    if (back_.GetComponent<Button>().isHover) {
-        //if (join_.GetComponent<Transform>().scale.x < 200) {
-        //  join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
-        //}
-        if (back_.GetComponent<Button>().isClick) {
-            //std::cout << "bitchhhhhhhhhhhhhhhhhhhh\n";
-            zoom_ = 1;
-            Menu_Button::startMenu_ = 0;
-        }
-    }
-    //std::cout << zoom_ << "bitchhhhhhhhhhhhhhhhhhhh\n";
-    zoom_ = Transit(zoom_, loadicon_, acc_, scaling_);
-
-    if (join_.GetComponent<Button>().isHover) {
-        //if (join_.GetComponent<Transform>().scale.x < 200) {
-        //  join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
-        //}
-        if (join_.GetComponent<Button>().isClick) {
-            textin_ = true;
-            if(!isConnected)
-            VI::iScene::Play("RequestIP");
-        }
-    }
-    else {
-        //if (join_.GetComponent<Transform>().scale.x > 100) {
-        //  join_.GetComponent<Transform>().scale.x -= 1000.f * (float)FUNC->GetDeltaTime();
-        //}
-    }
-
     (void)_e;
 }
 

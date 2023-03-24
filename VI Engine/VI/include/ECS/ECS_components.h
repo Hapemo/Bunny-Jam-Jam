@@ -32,7 +32,9 @@ enum BUNNY_INGAMESTATE
 	BUNNY_TIMEUP,
 	BUNNY_NEXT,
 	BUNNY_WIN,
-	BUNNY_SWAP
+	BUNNY_SWAP,
+	BUNNY_MENU,
+	BUNNY_GAMESTARTING
 };
 struct Bunny {
 	unsigned int carrots = 0;

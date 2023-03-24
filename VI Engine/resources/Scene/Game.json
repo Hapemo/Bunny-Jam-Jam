@@ -65,8 +65,8 @@
         },
         "Transform": {
             "scale": {
-                "X": 260.0,
-                "Y": 180.0
+                "X": 0.0,
+                "Y": 0.0
             },
             "rotation": 0.0,
             "translation": {
@@ -95,8 +95,8 @@
         },
         "Transform": {
             "scale": {
-                "X": 260.0,
-                "Y": 180.0
+                "X": 0.0,
+                "Y": 0.0
             },
             "rotation": 0.0,
             "translation": {
@@ -226,8 +226,8 @@
             },
             "rotation": 5.497786998748779,
             "translation": {
-                "X": -360.2200927734375,
-                "Y": 360.2200927734375
+                "X": 2431.294921875,
+                "Y": -2431.294921875
             }
         },
         "Sprite": {
@@ -256,8 +256,8 @@
             },
             "rotation": 5.497786998748779,
             "translation": {
-                "X": -2624.41845703125,
-                "Y": 2624.41845703125
+                "X": -561.6485595703125,
+                "Y": 561.6485595703125
             }
         },
         "Sprite": {
@@ -281,8 +281,8 @@
         },
         "Transform": {
             "scale": {
-                "X": 2000.0,
-                "Y": 2000.0
+                "X": -20.47592544555664,
+                "Y": -20.47592544555664
             },
             "rotation": 0.0,
             "translation": {
@@ -295,7 +295,7 @@
                 "r": 255,
                 "g": 255,
                 "b": 255,
-                "a": 255
+                "a": 0
             },
             "sprite": 1,
             "texture": "",
@@ -344,8 +344,8 @@
         },
         "Transform": {
             "scale": {
-                "X": 335.0,
-                "Y": 150.0
+                "X": 0.0,
+                "Y": 0.0
             },
             "rotation": 0.0,
             "translation": {
@@ -363,6 +363,53 @@
             "sprite": 2,
             "texture": "Textures\\You.png",
             "layer": 8
+        }
+    },
+    {
+        "General": {
+            "name": "starttimer",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 150.0,
+                "Y": 150.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 3,
+            "texture": "",
+            "layer": 9
+        },
+        "Text": {
+            "fontFile": "3Dumb",
+            "text": "3",
+            "offset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "scale": 2.0,
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "followCam": false,
+            "width": 0.0
         }
     }
 ]
