@@ -329,8 +329,6 @@ void ConnectionButtonControl::Update(Entity const& _e) {
                 you_.GetComponent<Transform>().translation.x = -400.f;
                 you_.GetComponent<Transform>().translation.y = 8.f;
             }
-            BUNNY_MENUSTATE = 1;
-
         }
 
       /*  if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE) == true) {
@@ -343,10 +341,11 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         }
 
 
-       /* if (NetworkSerializationManager::GetInstance()->mGameStarted)
+        if (NetworkSerializationManager::GetInstance()->mGameStarted)
         {
             BUNNY_MENUSTATE = 1;
-        }*/
+
+        }
 
         //------------------------------------------------------------------------// Buttons
 
