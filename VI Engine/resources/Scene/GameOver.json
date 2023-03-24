@@ -1,0 +1,140 @@
+[
+    {
+        "General": {
+            "name": "gameoverBG",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 1600.0,
+                "Y": 900.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\GameOver.png",
+            "layer": 0
+        },
+        "Script": {
+            "name": "GameOverScript"
+        }
+    },
+    {
+        "General": {
+            "name": "winnerBunny",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 300.0,
+                "Y": 300.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Bunny.png",
+            "layer": 1
+        },
+        "SheetAnimation": {
+            "frameCount": 5,
+            "currFrameIndex": 1,
+            "timePerFrame": 0.10000000149011612,
+            "timeToFrameSwap": 0.016666671261191368
+        }
+    },
+    {
+        "General": {
+            "name": "exit_button",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 333.0,
+                "Y": 178.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": -21.849000930786133,
+                "Y": -272.84210205078125
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 248,
+                "g": 248,
+                "b": 248,
+                "a": 0
+            },
+            "sprite": 0,
+            "texture": "",
+            "layer": 2
+        },
+        "Button": {
+            "interactable": true
+        }
+    },
+    {
+        "General": {
+            "name": "winnerChef",
+            "tag": 8,
+            "subtag": 0,
+            "isActive": true
+        },
+        "Transform": {
+            "scale": {
+                "X": 300.0,
+                "Y": 300.0
+            },
+            "rotation": 0.0,
+            "translation": {
+                "X": 0.0,
+                "Y": 0.0
+            }
+        },
+        "Sprite": {
+            "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+            },
+            "sprite": 2,
+            "texture": "Textures\\Chef.png",
+            "layer": 3
+        },
+        "SheetAnimation": {
+            "frameCount": 5,
+            "currFrameIndex": 3,
+            "timePerFrame": 0.10000000149011612,
+            "timeToFrameSwap": 0.03333333879709244
+        }
+    }
+]

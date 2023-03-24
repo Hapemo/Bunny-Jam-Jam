@@ -147,6 +147,7 @@ void Bunny_MatchOver::Update(Entity const& _e) {
 	// jh here
 	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_MATCHOVER)
 	{
+		VI::iGameState::ChangeGameState("Bunny_GameOver");
 
 	}
 
