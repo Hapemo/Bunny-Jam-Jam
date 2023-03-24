@@ -325,7 +325,10 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         }
     }
     
-
+    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE) == true) {
+        NetworkSerializationManager::GetInstance()->mNumberOfClientConnected = 2;
+        VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+    }
 
 
     if (zoom_ == -1 && loadicon_.GetComponent<Transform>().scale.x >= 2000) {

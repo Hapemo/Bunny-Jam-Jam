@@ -385,14 +385,20 @@ bool Application::FirstUpdate() {
   // Part 1
   glfwPollEvents();
 
+  NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
+  std::string gamestateName = GameStateManager::GetInstance()->mCurrentGameState->mName;
+
 #ifdef _CLIENT
-  NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::C2SPlayerControls);
+  if (gamestateName == "Bunny_GameLevel1")
+    manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::C2SPlayerControls);
 #endif
 
 
 #ifdef _SERVER
   if (Input::CheckKey(PRESS, SPACE))
-    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+    manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+  if (gamestateName == "Bunny_GameLevel1")
+    manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
 #endif
 
 

@@ -132,42 +132,68 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	char* currBuff{ mSendBuff };
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::C2SPlayerControls);
 	++currBuff; // 1 space in
-	
+
 	// Data consists of 4 keys, each key has 1 state (1 bytes each).
-	// So 4 bytes in total.
+	// So 4 bytes in total. plus another 4 bytes at the front for mPlayerID
 
-	E_KEY up = E_KEY::W;
-	E_KEY down = E_KEY::S;
-	E_KEY left = E_KEY::A;
-	E_KEY right = E_KEY::D;
+	*reinterpret_cast<int*>(currBuff) = mPlayerID;
+	currBuff += sizeof(int);
 
-	if (Input::CheckKey(PRESS, up) || Input::CheckKey(HOLD, up)) 
-		*currBuff = 1;
-	++currBuff;
-	if (Input::CheckKey(PRESS, down) || Input::CheckKey(HOLD, down)) 
-		*currBuff = 1;
-	++currBuff;
-	if (Input::CheckKey(PRESS, left) || Input::CheckKey(HOLD, left)) 
-		*currBuff = 1;
-	++currBuff;
-	if (Input::CheckKey(PRESS, right) || Input::CheckKey(HOLD, right)) 
-		*currBuff = 1;
+	E_KEY up = E_KEY::W;		// 0001
+	E_KEY down = E_KEY::S;	// 0010
+	E_KEY left = E_KEY::A;	// 0100
+	E_KEY right = E_KEY::D;	// 1000
+
+	char currInput{};
+
+	if (Input::CheckKey(PRESS, up) || Input::CheckKey(HOLD, up)) {
+		currInput |= (1L << 0);
+	}
+	if (Input::CheckKey(PRESS, down) || Input::CheckKey(HOLD, down)) {
+		currInput |= (1L << 1);
+	}
+	if (Input::CheckKey(PRESS, left) || Input::CheckKey(HOLD, left)) {
+		currInput |= (1L << 2);
+	}
+	if (Input::CheckKey(PRESS, right) || Input::CheckKey(HOLD, right)) {
+		currInput |= (1L << 3);
+	}
+
+	if (currInput == prevInput) return 0;
+	prevInput = currInput;
+
+	currBuff[0] = currInput;
 	++currBuff;
 
 	return static_cast<int>(currBuff - mSendBuff);
 }
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
-	bool up{static_cast<bool>(mRecvBuff[1])};
-	bool down{static_cast<bool>(mRecvBuff[2])};
-	bool left{static_cast<bool>(mRecvBuff[3])};
-	bool right{static_cast<bool>(mRecvBuff[4])};
+	int playerID{ *reinterpret_cast<int*>(mRecvBuff) };
+	char input{ mRecvBuff[5] };
+	//bool up{static_cast<bool>(mRecvBuff[5])};
+	//bool down{static_cast<bool>(mRecvBuff[6])};
+	//bool left{static_cast<bool>(mRecvBuff[7])};
+	//bool right{static_cast<bool>(mRecvBuff[8])};
+
+	if (playerID == 1) {
+		mP1InputW = static_cast<bool>((input & (1L << 0)));
+		mP1InputA = static_cast<bool>((input & (1L << 1)));
+		mP1InputS = static_cast<bool>((input & (1L << 2)));
+		mP1InputD = static_cast<bool>((input & (1L << 3)));
+	} else if (playerID == 2) {
+		mP2InputW = static_cast<bool>((input & (1L << 0)));
+		mP2InputA = static_cast<bool>((input & (1L << 1)));
+		mP2InputS = static_cast<bool>((input & (1L << 2)));
+		mP2InputD = static_cast<bool>((input & (1L << 3)));
+	}
 
 #if DEBUGPRINT
-	std::cout << "up: " << up << '\n';
-	std::cout << "down: " << down << '\n';
-	std::cout << "left: " << left << '\n';
-	std::cout << "right: " << right << '\n';
+	std::cout << "Player " << playerID;
+	std::cout << "up: " << static_cast<bool>(input & (1L << 0)) << '\n';
+	std::cout << "down: " << static_cast<bool>(input & (1L << 1)) << '\n';
+	std::cout << "left: " << static_cast<bool>(input & (1L << 2)) << '\n';
+	std::cout << "right: " << static_cast<bool>(input & (1L << 3)) << '\n';
 #endif
 	//PrintSendBuff();
 }
@@ -251,14 +277,11 @@ int NetworkSerializationManager::SerialiseGameStats(char*& currBuff) {
 	// int jam collected, float time remaining, bool swap
 	int jam{};
 	float timeRemain{};
-	bool swap{};
 
 	*(reinterpret_cast<int*>(currBuff)) = jam;
 	currBuff += sizeof(int);
 	*(reinterpret_cast<int*>(currBuff)) = timeRemain;
 	currBuff += sizeof(float);
-	*(reinterpret_cast<bool*>(currBuff)) = swap;
-	currBuff += sizeof(bool);
 	
 	return static_cast<int>(currBuff - mSendBuff);
 }
@@ -268,8 +291,6 @@ void NetworkSerializationManager::DeserialiseGameStats(char*& currBuff) {
 	currBuff += sizeof(int);
 	mTimeRemaining = *(reinterpret_cast<int*>(currBuff));
 	currBuff += sizeof(float);
-	mRound = *(reinterpret_cast<bool*>(currBuff));
-	currBuff += sizeof(bool);
 }
 
 int NetworkSerializationManager::SerialiseMultipleEntities(char*& currBuff, std::set<Entity> entities) {
@@ -533,14 +554,11 @@ void NetworkSerializationManager::DeserialiseData() {
 
 bool NetworkSerializationManager::GetFromBank(std::string name, int* intPtr) {
 	try {
-		std::cout << "1111111\n";
 		*intPtr = dataBank.at(name);
-		std::cout << "22222222\n";
 		dataBank.erase(dataBank.find(name));
 		return true;
 
 	} catch (const std::out_of_range& err) {
-		std::cout << "222333333333322222\n";
 		return false;
 	}
 }
