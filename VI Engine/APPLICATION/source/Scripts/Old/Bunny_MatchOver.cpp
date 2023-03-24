@@ -130,6 +130,11 @@ void Bunny_MatchOver::Update(Entity const& _e) {
 			VI::iPhysics::ApplyImpulse(bunny_at_matchover, { 0.0f,500.0f }, { 0.0f });
 			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_COLLIDED;
 		}
+		if (bunny_at_matchover.HasComponent<Bunny>())
+		{
+			if (bunny_at_matchover.GetComponent<Bunny>().carrots == 25)
+				INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_WIN;
+		}
 	}
 	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_COLLIDED)
 	{
@@ -138,6 +143,7 @@ void Bunny_MatchOver::Update(Entity const& _e) {
 		if (bunny_at_matchover.GetComponent<Transform>().translation.y < -Bunny_CollidedlimitDOWN)
 			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_MATCHOVER;
 	}
+	
 
 }
 

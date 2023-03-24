@@ -104,6 +104,11 @@ void Bunny_Timer::Update(const Entity& _e) {
 		_e.GetComponent<Text>().offset.x = -108.0f;
 		_e.GetComponent<Text>().text = "TIMES UP!";
 	}
+	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_WIN)
+	{
+		_e.GetComponent<Text>().offset.x = -108.0f;
+		_e.GetComponent<Text>().text = "GAME END!";
+	}
 }
 
 void Bunny_Timer::FixedUpdate(const Entity& _e) {
