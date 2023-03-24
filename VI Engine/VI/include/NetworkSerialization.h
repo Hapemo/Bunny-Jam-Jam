@@ -20,6 +20,7 @@ public:
 		// Server to Client 
 		ServerDataTypes, // This mark the beginning of server data types
 
+		S2CGameStarted,
 		S2CNumOfClientConnected,
 		S2CGamePlayData,
 		S2CEntityDetail, // For player and jam
@@ -37,7 +38,7 @@ public:
 	int SerialisePlayerControls();														// App::FirstUpdate(), after glfwinputpoll
 	int SerialisePlayAgain();																	// App::SecondUpdate(), since it'll be after the button update
 
-	int Serialise
+	int SerialiseGameStarted();
 	int SerialiseNumberOfClientConnected();										// ServerManager when a client joined and initialised in the server
 	int SerialiseGamePlayData();															// App::SecondUpdate(), since it's after all the logic and collision systems
 	int SerialiseGameStats(char*&);														// same
@@ -49,6 +50,7 @@ public:
 
 	void DeserialisePlayerControls();													// App::FirstUpdate(), since it's before logic system
 	void DeserialisePlayAgain();															// App::FirstUpdate(), since it's before logic system
+	void DeserialiseGameStarted();
 	void DeserialiseNumberOfClientConnected();								// App::FirstUpdate(), since it's before logic system
 	void DeserialiseGamePlayData();														// App::FirstUpdate(), since it's before logic system
 	void DeserialiseGameStats(char*&);												// App::FirstUpdate(), since it's before logic system
@@ -79,7 +81,7 @@ public:
 	bool mPlayAgain;
 	int mPrevPlayAgainCount;
 	int mPlayAgainCount; // if -1, quit. if 0, no data yet. if 1, 1 person play again. if 2, all player want to play again
-	bool gameStarted;
+	bool mGameStarted;
 
 	int mJam;
 	float mTimeRemaining;
