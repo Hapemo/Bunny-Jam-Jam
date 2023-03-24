@@ -18,6 +18,7 @@ Press "ESC" to toggle the pause menu.
 *******************************************************************************/
 
 #include "BunnyChef_PlayerMovement.h"
+#include "NetworkSerialization.h"
 
 REGISTER_SCRIPT(ScriptComponent, BunnyChef_PlayerMovement);
 bool isPlayer1{ false };
@@ -65,6 +66,111 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 		//std::cout << "state: " << INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs << std::endl;
 		if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_INGAME)
 		{
+#ifdef _SERVER
+			// BUNNY
+			//Move Up
+			if (NetworkSerializationManager::GetInstance()->mP1InputW)
+			{
+				if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
+				{
+					sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
+					BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+				}
+			}
+
+			//Move Down
+			if (NetworkSerializationManager::GetInstance()->mP1InputS)
+			{
+				if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN)
+				{
+					sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN;
+					BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+				}
+			}
+
+			//Move Left
+			if (NetworkSerializationManager::GetInstance()->mP1InputA)
+			{
+				if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT)
+				{
+					if (BunnyPlayer.GetComponent<Transform>().scale.x > 0.0f)
+						BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
+					sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
+					BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
+				}
+			}
+
+			//Move Right
+			if (NetworkSerializationManager::GetInstance()->mP1InputS)
+			{
+				if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
+				{
+					if (BunnyPlayer.GetComponent<Transform>().scale.x < 0.0f)
+						BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
+					sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
+					BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
+				}
+			}
+
+
+			// CHEF JO AL
+			if (NetworkSerializationManager::GetInstance()->mP2InputW)
+			{
+				if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
+				{
+					sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
+					ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+				}
+			}
+			if (NetworkSerializationManager::GetInstance()->mP2InputS)
+			{
+				if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN)
+				{
+					sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN;
+					ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+				}
+			}
+			if (NetworkSerializationManager::GetInstance()->mP2InputA)
+			{
+				if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT)
+				{
+					if (ChefPlayer.GetComponent<Transform>().scale.x > 0.0f)
+						ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
+					sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
+					ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
+				}
+			}
+			if (NetworkSerializationManager::GetInstance()->mP2InputS)
+			{
+				if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
+				{
+					if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)
+						ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
+					sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
+					ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
+				}
+			}
+#endif
 			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) { BunnyOrChef = !BunnyOrChef; }
 
 

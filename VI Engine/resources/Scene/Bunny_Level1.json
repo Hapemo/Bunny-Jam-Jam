@@ -2,7 +2,7 @@
     {
         "General": {
             "name": "lightsource",
-            "tag": 8,
+            "tag": 5,
             "subtag": 0,
             "isActive": true
         },
@@ -40,7 +40,7 @@
     {
         "General": {
             "name": "COLLISIONBOTTOM",
-            "tag": 8,
+            "tag": 5,
             "subtag": 0,
             "isActive": true
         },
@@ -82,7 +82,7 @@
     {
         "General": {
             "name": "COLLISIONTOP",
-            "tag": 8,
+            "tag": 5,
             "subtag": 0,
             "isActive": true
         },
@@ -124,7 +124,7 @@
     {
         "General": {
             "name": "COLLISIONRIGHT",
-            "tag": 8,
+            "tag": 5,
             "subtag": 0,
             "isActive": true
         },
@@ -166,7 +166,7 @@
     {
         "General": {
             "name": "COLLISIONLEFT",
-            "tag": 8,
+            "tag": 5,
             "subtag": 0,
             "isActive": true
         },
@@ -208,7 +208,7 @@
     {
         "General": {
             "name": "Bunny",
-            "tag": 0,
+            "tag": 8,
             "subtag": 0,
             "isActive": true
         },
@@ -634,7 +634,7 @@
         },
         "Text": {
             "fontFile": "BPtypewrite",
-            "text": "00:10",
+            "text": "00:60",
             "offset": {
                 "X": -108.0,
                 "Y": 0.0
@@ -1712,7 +1712,7 @@
     {
         "General": {
             "name": "COLLISIONBOTTOM",
-            "tag": 8,
+            "tag": 5,
             "subtag": 0,
             "isActive": true
         },
@@ -1754,7 +1754,7 @@
     {
         "General": {
             "name": "COLLISIONBOTTOM",
-            "tag": 8,
+            "tag": 5,
             "subtag": 0,
             "isActive": true
         },
@@ -3509,7 +3509,7 @@
     {
         "General": {
             "name": "Chef",
-            "tag": 0,
+            "tag": 8,
             "subtag": 0,
             "isActive": true
         },
@@ -3614,14 +3614,14 @@
     {
         "General": {
             "name": "BunnyLoadGame",
-            "tag": 8,
+            "tag": 6,
             "subtag": 0,
             "isActive": true
         },
         "Transform": {
             "scale": {
-                "X": -105.64111328125,
-                "Y": -105.64111328125
+                "X": 5000.0,
+                "Y": 5000.0
             },
             "rotation": 0.0,
             "translation": {
@@ -3647,7 +3647,7 @@
     {
         "General": {
             "name": "MatchOver",
-            "tag": 8,
+            "tag": 6,
             "subtag": 0,
             "isActive": true
         },
@@ -3680,7 +3680,7 @@
     {
         "General": {
             "name": "INGAMESTATEMANAGER",
-            "tag": 8,
+            "tag": 6,
             "subtag": 0,
             "isActive": true
         },
@@ -3710,7 +3710,7 @@
     {
         "General": {
             "name": "BUNNYCOUNTDOWN",
-            "tag": 8,
+            "tag": 6,
             "subtag": 0,
             "isActive": true
         },
