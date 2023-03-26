@@ -123,13 +123,11 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 //== Batch send to all connected clients
 bool ServerManager::serverSendData(char* data, int size)
 {
-    char ClientID = 0;
-
     // Broadcast data to all clients
     for (auto const& c : m_ClientList) 
     {
-        data[size] = ++ClientID;
-        std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << static_cast<int>(ClientID) << "\n";
+        data[size] = static_cast<char>(c.second.sPlayerNum);
+        std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << c.second.sPlayerNum << "\n";
         
         if (SendMsg(c.second, data, size + sizeof(char)) == false)
             return false;
@@ -145,8 +143,6 @@ void serverRecvData()
     while (1)
     {
         int nLength = 0;
-        //char cBuffer[1024];
-        //int fromlength = sizeof(cBuffer);
 
         CLIENT_INFO localClient{};
         struct sockaddr_in clientAddr;
@@ -182,24 +178,20 @@ void serverRecvData()
         // get the client's IP address
         std::string clientdata = inet_ntoa(clientAddr.sin_addr);
         
-        // check and update clientlist
+        // check clientlist
         auto clientinstance = ServerManager::GetInstance()->m_ClientList.find(clientdata);
+
+        //!< update clientlist if it encounters a new instance
         if (clientinstance == ServerManager::GetInstance()->m_ClientList.end()) 
         {
-            //!< New IP address -- adding it to the list
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
+            ci_instance.sPlayerNum = ++NetworkSerializationManager::GetInstance()->mNumberOfClientConnected;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
 
-            ++NetworkSerializationManager::GetInstance()->mNumberOfClientConnected;
-            std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
-
-            //for (int i{ 0 }; i < 60; i++) {
-            //    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
-            //}
-            
             NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             
+            std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
             std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
             
             if (ServerManager::GetInstance()->m_ClientList.size() > 1) {

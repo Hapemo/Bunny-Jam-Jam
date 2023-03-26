@@ -104,7 +104,7 @@ void clientRecvData()
           // tell jazz to deserialize
           NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
           NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
-          std::cout << "server sent to player playerID: " << NetworkSerializationManager::GetInstance()->mPlayerID << " received data\n";
+          std::cout << "[CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
         }
     }
 
