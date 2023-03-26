@@ -123,13 +123,11 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 //== Batch send to all connected clients
 bool ServerManager::serverSendData(char* data, int size)
 {
-    char ClientID = 0;
-
     // Broadcast data to all clients
     for (auto const& c : m_ClientList) 
     {
-        data[size] = ++ClientID;
-        std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << static_cast<int>(ClientID) << "\n";
+        data[size] = static_cast<char>(c.second.sPlayerNum);
+        std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << c.second.sPlayerNum << "\n";
         
         if (SendMsg(c.second, data, size + sizeof(char)) == false)
             return false;
@@ -180,43 +178,42 @@ void serverRecvData()
         // get the client's IP address
         std::string clientdata = inet_ntoa(clientAddr.sin_addr);
         
-        // check and update clientlist
+        // check clientlist
         auto clientinstance = ServerManager::GetInstance()->m_ClientList.find(clientdata);
+
+        //!< update clientlist if it encounters a new instance
         if (clientinstance == ServerManager::GetInstance()->m_ClientList.end()) 
         {
-            //!< New IP address -- Adding it to list
             CLIENT_INFO ci_instance;
             ci_instance.clientAddr = clientAddr;
+            ci_instance.sPlayerNum = ++NetworkSerializationManager::GetInstance()->mNumberOfClientConnected;
             ServerManager::GetInstance()->m_ClientList[clientdata] = ci_instance;
 
-            ++NetworkSerializationManager::GetInstance()->mNumberOfClientConnected;
-            std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
-
-            //for (int i{ 0 }; i < 60; i++) {
-            //    NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
-            //}
+            NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             
-            //NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
+            std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
+            std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
             
             if (ServerManager::GetInstance()->m_ClientList.size() > 1) {
               std::cout << "More than 1 player, starting game\n";
               NetworkSerializationManager::GetInstance()->mGameStarted = true;
             }
-            std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
 		}
+        
         else 
         {
-            // wrong instance
             // std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
             // std::cout << "newPacketNum: " << newPacketNum << '\n';
-            if (clientinstance->second.clientPacketNum < newPacketNum) 
-            {
-                // std::cout << "Successful, going to deserialise\n";
-                clientinstance->second.clientPacketNum = newPacketNum;
-                NetworkSerializationManager::GetInstance()->mPlayerID = std::distance(ServerManager::GetInstance()->m_ClientList.begin(), clientinstance) + 1;
-                std::cout << "[SERVER] :: mPlayerID within recvServerData -> " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
-                NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
-            }
+          if (clientinstance->second.clientPacketNum < newPacketNum) 
+          {
+            clientinstance->second.clientPacketNum = newPacketNum;
+            NetworkSerializationManager::GetInstance()->mPlayerID = std::distance(ServerManager::GetInstance()->m_ClientList.begin(), clientinstance) + 1;
+            
+            std::cout << "[SERVER] :: Successful, going to deserialise\n";
+            std::cout << "[SERVER] :: mPlayerID within recvServerData -> " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
+            
+            NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
+          }
         }
     }
 }
