@@ -180,19 +180,18 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 }
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
-	int playerID{ *reinterpret_cast<int*>(mRecvBuff) };
 	char input{ mRecvBuff[5] };
 	//bool up{static_cast<bool>(mRecvBuff[5])};
 	//bool down{static_cast<bool>(mRecvBuff[6])};
 	//bool left{static_cast<bool>(mRecvBuff[7])};
 	//bool right{static_cast<bool>(mRecvBuff[8])};
 
-	if (playerID == 1) {
+	if (NetworkSerializationManager::GetInstance()->mPlayerID == 1) {
 		mP1InputW = static_cast<bool>((input & (1L << 0)));
 		mP1InputA = static_cast<bool>((input & (1L << 1)));
 		mP1InputS = static_cast<bool>((input & (1L << 2)));
 		mP1InputD = static_cast<bool>((input & (1L << 3)));
-	} else if (playerID == 2) {
+	} else if (NetworkSerializationManager::GetInstance()->mPlayerID == 2) {
 		mP2InputW = static_cast<bool>((input & (1L << 0)));
 		mP2InputA = static_cast<bool>((input & (1L << 1)));
 		mP2InputS = static_cast<bool>((input & (1L << 2)));
@@ -200,7 +199,7 @@ void NetworkSerializationManager::DeserialisePlayerControls() {
 	}
 
 #if DEBUGPRINT
-	std::cout << "Player " << playerID;
+	std::cout << "Player " << NetworkSerializationManager::GetInstance()->mPlayerID;
 	std::cout << "up: " << static_cast<bool>(input & (1L << 0)) << '\n';
 	std::cout << "down: " << static_cast<bool>(input & (1L << 1)) << '\n';
 	std::cout << "left: " << static_cast<bool>(input & (1L << 2)) << '\n';
