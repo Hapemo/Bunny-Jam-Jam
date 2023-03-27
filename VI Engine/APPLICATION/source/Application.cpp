@@ -377,6 +377,7 @@ void Application::init() {
   Helper::SetFullScreen(true);
 #endif
 #endif
+  Helper::SetFullScreen(false);
 }
 
 bool Application::FirstUpdate() {

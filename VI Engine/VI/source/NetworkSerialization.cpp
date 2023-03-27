@@ -605,12 +605,12 @@ void NetworkSerializationManager::PrintSendBuff() {
 }
 
 void NetworkSerializationManager::PrintRecvBuff() {
-	std::cout << "Printing SendBuff\n";
+	std::cout << "Printing RecvBuff\n";
 	for (int i{}; i < MAX_UDP_PACKET_SIZE; ++i) {
 		std::cout << (mSendBuff[i] != '\0' ? mSendBuff[i] : '*');
 
 	}
-	std::cout << "End Printing SendBuff\n";
+	std::cout << "End Printing RecvBuff\n";
 }
 
 void NetworkSerializationManager::TestTransferData() {
