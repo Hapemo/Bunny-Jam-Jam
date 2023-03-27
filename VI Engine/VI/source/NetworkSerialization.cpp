@@ -188,23 +188,23 @@ void NetworkSerializationManager::DeserialisePlayerControls() {
 
 	if (NetworkSerializationManager::GetInstance()->mPlayerID == 1) {
 		mP1InputW = static_cast<bool>((input & (1L << 0)));
-		mP1InputA = static_cast<bool>((input & (1L << 1)));
 		mP1InputS = static_cast<bool>((input & (1L << 2)));
+		mP1InputA = static_cast<bool>((input & (1L << 1)));
 		mP1InputD = static_cast<bool>((input & (1L << 3)));
 	} else if (NetworkSerializationManager::GetInstance()->mPlayerID == 2) {
 		mP2InputW = static_cast<bool>((input & (1L << 0)));
-		mP2InputA = static_cast<bool>((input & (1L << 1)));
 		mP2InputS = static_cast<bool>((input & (1L << 2)));
+		mP2InputA = static_cast<bool>((input & (1L << 1)));
 		mP2InputD = static_cast<bool>((input & (1L << 3)));
 	}
 
-#if DEBUGPRINT
+//#if DEBUGPRINT
 	std::cout << "Player " << NetworkSerializationManager::GetInstance()->mPlayerID;
 	std::cout << "up: " << static_cast<bool>(input & (1L << 0)) << '\n';
 	std::cout << "down: " << static_cast<bool>(input & (1L << 1)) << '\n';
 	std::cout << "left: " << static_cast<bool>(input & (1L << 2)) << '\n';
 	std::cout << "right: " << static_cast<bool>(input & (1L << 3)) << '\n';
-#endif
+//#endif
 	//PrintSendBuff();
 }
 
