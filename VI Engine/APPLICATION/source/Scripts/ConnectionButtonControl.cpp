@@ -303,9 +303,10 @@ void ConnectionButtonControl::Update(Entity const& _e) {
     //        ifFound = true;
     //    }
     //}
-    if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 1)
+    if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
     {
         player1_ = true;
+        player2_ = true;
         if (!bothPlayers)
         {
             bothPlayers = true;
@@ -313,9 +314,8 @@ void ConnectionButtonControl::Update(Entity const& _e) {
             you_.GetComponent<Transform>().translation.y = 220.f;
         }
     }
-    else if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
+    else if (NetworkSerializationManager::GetInstance()->mPlayerID == 2)
     {
-        player1_ = true;
         player2_ = true;
         if (!bothPlayers)
         {
