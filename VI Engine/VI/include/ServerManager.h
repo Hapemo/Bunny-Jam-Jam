@@ -43,6 +43,9 @@ public:
 	SOCKET								m_ServerSocket;
 	S_SERVER							m_ServerInstance;
 
+	std::bitset<8> mP1Input;
+	std::bitset<8> mP2Input;
+
 // some fancy stuff if we want to include
 	std::string							m_HostName;
 	int									player1Score;
