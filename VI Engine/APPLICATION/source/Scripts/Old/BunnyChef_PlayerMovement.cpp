@@ -108,7 +108,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 		}
 
 		//Move Right
-		if (NetworkSerializationManager::GetInstance()->mP1InputS)
+		if (NetworkSerializationManager::GetInstance()->mP1InputD)
 		{
 			if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
 			{
@@ -157,7 +157,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 
 			}
 		}
-		if (NetworkSerializationManager::GetInstance()->mP2InputS)
+		if (NetworkSerializationManager::GetInstance()->mP2InputD)
 		{
 			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
 			{
