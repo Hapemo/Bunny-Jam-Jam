@@ -42,7 +42,6 @@ void Bunny_CarrotCount::EarlyUpdate(Entity const& _e) {
 void Bunny_CarrotCount::Update(const Entity& _e) {
 	//std::string tmp = _e.GetComponent<Text>().text.substr(0, 8);
 	//tmp += std::to_string(BUNNY_Player.GetComponent<Bunny>().carrots);
-	if (BUNNY_Player.HasComponent<Bunny>())
 	{
 		_e.GetComponent<Text>().text = _e.GetComponent<Text>().text.substr(0, 4) + std::to_string(ServerManager::GetInstance()->mJam);
 	}
