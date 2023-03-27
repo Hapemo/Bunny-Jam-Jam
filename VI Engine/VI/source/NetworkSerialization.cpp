@@ -168,67 +168,49 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	}
 	
 	// bit 5 true when player 1
+	if (mPlayerID == 1) currInput |= (1L << 4);
+	
 
 	if (currInput == prevInput) return 0;
 	prevInput = currInput;
 
-	std::bitset<8> bit( currInput );
+	std::bitset<8> bit{ currInput };
 	std::cout << "send: " << bit << '\n';
 
-	if (Input::CheckKey(PRESS, up) || Input::CheckKey(HOLD, up)) {
-		*currBuff = 1;
-	}
-		++currBuff;
-	if (Input::CheckKey(PRESS, down) || Input::CheckKey(HOLD, down)) {
-		*currBuff = 1;
-	}
-		++currBuff;
-	if (Input::CheckKey(PRESS, left) || Input::CheckKey(HOLD, left)) {
-		*currBuff = 1;
-	}
-		++currBuff;
-	if (Input::CheckKey(PRESS, right) || Input::CheckKey(HOLD, right)) {
-		*currBuff = 1;
-	}
-		++currBuff;
-
-	if (mPlayerID == 1)
-		*currBuff = 1;
+	currBuff[0] = currInput;
 	++currBuff;
 
 	return static_cast<int>(currBuff - mSendBuff);
 }
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
-	//char input{ mRecvBuff[1]};
+	char input{ mRecvBuff[1]};
 	//bool up{static_cast<bool>(mRecvBuff[5])};
 	//bool down{static_cast<bool>(mRecvBuff[6])};
 	//bool left{static_cast<bool>(mRecvBuff[7])};
 	//bool right{static_cast<bool>(mRecvBuff[8])};
 
-	//std::bitset<8> bit( input );
-	//std::cout << "input: " << bit << '\n';
+	std::bitset<8> bit{ input };
+	std::cout << "input: " << bit << '\n';
 
-	if (mRecvBuff[5]) {
-		std::cout << "p1\n";
-		mP1InputW = mRecvBuff[1];
-		mP1InputS = mRecvBuff[2];
-		mP1InputA = mRecvBuff[3];
-		mP1InputD = mRecvBuff[4];
+	if (input & (1L << 4)) {
+		mP1InputW = static_cast<bool>(input & (1L << 0));
+		mP1InputS = static_cast<bool>(input & (1L << 1));
+		mP1InputA = static_cast<bool>(input & (1L << 2));
+		mP1InputD = static_cast<bool>(input & (1L << 3));
 	} else {
-		std::cout << "p2\n";
-		mP2InputW = mRecvBuff[1];
-		mP2InputS = mRecvBuff[2];
-		mP2InputA = mRecvBuff[3];
-		mP2InputD = mRecvBuff[4];
+		mP2InputW = static_cast<bool>(input & (1L << 0));
+		mP2InputS = static_cast<bool>(input & (1L << 1));
+		mP2InputA = static_cast<bool>(input & (1L << 2));
+		mP2InputD = static_cast<bool>(input & (1L << 3));
 	}
 
 //#if DEBUGPRINT
-	std::cout << "Player " << mRecvBuff[5]<< '\n';
-	std::cout << "up: " << mRecvBuff[1]<< '\n';
-	std::cout << "down: " << mRecvBuff[2]<< '\n';
-	std::cout << "left: " << mRecvBuff[3]<< '\n';
-	std::cout << "right: " << mRecvBuff[4]<< '\n';
+	std::cout << "Player " << NetworkSerializationManager::GetInstance()->mPlayerID;
+	std::cout << "up: " << static_cast<bool>(input & (1L << 0)) << '\n';
+	std::cout << "down: " << static_cast<bool>(input & (1L << 1)) << '\n';
+	std::cout << "left: " << static_cast<bool>(input & (1L << 2)) << '\n';
+	std::cout << "right: " << static_cast<bool>(input & (1L << 3)) << '\n';
 //#endif
 	//PrintSendBuff();
 }
