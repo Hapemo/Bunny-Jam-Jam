@@ -127,15 +127,15 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 		}*/
 
 		{
-			if (server->mP1Input[0]))
-		{
-		if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
-		{
-			sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
-			BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-			BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-			BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
-		}
+			if (server->mP1Input[0])
+			{
+				if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
+				{
+					sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
+					BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
+					BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+				}
 			}
 
 			//Move Down
@@ -433,7 +433,6 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 	}
 #endif
 	//if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) { BunnyOrChef = !BunnyOrChef; }
-	}
 }
 
 void BunnyChef_PlayerMovement::FixedUpdate(const Entity& _e) {
