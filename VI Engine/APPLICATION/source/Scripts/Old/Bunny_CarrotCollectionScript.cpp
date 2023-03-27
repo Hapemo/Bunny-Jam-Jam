@@ -50,7 +50,7 @@ void Bunny_CarrotCollectionScript::Update(const Entity& _e) {
 	{
 		if (VI::iPhysics::CheckCollision(BUNNY_Player, _e, false))
 		{
-#ifndef _SERVER
+#ifdef _SERVER
 			ServerManager::GetInstance()->mJam++;
 			_e.Deactivate();
 #endif
