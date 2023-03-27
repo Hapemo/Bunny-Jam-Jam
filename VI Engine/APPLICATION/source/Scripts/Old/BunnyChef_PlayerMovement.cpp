@@ -90,33 +90,33 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 	// Update character directions
 	float movementSpeed{ 40.f };
 
-	if (manager->mP1InputW)	{
+	if (manager->mP1Input[0])	{
 		VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0, movementSpeed }, 0.0f);
 		std::cout << "mP1InputW\n";
 	}
-	else if (manager->mP1InputS) {
+	else if (manager->mP1Input[1]) {
 		VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0, -movementSpeed }, 0.0f);
 		std::cout << "mP1InputS\n";
 	}
-	else if (manager->mP1InputA) {
+	else if (manager->mP1Input[2]) {
 		VI::iPhysics::ApplyImpulse(BunnyPlayer, { -movementSpeed, 0 }, 0.0f);
 		std::cout << "mP1InputA\n";
 	}
-	else if (manager->mP1InputD) {
+	else if (manager->mP1Input[3]) {
 		VI::iPhysics::ApplyImpulse(BunnyPlayer, { movementSpeed, 0 }, 0.0f);
 		std::cout << "mP1InputD\n";
 	}
 
-	if (manager->mP2InputW) {
+	if (manager->mP2Input[0]) {
 		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0, movementSpeed }, 0.0f);
 		std::cout << "mP2InputW\n";
-	} else if (manager->mP2InputS) {
+	} else if (manager->mP2Input[1]) {
 		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0, -movementSpeed }, 0.0f);
 		std::cout << "mP2InputS\n";
-	} else if (manager->mP2InputA) {
+	} else if (manager->mP2Input[2]) {
 		VI::iPhysics::ApplyImpulse(ChefPlayer, { -movementSpeed, 0 }, 0.0f);
 		std::cout << "mP2InputA\n";
-	} else if (manager->mP2InputD) {
+	} else if (manager->mP2Input[3]) {
 		VI::iPhysics::ApplyImpulse(ChefPlayer, { movementSpeed, 0 }, 0.0f);
 		std::cout << "mP2InputD\n";
 	}

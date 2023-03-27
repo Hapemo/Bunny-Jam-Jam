@@ -95,6 +95,9 @@ public:
 #endif
 
 #ifndef _CLIENT //If server
+	std::bitset<8> mP1Input;
+	std::bitset<8> mP2Input;
+
 	bool mP1InputW;
 	bool mP1InputA;
 	bool mP1InputS;

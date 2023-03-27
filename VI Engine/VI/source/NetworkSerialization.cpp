@@ -194,11 +194,13 @@ void NetworkSerializationManager::DeserialisePlayerControls() {
 	std::cout << "input: " << bit << '\n';
 
 	if (input & (1L << 4)) {
+		mP1Input = bit;
 		mP1InputW = static_cast<bool>(input & (1L << 0));
 		mP1InputS = static_cast<bool>(input & (1L << 1));
 		mP1InputA = static_cast<bool>(input & (1L << 2));
 		mP1InputD = static_cast<bool>(input & (1L << 3));
 	} else {
+		mP2Input = bit;
 		mP2InputW = static_cast<bool>(input & (1L << 0));
 		mP2InputS = static_cast<bool>(input & (1L << 1));
 		mP2InputA = static_cast<bool>(input & (1L << 2));
