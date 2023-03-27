@@ -9,6 +9,7 @@ the scenes. Only 1 gmae state should be loaded and running in the game at a
 time.
 *******************************************************************************/
 #include "GameState.h"
+#include "NetworkSerialization.h"
 //#include "Serialization.h"
 
 
@@ -90,6 +91,7 @@ void GameState::Unload() {
 	for (auto& scene : mScenes)
 		scene.Unload();
 	mScenes.clear();
+	NetworkSerializationManager::GetInstance()->mEntitiesToSerialise.clear();
 #ifndef _EDITOR
 	ResourceManager::GetInstance()->SelectiveUnloadAllResources();
 #endif

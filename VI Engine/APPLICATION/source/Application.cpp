@@ -434,7 +434,6 @@ void Application::SecondUpdate() {
   if (gamestateName == "Bunny_GameLevel1") {
     if (Input::CheckKey(PRESS, _0))
       manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
-    std::cout << "In Bunny_GameLevel1\n";
   } else if (manager->mGameStarted)
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGameStarted);
 #endif

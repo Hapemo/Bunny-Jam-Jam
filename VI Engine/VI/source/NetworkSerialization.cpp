@@ -92,7 +92,7 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 	}
 
 #if DEBUGPRINT
-	std::cout << "*reinterpret_cast<unsigned long*>(mSendBuff + dataSize): " << *reinterpret_cast<unsigned long*>(mSendBuff + dataSize) << '\n';
+	std::cout << "data size: " << dataSize << '\n';
 #endif
 	//ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
 }
@@ -289,10 +289,9 @@ int NetworkSerializationManager::SerialiseGamePlayData() {
 	char* currBuff{ mSendBuff + 1 };
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGamePlayData);
 
-	std::set<Entity> entitiesToSerialise;
-
 	SerialiseGameStats(currBuff);
-	SerialiseMultipleEntities(currBuff, entitiesToSerialise);
+	SerialiseMultipleEntities(currBuff, mEntitiesToSerialise);
+
 
 	return currBuff - mSendBuff;
 }
@@ -330,7 +329,6 @@ int NetworkSerializationManager::SerialiseMultipleEntities(char*& currBuff, std:
 	//memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
 	//char* currBuff{ mSendBuff + 1 };
 	//mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CEntityDetail);
-	
 	*reinterpret_cast<int*>(currBuff) = static_cast<int>(entities.size());
 	currBuff += sizeof(int);
 
@@ -381,42 +379,42 @@ int NetworkSerializationManager::SerialiseEntityDetail(char*& currBuff, Entity _
 		currBuff += sizeof(transformComp);
 	}
 
-	// Physics2D component
-	// Size until before std::vector<Force> is 56
-	// Physics2DComponent<56 bytes of physics2dComp><numOfForces><ListOfForces>
-	if (_e.HasComponent<Physics2D>()) {
-		Physics2D& physics2dComp = _e.GetComponent<Physics2D>();
-		memcpy(currBuff, physics2dName, strlen(physics2dName));
-		currBuff += strlen(physics2dName);
-		memcpy(currBuff, &physics2dComp, 56);
-		currBuff += 56;
-		currBuff[0] = static_cast<char>(physics2dComp.forceList.size());
-		++currBuff;
-		for (Force& force : physics2dComp.forceList) {
-			memcpy(currBuff, &force, sizeof(Force));
-			currBuff += sizeof(Force);
-		}
-	}
+	//// Physics2D component
+	//// Size until before std::vector<Force> is 56
+	//// Physics2DComponent<56 bytes of physics2dComp><numOfForces><ListOfForces>
+	//if (_e.HasComponent<Physics2D>()) {
+	//	Physics2D& physics2dComp = _e.GetComponent<Physics2D>();
+	//	memcpy(currBuff, physics2dName, strlen(physics2dName));
+	//	currBuff += strlen(physics2dName);
+	//	memcpy(currBuff, &physics2dComp, 56);
+	//	currBuff += 56;
+	//	currBuff[0] = static_cast<char>(physics2dComp.forceList.size());
+	//	++currBuff;
+	//	for (Force& force : physics2dComp.forceList) {
+	//		memcpy(currBuff, &force, sizeof(Force));
+	//		currBuff += sizeof(Force);
+	//	}
+	//}
 
 	// RectCollider
 	// RectColliderComponent<Whole RectCollider component>
-	if (_e.HasComponent<RectCollider>()) {
-		RectCollider& rectColliderComp = _e.GetComponent<RectCollider>();
-		memcpy(currBuff, rectColliderName, strlen(rectColliderName));
-		currBuff += strlen(rectColliderName);
-		memcpy(currBuff, &rectColliderComp, sizeof(rectColliderComp));
-		currBuff += sizeof(rectColliderComp);
-	}
+	//if (_e.HasComponent<RectCollider>()) {
+	//	RectCollider& rectColliderComp = _e.GetComponent<RectCollider>();
+	//	memcpy(currBuff, rectColliderName, strlen(rectColliderName));
+	//	currBuff += strlen(rectColliderName);
+	//	memcpy(currBuff, &rectColliderComp, sizeof(rectColliderComp));
+	//	currBuff += sizeof(rectColliderComp);
+	//}
 
-	// CircleCollider
-	// CircleColliderComponent<Whole CircleCollider component>
-	if (_e.HasComponent<CircleCollider>()) {
-		CircleCollider& circleColliderComp = _e.GetComponent<CircleCollider>();
-		memcpy(currBuff, circleColliderName, strlen(circleColliderName));
-		currBuff += strlen(circleColliderName);
-		memcpy(currBuff, &circleColliderComp, sizeof(circleColliderComp));
-		currBuff += sizeof(circleColliderComp);
-	}
+	//// CircleCollider
+	//// CircleColliderComponent<Whole CircleCollider component>
+	//if (_e.HasComponent<CircleCollider>()) {
+	//	CircleCollider& circleColliderComp = _e.GetComponent<CircleCollider>();
+	//	memcpy(currBuff, circleColliderName, strlen(circleColliderName));
+	//	currBuff += strlen(circleColliderName);
+	//	memcpy(currBuff, &circleColliderComp, sizeof(circleColliderComp));
+	//	currBuff += sizeof(circleColliderComp);
+	//}
 
 	return static_cast<int>(currBuff - mSendBuff);
 }
@@ -458,7 +456,7 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 	// Physics2D component
 	// Size until before std::vector<Force> is 56
 	// Physics2DComponent<56 bytes of physics2dComp><numOfForces><ListOfForces>
-	char* physics2dPtr{ nullptr };
+	/*char* physics2dPtr{ nullptr };
 
 	if (physics2dPtr = FindSubStringEnd(currBuff, physics2dName)) {
 		Physics2D& physicsComp{ e.GetComponent<Physics2D>() };
@@ -488,41 +486,41 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 		std::cout << "angularVelocity: " << physics.angularVelocity << '\n';
 		std::cout << "angularTorque: " << physics.angularTorque << '\n';
 #endif
-	}
+	}*/
 
 	// RectCollider
 	// RectColliderComponent<Whole RectCollider component>
-	char* rectColliderPtr{ nullptr };
-	if (rectColliderPtr = FindSubStringEnd(currBuff, rectColliderName)) {
-		currBuff = rectColliderPtr;
-		e.GetComponent<RectCollider>() = *reinterpret_cast<RectCollider*>(currBuff);
-		
-#if DEBUGPRINT
-		RectCollider rectcollider = e.GetComponent<RectCollider>();
-		std::cout << "===> RectCollider Component\n";
-		std::cout << "centerOffset" << rectcollider.centerOffset << '\n';
-		std::cout << "scaleOffset" << rectcollider.scaleOffset << '\n';
-		std::cout << "isTrigger" << rectcollider.isTrigger << '\n';
-		std::cout << "renderFlag" << rectcollider.renderFlag << '\n';
-#endif
-	}
-
-	// CircleCollider
-	// CircleColliderComponent<Whole CircleCollider component>
-	char* circleColliderPtr{ nullptr };
-	if (circleColliderPtr = FindSubStringEnd(currBuff, circleColliderName)) {
-		currBuff = circleColliderPtr;
-		e.GetComponent<CircleCollider>() = *reinterpret_cast<CircleCollider*>(currBuff);
-
-#if DEBUGPRINT
-		CircleCollider circlecollider = e.GetComponent<CircleCollider>();
-		std::cout << "===> CircleCollider Component\n";
-		std::cout << "centerOffset" << circlecollider.centerOffset << '\n';
-		std::cout << "scaleOffset" << circlecollider.scaleOffset << '\n';
-		std::cout << "isTrigger" << circlecollider.isTrigger << '\n';
-		std::cout << "renderFlag" << circlecollider.renderFlag << '\n';
-#endif
-	}
+//	char* rectColliderPtr{ nullptr };
+//	if (rectColliderPtr = FindSubStringEnd(currBuff, rectColliderName)) {
+//		currBuff = rectColliderPtr;
+//		e.GetComponent<RectCollider>() = *reinterpret_cast<RectCollider*>(currBuff);
+//		
+//#if DEBUGPRINT
+//		RectCollider rectcollider = e.GetComponent<RectCollider>();
+//		std::cout << "===> RectCollider Component\n";
+//		std::cout << "centerOffset" << rectcollider.centerOffset << '\n';
+//		std::cout << "scaleOffset" << rectcollider.scaleOffset << '\n';
+//		std::cout << "isTrigger" << rectcollider.isTrigger << '\n';
+//		std::cout << "renderFlag" << rectcollider.renderFlag << '\n';
+//#endif
+//	}
+//
+//	// CircleCollider
+//	// CircleColliderComponent<Whole CircleCollider component>
+//	char* circleColliderPtr{ nullptr };
+//	if (circleColliderPtr = FindSubStringEnd(currBuff, circleColliderName)) {
+//		currBuff = circleColliderPtr;
+//		e.GetComponent<CircleCollider>() = *reinterpret_cast<CircleCollider*>(currBuff);
+//
+//#if DEBUGPRINT
+//		CircleCollider circlecollider = e.GetComponent<CircleCollider>();
+//		std::cout << "===> CircleCollider Component\n";
+//		std::cout << "centerOffset" << circlecollider.centerOffset << '\n';
+//		std::cout << "scaleOffset" << circlecollider.scaleOffset << '\n';
+//		std::cout << "isTrigger" << circlecollider.isTrigger << '\n';
+//		std::cout << "renderFlag" << circlecollider.renderFlag << '\n';
+//#endif
+//	}
 
 }
 
