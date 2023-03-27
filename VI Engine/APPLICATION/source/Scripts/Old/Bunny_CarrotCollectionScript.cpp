@@ -52,8 +52,8 @@ void Bunny_CarrotCollectionScript::Update(const Entity& _e) {
 		{
 #ifndef _SERVER
 			ServerManager::GetInstance()->mJam++;
-#endif
 			_e.Deactivate();
+#endif
 		}
 	}
 }
