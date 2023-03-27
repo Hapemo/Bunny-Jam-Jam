@@ -243,7 +243,8 @@ int NetworkSerializationManager::SerialiseGameStarted() {
 	char* currBuff{ mSendBuff + 1 };
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGameStarted);
 
-	currBuff[0] = static_cast<char>(mGameStarted);
+	*reinterpret_cast<float*>(currBuff) = mGameCountDown;
+	currBuff += sizeof(float);
 
 	return static_cast<int>(currBuff - mSendBuff);
 }
@@ -252,7 +253,9 @@ void NetworkSerializationManager::DeserialiseGameStarted() {
 	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGameStarted)
 		std::cout << "NETWORKDATATYPE::S2CGameStarted\n";
 
-	mGameStarted = static_cast<bool>(mRecvBuff[1]);
+	if (mGameCountDown > 0) return;
+
+	mGameCountDown = *reinterpret_cast<float*>(mRecvBuff + 1);
 }
        
 int NetworkSerializationManager::SerialiseNumberOfClientConnected() {

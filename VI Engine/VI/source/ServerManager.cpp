@@ -197,6 +197,7 @@ void serverRecvData()
             if (ServerManager::GetInstance()->m_ClientList.size() > 1) {
               std::cout << "More than 1 player, starting game\n";
               NetworkSerializationManager::GetInstance()->mGameStarted = true;
+              NetworkSerializationManager::GetInstance()->mGameCountDown = 5;
             }
 		}
         

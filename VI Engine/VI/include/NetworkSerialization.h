@@ -83,6 +83,7 @@ public:
 	int mPrevPlayAgainCount;
 	int mPlayAgainCount; // if -1, quit. if 0, no data yet. if 1, 1 person play again. if 2, all player want to play again
 	bool mGameStarted;
+	float mGameCountDown;
 
 	int mJam;
 	float mTimeRemaining;
