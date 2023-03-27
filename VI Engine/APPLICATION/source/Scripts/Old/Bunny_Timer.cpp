@@ -18,6 +18,7 @@ Press "ESC" to toggle the pause menu.
 *******************************************************************************/
 
 #include "Bunny_Timer.h"
+#include "ServerManager.h"
 
 REGISTER_SCRIPT(ScriptComponent, Bunny_Timer);
 namespace {
@@ -32,7 +33,7 @@ void Bunny_Timer::Alive(const Entity& _e) {
 
 void Bunny_Timer::Init(const Entity& _e) {
 	(void)_e;
-	timer = 60;
+	ServerManager::GetInstance()->mTimeRemaining = 60;
 	countdowntimer = 4.0f;
 	if (_e.HasComponent<Text>())
 		_e.GetComponent<Text>().text = "00:60";
@@ -75,14 +76,14 @@ void Bunny_Timer::Update(const Entity& _e) {
 	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_INGAME)
 	{
 		_e.GetComponent<Text>().offset.x = -190.0f;
-		if (timer > 0)
-			timer -= VI::GetDeltaTime();
+		if (ServerManager::GetInstance()->mTimeRemaining > 0)
+			ServerManager::GetInstance()->mTimeRemaining -= VI::GetDeltaTime();
 		else
 			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_TIMEUP;
 		if (_e.HasComponent<Text>())
 		{
 			_e.GetComponent<Text>().text = "00:";
-			if (timer < 10.0f)
+			if (ServerManager::GetInstance()->mTimeRemaining < 10.0f)
 			{
 				_e.GetComponent<Text>().text += "0";
 				_e.GetComponent<Text>().color.r = 255;
@@ -96,7 +97,7 @@ void Bunny_Timer::Update(const Entity& _e) {
 				_e.GetComponent<Text>().color.b = 255;
 			}
 
-			_e.GetComponent<Text>().text += std::to_string(static_cast<int>(timer));
+			_e.GetComponent<Text>().text += std::to_string(static_cast<int>(ServerManager::GetInstance()->mTimeRemaining));
 		}
 	}
 	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_TIMEUP)

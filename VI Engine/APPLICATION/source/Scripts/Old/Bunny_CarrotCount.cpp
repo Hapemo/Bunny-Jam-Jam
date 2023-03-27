@@ -18,6 +18,7 @@ Press "ESC" to toggle the pause menu.
 *******************************************************************************/
 
 #include "Bunny_CarrotCount.h"
+#include "ServerManager.h"
 
 REGISTER_SCRIPT(ScriptComponent, Bunny_CarrotCount);
 
@@ -43,7 +44,7 @@ void Bunny_CarrotCount::Update(const Entity& _e) {
 	//tmp += std::to_string(BUNNY_Player.GetComponent<Bunny>().carrots);
 	if (BUNNY_Player.HasComponent<Bunny>())
 	{
-		_e.GetComponent<Text>().text = _e.GetComponent<Text>().text.substr(0, 4) + std::to_string(BUNNY_Player.GetComponent<Bunny>().carrots);
+		_e.GetComponent<Text>().text = _e.GetComponent<Text>().text.substr(0, 4) + std::to_string(ServerManager::GetInstance()->mJam);
 	}
 }
 

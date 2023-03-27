@@ -18,6 +18,7 @@ Press "ESC" to toggle the pause menu.
 *******************************************************************************/
 
 #include "Bunny_CarrotCollectionScript.h"
+#include "ServerManager.h"
 
 REGISTER_SCRIPT(ScriptComponent, Bunny_CarrotCollectionScript);
 
@@ -49,7 +50,7 @@ void Bunny_CarrotCollectionScript::Update(const Entity& _e) {
 	{
 		if (VI::iPhysics::CheckCollision(BUNNY_Player, _e, false))
 		{
-			BUNNY_Player.GetComponent<Bunny>().carrots++;
+			ServerManager::GetInstance()->mJam++;
 			_e.Deactivate();
 		}
 	}
