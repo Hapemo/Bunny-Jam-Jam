@@ -127,7 +127,7 @@ bool ServerManager::serverSendData(char* data, int size)
     for (auto const& c : m_ClientList) 
     {
         data[size] = static_cast<char>(c.second.sPlayerNum);
-        std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << c.second.sPlayerNum << "\n";
+        //std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << c.second.sPlayerNum << "\n";
         
         if (SendMsg(c.second, data, size + sizeof(char)) == false)
             return false;

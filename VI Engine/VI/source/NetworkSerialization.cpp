@@ -5,7 +5,7 @@
 #include "ServerManager.h"
 #include "ClientManager.h"
 
-#define DEBUGPRINT 1
+#define DEBUGPRINT 0
 
 
 namespace {
