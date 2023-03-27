@@ -485,7 +485,7 @@ void Application::MainUpdate() {
     }
 #else
     GameStateManager::GetInstance()->Update(); // Game logic
-    shadowManager->Update();
+    // shadowManager->Update();
     SystemUpdate();
 
 #endif

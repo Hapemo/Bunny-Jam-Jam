@@ -145,10 +145,7 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	++currBuff; // 1 space in
 
 	// Data consists of 4 keys, each key has 1 state (1 bytes each).
-	// So 4 bytes in total. plus another 4 bytes at the front for mPlayerID
-
-	*reinterpret_cast<int*>(currBuff) = mPlayerID;
-	currBuff += sizeof(int);
+	// So 4 bytes in total. plus another 4 bytes at the front for 
 
 	E_KEY up = E_KEY::W;		// 0001
 	E_KEY down = E_KEY::S;	// 0010
@@ -169,9 +166,14 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	if (Input::CheckKey(PRESS, right) || Input::CheckKey(HOLD, right)) {
 		currInput |= (1L << 3);
 	}
+	
+	// bit 5 true when player 1
+	if (mPlayerID == 1) currInput |= (1L << 4);
+	
 
 	if (currInput == prevInput) return 0;
 	prevInput = currInput;
+	printf("sending: %x\n", currInput);
 
 	currBuff[0] = currInput;
 	++currBuff;
@@ -180,22 +182,24 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 }
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
-	char input{ mRecvBuff[5] };
+	char input{ mRecvBuff[1]};
 	//bool up{static_cast<bool>(mRecvBuff[5])};
 	//bool down{static_cast<bool>(mRecvBuff[6])};
 	//bool left{static_cast<bool>(mRecvBuff[7])};
 	//bool right{static_cast<bool>(mRecvBuff[8])};
 
-	if (NetworkSerializationManager::GetInstance()->mPlayerID == 1) {
-		mP1InputW = static_cast<bool>((input & (1L << 0)));
-		mP1InputS = static_cast<bool>((input & (1L << 2)));
-		mP1InputA = static_cast<bool>((input & (1L << 1)));
-		mP1InputD = static_cast<bool>((input & (1L << 3)));
-	} else if (NetworkSerializationManager::GetInstance()->mPlayerID == 2) {
-		mP2InputW = static_cast<bool>((input & (1L << 0)));
-		mP2InputS = static_cast<bool>((input & (1L << 2)));
-		mP2InputA = static_cast<bool>((input & (1L << 1)));
-		mP2InputD = static_cast<bool>((input & (1L << 3)));
+	printf("input: %x\n", input);
+
+	if (input & (1L << 4)) {
+		mP1InputW = static_cast<bool>(input & (1L << 0));
+		mP1InputS = static_cast<bool>(input & (1L << 1));
+		mP1InputA = static_cast<bool>(input & (1L << 2));
+		mP1InputD = static_cast<bool>(input & (1L << 3));
+	} else {
+		mP2InputW = static_cast<bool>(input & (1L << 0));
+		mP2InputS = static_cast<bool>(input & (1L << 1));
+		mP2InputA = static_cast<bool>(input & (1L << 2));
+		mP2InputD = static_cast<bool>(input & (1L << 3));
 	}
 
 //#if DEBUGPRINT
