@@ -173,7 +173,9 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 
 	if (currInput == prevInput) return 0;
 	prevInput = currInput;
-	printf("sending: %x\n", currInput);
+
+	std::bitset<8> bit{ currInput };
+	std::cout << "send: " << bit << '\n';
 
 	currBuff[0] = currInput;
 	++currBuff;
@@ -188,7 +190,8 @@ void NetworkSerializationManager::DeserialisePlayerControls() {
 	//bool left{static_cast<bool>(mRecvBuff[7])};
 	//bool right{static_cast<bool>(mRecvBuff[8])};
 
-	printf("input: %x\n", input);
+	std::bitset<8> bit{ input };
+	std::cout << "input: " << bit << '\n';
 
 	if (input & (1L << 4)) {
 		mP1InputW = static_cast<bool>(input & (1L << 0));
