@@ -309,21 +309,18 @@ void NetworkSerializationManager::DeserialiseGamePlayData() {
 
 int NetworkSerializationManager::SerialiseGameStats(char*& currBuff) {
 	// int jam collected, float time remaining, bool swap
-	int jam{};
-	float timeRemain{};
-
-	*(reinterpret_cast<int*>(currBuff)) = jam;
+	*(reinterpret_cast<int*>(currBuff)) = ServerManager::GetInstance()->mJam;
 	currBuff += sizeof(int);
-	*(reinterpret_cast<int*>(currBuff)) = timeRemain;
+	*(reinterpret_cast<int*>(currBuff)) = ServerManager::GetInstance()->mTimeRemaining;
 	currBuff += sizeof(float);
 	
 	return static_cast<int>(currBuff - mSendBuff);
 }
 
 void NetworkSerializationManager::DeserialiseGameStats(char*& currBuff) {
-	mJam = *(reinterpret_cast<int*>(currBuff));
+	ServerManager::GetInstance()->mJam = *(reinterpret_cast<int*>(currBuff));
 	currBuff += sizeof(int);
-	mTimeRemaining = *(reinterpret_cast<int*>(currBuff));
+	ServerManager::GetInstance()->mTimeRemaining = *(reinterpret_cast<int*>(currBuff));
 	currBuff += sizeof(float);
 }
 

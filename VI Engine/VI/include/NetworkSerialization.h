@@ -85,7 +85,6 @@ public:
 	bool mGameStarted;
 	float mGameCountDown;
 
-	int mJam;
 	float mTimeRemaining;
 
 	std::set<Entity> mEntitiesToSerialise;

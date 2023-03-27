@@ -45,6 +45,8 @@ public:
 
 	std::bitset<8> mP1Input;
 	std::bitset<8> mP2Input;
+	int mJam;
+	float mTimeRemaining;
 
 // some fancy stuff if we want to include
 	std::string							m_HostName;
