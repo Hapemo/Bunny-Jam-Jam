@@ -431,10 +431,10 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 	default:
 		break;
 	}
+	}
 #endif
 	//if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) { BunnyOrChef = !BunnyOrChef; }
-}
-
+	}
 void BunnyChef_PlayerMovement::FixedUpdate(const Entity& _e) {
 	(void)_e;
 }
