@@ -379,6 +379,15 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         //}
     }
 
+    // get game started timing
+    NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
+
+
+    if (manager->mGameCountDown > 0) {
+      manager->mGameCountDown -= static_cast<float>(FPSManager::dt);
+      if (manager->mGameCountDown <= 0) VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+    }
+
     (void)_e;
 }
 

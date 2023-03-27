@@ -11,6 +11,7 @@ Updates the fps count, for the fps printer in entity
 
 
 #include "Menu_Button.h"
+#include "NetworkSerialization.h"
 static bool updateOne{ false };
 int Menu_Button::startMenu_{ -1 };
 REGISTER_SCRIPT(ScriptComponent, Menu_Button);
@@ -33,7 +34,6 @@ namespace {
 	bool atControls{ false };
 
 	int counter = 0;
-
 }
 
 
@@ -257,7 +257,16 @@ void Menu_Button::Update(Entity const& _e) {
 	}
 	startMenu_ = Transit(startMenu_, loadicon_, acc_, scaling_);
 	
-	
+	NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
+
+	if (manager->mGameStarted) {
+		manager->mGameCountDown -= static_cast<float>(FPSManager::dt);
+		manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGameStarted);
+		
+		if (manager->mGameCountDown <= 0) VI::iGameState::ChangeGameState("Bunny_GameLevel1");
+	}
+
+
 }
 
 /*!*****************************************************************************
