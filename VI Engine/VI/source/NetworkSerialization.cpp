@@ -183,6 +183,8 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	return static_cast<int>(currBuff - mSendBuff);
 }
 
+
+
 void NetworkSerializationManager::DeserialisePlayerControls() {
 	char input{ mRecvBuff[1]};
 	//bool up{static_cast<bool>(mRecvBuff[5])};
@@ -289,6 +291,7 @@ int NetworkSerializationManager::SerialiseGamePlayData() {
 	char* currBuff{ mSendBuff + 1 };
 	mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CGamePlayData);
 
+	SerialisePlayerInputs(currBuff);
 	SerialiseGameStats(currBuff);
 	SerialiseMultipleEntities(currBuff, mEntitiesToSerialise);
 
@@ -302,6 +305,7 @@ void NetworkSerializationManager::DeserialiseGamePlayData() {
 
 	char* currBuff{ mRecvBuff + 1 };
 
+	DeserialisePlayerInputs(currBuff);
 	DeserialiseGameStats(currBuff);
 	DeserialiseMultipleEntities(currBuff);
 }
@@ -427,6 +431,10 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 	Entity e = GameStateManager::GetInstance()->GetEntity(entityName);
 	currBuff += entityName.size() + 1;
 
+	if (!e.HasComponent<General>()) {
+		std::cout << "no entity found: " << e.id << '\n';
+		return;
+	}
 	e.GetComponent<General>().isActive = static_cast<bool>(currBuff[0]);
 	e.GetComponent<General>().isPaused = static_cast<bool>(currBuff[1]);
 	currBuff += 2;
@@ -542,6 +550,29 @@ void NetworkSerializationManager::DeserialisePlayAgainCount() {
 
 	mPlayAgainCount = *reinterpret_cast<int*>(mRecvBuff + 1);
 }
+
+
+int NetworkSerializationManager::SerialisePlayerInputs(char*& currBuff) {
+	unsigned long i1 = ServerManager::GetInstance()->mP1Input.to_ulong();
+	unsigned long i2 = ServerManager::GetInstance()->mP2Input.to_ulong();
+	char c1 = static_cast<char>(i1);
+	char c2 = static_cast<char>(i2);
+
+	currBuff[0] = c1;
+	currBuff[1] = c2;
+
+	currBuff += 2;
+	return static_cast<int>(currBuff - mSendBuff);
+}
+
+void NetworkSerializationManager::DeserialisePlayerInputs(char*& currBuff) {
+	ServerManager::GetInstance()->mP1Input = currBuff[1];
+	ServerManager::GetInstance()->mP2Input = currBuff[2];
+
+	currBuff += 2;
+}
+
+
 
 
 void NetworkSerializationManager::PrepareData(std::string str, int i) {

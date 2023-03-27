@@ -432,8 +432,12 @@ void Application::SecondUpdate() {
   NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
 #ifdef _SERVER
   if (gamestateName == "Bunny_GameLevel1") {
-    if (Input::CheckKey(PRESS, _0))
+    static float timer{};
+    timer += FPSManager::dt;
+    if (timer > 0.2f) {
       manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
+      timer = 0;
+    }
   } else if (manager->mGameStarted)
     manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGameStarted);
 #endif

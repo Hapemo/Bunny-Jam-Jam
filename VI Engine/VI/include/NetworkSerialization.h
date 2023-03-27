@@ -45,6 +45,7 @@ public:
 	int SerialiseMultipleEntities(char*&, std::set<Entity>);	// same
 	int SerialiseEntityDetail(char*&, Entity);								// same
 	int SerialisePlayAgainCount();														// After play again number changes. If gamestate is asking for play again and compare mPlayAgainCount with mPrevPlayAgainCount
+	int SerialisePlayerInputs(char*&);
 
 	int SerialiseData(); // Serialise a string and int to send over
 
@@ -57,6 +58,7 @@ public:
 	void DeserialiseMultipleEntities(char*&);									// App::FirstUpdate(), since it's before logic system
 	void DeserialiseEntityDetail(char* currBuff);							// App::FirstUpdate(), since it's before logic system
 	void DeserialisePlayAgainCount();													// App::FirstUpdate(), since it's before logic system
+	void DeserialisePlayerInputs(char*&);
 
 	// To use the data bank, firstly input the data using PrepareData(). Secondly, send the data using SerialiseAndSend(C2SData or S2CData)
 	void PrepareData(std::string, int);
