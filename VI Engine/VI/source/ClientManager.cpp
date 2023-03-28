@@ -71,17 +71,16 @@ void clientRecvData()
         if (ClientManager::GetInstance()->m_StopReceive)
             return;
 
-        int temp{ MAX_UDP_PACKET_SIZE };
-
         char localBuff[MAX_UDP_PACKET_SIZE];
+        int size = sizeof(localBuff);
 
         int nLength = recvfrom(ClientManager::GetInstance()->m_ClientInstance.clientSocket, 
                                localBuff,
                                MAX_UDP_PACKET_SIZE, 0, 
                                (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, 
-                               &temp);
+                               &size);
 
-        if (nLength > 0) std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
+        if (nLength > 0) std::cout << "\n\n>> [CLIENT] Received data!\n" << "nLength: " << nLength << '\n';
 
         if (nLength == SOCKET_ERROR) {
           std::cout << "RECV SOCKET ERROR\n";
@@ -95,8 +94,8 @@ void clientRecvData()
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - sizeof(char)));
 
 
-        std::cout << "ClientManager::GetInstance()->serverPacketNum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
-        std::cout << "newPacketNum: " << newPacketNum << '\n';
+        std::cout << ">> [CLIENT] oldpacketnum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
+        std::cout << ">> [CLIENT] newPacketNum: " << newPacketNum << '\n';
         if (ClientManager::GetInstance()->serverPacketNum < newPacketNum) 
         {
           std::cout << "Successful, going to deserialise\n";
@@ -104,7 +103,7 @@ void clientRecvData()
           // tell jazz to deserialize
           NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
           NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
-          std::cout << "[CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
+          std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
         }
     }
 
