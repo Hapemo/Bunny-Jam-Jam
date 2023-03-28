@@ -42,7 +42,6 @@
     <ClCompile Include="source\Scripts\BackBunny.cpp" />
     <ClCompile Include="source\Scripts\ConnectionButtonControl.cpp" />
     <ClCompile Include="source\Scripts\Menu_Button.cpp" />
-    <ClCompile Include="source\Scripts\Old\BunnyChef_PlayerMovement.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_CarrotCollectionScript.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_CarrotCount.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_PlayerMovement.cpp" />
@@ -50,5 +49,6 @@
     <ClCompile Include="source\Scripts\Old\Bunny_GameSceneTransition.cpp" />
     <ClCompile Include="source\Scripts\Old\Bunny_MatchOver.cpp" />
     <ClCompile Include="source\Scripts\GameOverScript.cpp" />
+    <ClCompile Include="source\Scripts\Old\BunnyChef_PlayerMovement.cpp" />
   </ItemGroup>
 </Project>

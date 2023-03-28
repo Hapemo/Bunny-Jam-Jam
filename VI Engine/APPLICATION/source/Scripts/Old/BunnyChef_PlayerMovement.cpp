@@ -24,11 +24,17 @@ Press "ESC" to toggle the pause menu.
 REGISTER_SCRIPT(ScriptComponent, BunnyChef_PlayerMovement);
 bool isPlayer1{ false };
 bool BunnyOrChef{ false }; //False = Bunny , True = Chef
+bool clientPrediction{ false };
+bool serverReconciliation{ false };
+bool EntityInterpolation{ false };
 namespace 
 {
 	Entity BunnyPlayer;
 	Entity ChefPlayer;
 	Entity INGAMESTATEMANAGER;
+	Entity clientPred;
+	Entity ServerRecon;
+	Entity entityInter;
 }
 
 
@@ -67,10 +73,16 @@ void BunnyChef_PlayerMovement::Init(const Entity& _e) {
 
 
 	BunnyPlayer = VI::iEntity::GetEntity("Bunny", "");
-
 	ChefPlayer = VI::iEntity::GetEntity("Chef", "");
-
 	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER", "");
+
+	//Network Toggles
+	clientPred = VI::iEntity::GetEntity("clientPred", "");
+	ServerRecon = VI::iEntity::GetEntity("serverRecon", "");
+	entityInter = VI::iEntity::GetEntity("entityInter", "");
+
+
+
 
 	
 
@@ -82,12 +94,20 @@ void BunnyChef_PlayerMovement::EarlyUpdate(Entity const& _e) {
 	(void)_e;
 }
 
-void BunnyChef_PlayerMovement::Update(const Entity& _e) {
+void BunnyChef_PlayerMovement::Update(const Entity& _e) 
+{
 	(void)_e;
 	INGAMESTATEMANAGER = VI::iEntity::GetEntity("INGAMESTATEMANAGER", "");
 	NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();
 	ServerManager* server = ServerManager::GetInstance();
 	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_INGAME) {
+
+
+
+
+
+
+
 #ifdef _SERVER
 		// Update character directions
 		/*float movementSpeed{ 40.f };
@@ -281,6 +301,20 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e) {
 
 
 #ifdef _CLIENT
+
+
+	// Network Toggle
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_1)) { clientPrediction = !clientPrediction; }
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_2)) { serverReconciliation = !serverReconciliation; }
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_3)) { EntityInterpolation = !EntityInterpolation; }
+	clientPred.GetComponent<Sprite>().color = (clientPrediction) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
+	ServerRecon.GetComponent<Sprite>().color = (serverReconciliation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
+	entityInter.GetComponent<Sprite>().color = (EntityInterpolation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
+
+	//if (clientPrediction) {}
+	//if (serverReconciliation) {}
+	//if (EntityInterpolation) {}
+
 
 	if (!BunnyPlayer.HasComponent<Bunny>())
 		BunnyPlayer.AddComponent(Bunny{});
