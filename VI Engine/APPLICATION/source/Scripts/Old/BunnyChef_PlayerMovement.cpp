@@ -20,14 +20,15 @@ Press "ESC" to toggle the pause menu.
 #include "BunnyChef_PlayerMovement.h"
 #include "NetworkSerialization.h"
 #include "ServerManager.h"
-
+#include "ClientManager.h"
+#include "Application.h"
 REGISTER_SCRIPT(ScriptComponent, BunnyChef_PlayerMovement);
 bool isPlayer1{ false };
 bool BunnyOrChef{ false }; //False = Bunny , True = Chef
 bool clientPrediction{ false };
 bool serverReconciliation{ false };
 bool EntityInterpolation{ false };
-namespace 
+namespace
 {
 	Entity BunnyPlayer;
 	Entity ChefPlayer;
@@ -35,6 +36,8 @@ namespace
 	Entity clientPred;
 	Entity ServerRecon;
 	Entity entityInter;
+	Transform Bunny_prevXform{};
+	Transform Chef_prevXform{};
 }
 
 
@@ -83,8 +86,6 @@ void BunnyChef_PlayerMovement::Init(const Entity& _e) {
 
 
 
-
-	
 
 
 
@@ -306,11 +307,12 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 	// Network Toggle
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_1)) { clientPrediction = !clientPrediction; }
 	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_2)) { serverReconciliation = !serverReconciliation; }
-	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_3)) { EntityInterpolation = !EntityInterpolation; }
+	if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_3)) {
+		EntityInterpolation = !EntityInterpolation;
+	}
 	clientPred.GetComponent<Sprite>().color = (clientPrediction) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
 	ServerRecon.GetComponent<Sprite>().color = (serverReconciliation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
 	entityInter.GetComponent<Sprite>().color = (EntityInterpolation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
-
 	//if (clientPrediction) {}
 	//if (serverReconciliation) {}
 	//if (EntityInterpolation) {}
@@ -376,6 +378,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			}
 		}
 	}
+	
 	if (clientPrediction)
 	{
 		switch (sPLAYERDIRECTION)
@@ -396,8 +399,14 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			break;
 		}
 	}
-
-
+	if (EntityInterpolation)
+	{
+		if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
+		{
+			ChefPlayer.GetComponent<Transform>().translation.x = Chef_prevXform.translation.x + (ChefPlayer.GetComponent<Transform>().translation.x - 
+				Chef_prevXform.translation.x) * (Application::Get_timeStep() - Application::Get_prevTime());
+		}
+	}
 
 	//Mac Chef
 
@@ -470,6 +479,16 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			break;
 		}
 	}
+	if (EntityInterpolation)
+	{
+		if (NetworkSerializationManager::GetInstance()->mPlayerID == 2)
+		{
+			BunnyPlayer.GetComponent<Transform>().translation.x = Bunny_prevXform.translation.x + (BunnyPlayer.GetComponent<Transform>().translation.x -
+				Bunny_prevXform.translation.x) * (Application::Get_timeStep() - Application::Get_prevTime());
+		}
+	}
+	Chef_prevXform = ChefPlayer.GetComponent<Transform>();
+	Bunny_prevXform = BunnyPlayer.GetComponent<Transform>();
 #endif
 	}
 //if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) { BunnyOrChef = !BunnyOrChef; }

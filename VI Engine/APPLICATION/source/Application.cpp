@@ -28,6 +28,8 @@ start up of window and game system, also runs their update functions.
 #include "ServerManager.h"
 
 // Static variables
+float timestep = 0.0f;
+float prevTime = 0.0f;
 int Application::window_width{};
 int Application::window_height{};
 std::string Application::title{ "gam200" };
@@ -473,12 +475,16 @@ void Application::MainUpdate() {
   // Logic & Systems update
   // Graphics update
   // Application ending update
-
   while (GameStateManager::mGSMState != GameStateManager::E_GSMSTATE::EXIT) {
     if (!FirstUpdate()) {
       audioManager->SetALLVolume(0.f);   //need pause all the audio... and resume properly
       continue;
+
     }
+    timestep += FPSManager::dt;
+
+    std::cout << "curr: " << timestep << std::endl;
+    std::cout << "prev: " << prevTime<< std::endl;
     TRACK_PERFORMANCE("MainLoop");
 #ifdef _EDITOR
     TRACK_PERFORMANCE("Editor");
@@ -492,7 +498,7 @@ void Application::MainUpdate() {
     GameStateManager::GetInstance()->Update(); // Game logic
     // shadowManager->Update();
     SystemUpdate();
-
+    prevTime = timestep;
 #endif
     static bool toggle{ false };
     if (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, F)) Helper::SetFullScreen(toggle = !toggle);
@@ -671,4 +677,12 @@ void Application::fbsize_cb(GLFWwindow* ptr_win, int width, int height) {
   glViewport(0, 0, width, height);
   (void)ptr_win;
   // later, if working in 3D, we'll have to set the projection matrix here ...
+}
+float Application::Get_timeStep()
+{
+    return timestep;
+}
+float Application::Get_prevTime()
+{
+    return prevTime;
 }

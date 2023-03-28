@@ -66,6 +66,8 @@ public:
 	static int getWindowWidth() { return window_width; }
 	static int getWindowHeight() { return window_height; }
 	static std::string& GetCurrGameStateName() { return mCurrGameStateName; }
+	static float Get_timeStep();
+	static float Get_prevTime();
 private:
 	static int window_width, window_height;
 	static std::string title;
