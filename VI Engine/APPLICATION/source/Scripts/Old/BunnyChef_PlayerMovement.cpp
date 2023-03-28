@@ -376,7 +376,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			}
 		}
 	}
-	if (!clientPrediction)
+	if (clientPrediction)
 	{
 		switch (sPLAYERDIRECTION)
 		{
@@ -450,7 +450,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			}
 		}
 	}
-	if (!clientPrediction)
+	if (clientPrediction)
 	{
 		switch (sCHEFDIRECTION)
 		{
