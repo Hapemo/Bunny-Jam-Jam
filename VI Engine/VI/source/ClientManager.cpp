@@ -80,7 +80,7 @@ void clientRecvData()
                                (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, 
                                &size);
 
-        if (nLength > 0) std::cout << "\n\n>> [CLIENT] Received data!\n" << "nLength: " << nLength << '\n';
+        //if (nLength > 0) std::cout << "\n\n>> [CLIENT] Received data!\n" << "nLength: " << nLength << '\n';
 
         if (nLength == SOCKET_ERROR) {
           std::cout << "RECV SOCKET ERROR\n";
