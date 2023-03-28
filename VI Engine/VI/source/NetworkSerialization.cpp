@@ -204,13 +204,13 @@ void NetworkSerializationManager::DeserialisePlayerControls() {
 		ServerManager::GetInstance()->mP2Input = bit;
 	}
 
-//#if DEBUGPRINT
+#if DEBUGPRINT
 	std::cout << "Player " << NetworkSerializationManager::GetInstance()->mPlayerID;
 	std::cout << "up: " << static_cast<bool>(input & (1L << 0)) << '\n';
 	std::cout << "down: " << static_cast<bool>(input & (1L << 1)) << '\n';
 	std::cout << "left: " << static_cast<bool>(input & (1L << 2)) << '\n';
 	std::cout << "right: " << static_cast<bool>(input & (1L << 3)) << '\n';
-//#endif
+#endif
 	//PrintSendBuff();
 }
 

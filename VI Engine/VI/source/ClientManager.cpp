@@ -94,16 +94,16 @@ void clientRecvData()
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - sizeof(char)));
 
 
-        std::cout << ">> [CLIENT] oldpacketnum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
-        std::cout << ">> [CLIENT] newPacketNum: " << newPacketNum << '\n';
+        //std::cout << ">> [CLIENT] oldpacketnum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
+        //std::cout << ">> [CLIENT] newPacketNum: " << newPacketNum << '\n';
         if (ClientManager::GetInstance()->serverPacketNum < newPacketNum) 
         {
-          std::cout << "Successful, going to deserialise\n";
+          //std::cout << "Successful, going to deserialise\n";
           ClientManager::GetInstance()->serverPacketNum = newPacketNum;
           // tell jazz to deserialize
           NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
           NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
-          std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
+          //std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
         }
     }
 

@@ -191,8 +191,8 @@ void serverRecvData()
 
             NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             
-            std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
-            std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
+            //std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
+            //std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
             
             if (ServerManager::GetInstance()->m_ClientList.size() > 1) {
               std::cout << "More than 1 player, starting game\n";
@@ -210,8 +210,8 @@ void serverRecvData()
             clientinstance->second.clientPacketNum = newPacketNum;
             NetworkSerializationManager::GetInstance()->mPlayerID = std::distance(ServerManager::GetInstance()->m_ClientList.begin(), clientinstance) + 1;
             
-            std::cout << "[SERVER] :: Successful, going to deserialise\n";
-            std::cout << "[SERVER] :: mPlayerID within recvServerData -> " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
+            //std::cout << "[SERVER] :: Successful, going to deserialise\n";
+            //std::cout << "[SERVER] :: mPlayerID within recvServerData -> " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
             
             NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
           }
