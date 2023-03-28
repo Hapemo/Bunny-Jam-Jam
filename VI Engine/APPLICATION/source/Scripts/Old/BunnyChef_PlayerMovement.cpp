@@ -376,22 +376,25 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			}
 		}
 	}
-	switch (sPLAYERDIRECTION)
+	if (!clientPrediction)
 	{
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
-		VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,40.0f }, 0.0f);
-		break;
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
-		VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-40.0f }, 0.0f);
-		break;
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
-		VI::iPhysics::ApplyImpulse(BunnyPlayer, { -40.0f,0.0f }, 0.0f);
-		break;
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
-		VI::iPhysics::ApplyImpulse(BunnyPlayer, { 40.0f,0.0f }, 0.0f);
-		break;
-	default:
-		break;
+		switch (sPLAYERDIRECTION)
+		{
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
+			VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,40.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
+			VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-40.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
+			VI::iPhysics::ApplyImpulse(BunnyPlayer, { -40.0f,0.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
+			VI::iPhysics::ApplyImpulse(BunnyPlayer, { 40.0f,0.0f }, 0.0f);
+			break;
+		default:
+			break;
+		}
 	}
 
 
@@ -447,23 +450,25 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			}
 		}
 	}
-
-	switch (sCHEFDIRECTION)
+	if (!clientPrediction)
 	{
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
-		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,40.0f }, 0.0f);
-		break;
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
-		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-40.0f }, 0.0f);
-		break;
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
-		VI::iPhysics::ApplyImpulse(ChefPlayer, { -40.0f,0.0f }, 0.0f);
-		break;
-	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
-		VI::iPhysics::ApplyImpulse(ChefPlayer, { 40.0f,0.0f }, 0.0f);
-		break;
-	default:
-		break;
+		switch (sCHEFDIRECTION)
+		{
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,40.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-40.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { -40.0f,0.0f }, 0.0f);
+			break;
+		case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { 40.0f,0.0f }, 0.0f);
+			break;
+		default:
+			break;
+		}
 	}
 #endif
 	}
