@@ -174,8 +174,8 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	if (currInput == prevInput) return 0;
 	prevInput = currInput;
 
-	std::bitset<8> bit( currInput );
-	std::cout << "send: " << bit << '\n';
+	//std::bitset<8> bit( currInput );
+	//std::cout << "send: " << bit << '\n';
 
 	currBuff[0] = currInput;
 	++currBuff;
@@ -256,8 +256,8 @@ int NetworkSerializationManager::SerialiseGameStarted() {
 }
 
 void NetworkSerializationManager::DeserialiseGameStarted() {
-	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGameStarted)
-		std::cout << "NETWORKDATATYPE::S2CGameStarted\n";
+	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGameStarted)
+	//	std::cout << "NETWORKDATATYPE::S2CGameStarted\n";
 
 	//std::cout << "mgamecountdown: " << mGameCountDown << "\n";
 	if (mGameCountDown > 0) return;
@@ -302,8 +302,8 @@ int NetworkSerializationManager::SerialiseGamePlayData() {
 }
 
 void NetworkSerializationManager::DeserialiseGamePlayData() {
-	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGamePlayData)
-		std::cout << "NETWORKDATATYPE::S2CGamePlayData\n";
+	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGamePlayData)
+	//	std::cout << "NETWORKDATATYPE::S2CGamePlayData\n";
 
 	char* currBuff{ mRecvBuff + 1 };
 
@@ -602,8 +602,8 @@ int NetworkSerializationManager::SerialiseData() {
 
 void NetworkSerializationManager::DeserialiseData() {
 	// Doesn't matter what the data type is, just save it as C2SData
-	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::C2SData || static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CData)
-		std::cout << "NETWORKDATATYPE::C2SData or NETWORKDATATYPE::S2CData\n";
+	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::C2SData || static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CData)
+	//	std::cout << "NETWORKDATATYPE::C2SData or NETWORKDATATYPE::S2CData\n";
 
 	char* currBuff{ mRecvBuff + 1 };
 	std::string tempStr = currBuff;
