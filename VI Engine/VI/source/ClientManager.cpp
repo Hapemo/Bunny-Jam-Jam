@@ -68,8 +68,8 @@ void clientRecvData()
     {
         //char buffer[1024];
         //int fromlength = sizeof(buffer);
-        if (ClientManager::GetInstance()->m_StopReceive)
-            return;
+        //if (ClientManager::GetInstance()->m_StopReceive)
+        //    return;
 
         char localBuff[MAX_UDP_PACKET_SIZE];
         int size = sizeof(localBuff);
