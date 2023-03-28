@@ -259,11 +259,11 @@ void NetworkSerializationManager::DeserialiseGameStarted() {
 	if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGameStarted)
 		std::cout << "NETWORKDATATYPE::S2CGameStarted\n";
 
-	std::cout << "mgamecountdown: " << mGameCountDown << "\n";
+	//std::cout << "mgamecountdown: " << mGameCountDown << "\n";
 	if (mGameCountDown > 0) return;
-	std::cout << "mgamecountdown saved: " << mGameCountDown << "\n";
+	//std::cout << "mgamecountdown saved: " << mGameCountDown << "\n";
 
-	mGameCountDown = *reinterpret_cast<float*>(mRecvBuff + 1);
+	mGameCountDown = *reinterpret_cast<float*>(mRecvBuff + 1) - 1;
 }
        
 int NetworkSerializationManager::SerialiseNumberOfClientConnected() {
