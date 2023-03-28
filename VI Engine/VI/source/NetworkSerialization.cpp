@@ -263,7 +263,7 @@ void NetworkSerializationManager::DeserialiseGameStarted() {
 	if (mGameCountDown > 0) return;
 	//std::cout << "mgamecountdown saved: " << mGameCountDown << "\n";
 
-	mGameCountDown = *reinterpret_cast<float*>(mRecvBuff + 1);
+	mGameCountDown = *reinterpret_cast<float*>(mRecvBuff + 1) - 1;
 }
        
 int NetworkSerializationManager::SerialiseNumberOfClientConnected() {

@@ -90,6 +90,12 @@ void clientRecvData()
 
         memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
         memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
+
+        if (nLength == size)
+            std::cout << "the sizes are the same!\n";
+        else
+            std::cout << "nlength: " << nLength << ", size: " << size << "\n";
+        
         //NetworkSerializationManager::GetInstance()->PrintRecvBuff();
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - sizeof(char)));
 
