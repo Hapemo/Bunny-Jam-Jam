@@ -8,7 +8,7 @@
         },
         "Transform": {
             "scale": {
-                "X": 831.0,
+                "X": 661.0,
                 "Y": 155.0
             },
             "rotation": 0.0,
@@ -30,7 +30,7 @@
         },
         "Text": {
             "fontFile": "Montserrat-Regular",
-            "text": "Enter IP Address",
+            "text": "",
             "offset": {
                 "X": -62.0,
                 "Y": 0.0

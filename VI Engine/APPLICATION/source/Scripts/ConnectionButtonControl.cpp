@@ -272,44 +272,39 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 
 
-    //Connect Address
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER) == true) 
-    {
-        if (!isConnected)
+        //Connect Address
+        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ENTER))
         {
-            //ipstring_ = "192.168.136.176";
-            //ipstring_ = "192.168.50.172";
-            //ipstring_ = "192.168.50.16";
-            if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay"))
+            if (!isConnected)
             {
-                //Connected Successfully
-                VI::iScene::Pause("RequestIP");
-                isConnected = true;
-
-                //Pop up P1 based on Connection.size
-                //VI::iGameState::ChangeGameState("Bunny_GameLevel1");
-
-
-            }
-            else
-            {
-                //Connection failed
-                VI::iScene::Pause("RequestIP");
-                //Pop up error Message
+                //ipstring_ = "192.168.136.176";
+                //ipstring_ = "192.168.50.172";
+                //ipstring_ = "192.168.50.16";
+                if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay"))
+                {
+                    //Connected Successfully
+                    VI::iScene::Pause("RequestIP");
+                    isConnected = true;
+                }
+                else
+                {
+                    //Connection failed
+                    VI::iScene::Play("wrongipScene");
+                    VI::iScene::Pause("RequestIP");
+                    //Pop up error Message
+                }
             }
         }
+    
+    //Out of wrong ip scene
+    if (!VI::iScene::IsPaused("wrongipScene")) 
+    {
+        if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::ESCAPE)) { VI::iScene::Pause("wrongipScene"); }
     }
-    //if (!ifFound)
-    //{
-    //    if (NetworkSerializationManager::GetInstance()->GetFromBank("mNumberOfClientConnected", &NetworkSerializationManager::GetInstance()->mNumberOfClientConnected))
-    //    {
-    //        ifFound = true;
-    //    }
-    //}
+
     if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
     {
         player1_ = true;
-        player2_ = true;
         if (!bothPlayers)
         {
             bothPlayers = true;
@@ -327,12 +322,13 @@ void ConnectionButtonControl::Update(Entity const& _e) {
             you_.GetComponent<Transform>().translation.y = 8.f;
         }
     }
-    
-    if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE) == true) {
-        NetworkSerializationManager::GetInstance()->mNumberOfClientConnected = 2;
-        VI::iGameState::ChangeGameState("Bunny_GameLevel1");
-    }
 
+
+    if (NetworkSerializationManager::GetInstance()->mNumberOfClientConnected == 2)
+    {
+        player1_ = true;
+        player2_ = true;
+    }
 
     if (zoom_ == -1 && loadicon_.GetComponent<Transform>().scale.x >= 2000) {
         VI::iGameState::ChangeGameState("Bunny_MainMenu");
@@ -358,12 +354,10 @@ void ConnectionButtonControl::Update(Entity const& _e) {
         //  join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
         //}
         if (back_.GetComponent<Button>().isClick) {
-            //std::cout << "bitchhhhhhhhhhhhhhhhhhhh\n";
             zoom_ = 1;
             Menu_Button::startMenu_ = 0;
         }
     }
-    //std::cout << zoom_ << "bitchhhhhhhhhhhhhhhhhhhh\n";
     zoom_ = Transit(zoom_, loadicon_, acc_, scaling_);
 
     if (join_.GetComponent<Button>().isHover) {
@@ -376,11 +370,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
             VI::iScene::Play("RequestIP");
         }
     }
-    else {
-        //if (join_.GetComponent<Transform>().scale.x > 100) {
-        //  join_.GetComponent<Transform>().scale.x -= 1000.f * (float)FUNC->GetDeltaTime();
-        //}
-    }
+
 
     // get game started timing
     NetworkSerializationManager* manager = NetworkSerializationManager::GetInstance();

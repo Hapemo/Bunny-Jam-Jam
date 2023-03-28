@@ -148,9 +148,6 @@ void Menu_Button::Update(Entity const& _e) {
 		playButton = VI::iEntity::GetEntity("Play_Button", "");
 		loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
 		h2pButton = VI::iEntity::GetEntity("H2P_Button", "");
-		toObjectives = VI::iEntity::GetEntity("toObjectives", "");
-		toControls = VI::iEntity::GetEntity("toControls", "");
-
 		updateOne = true;
 
 	}
@@ -159,8 +156,6 @@ void Menu_Button::Update(Entity const& _e) {
 	playButton = VI::iEntity::GetEntity("Play_Button", "");
 	loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
 	h2pButton = VI::iEntity::GetEntity("H2P_Button", "");
-	toObjectives = VI::iEntity::GetEntity("toObjectives", "");
-	toControls = VI::iEntity::GetEntity("toControls", "");
 
 
 
@@ -197,38 +192,6 @@ void Menu_Button::Update(Entity const& _e) {
 		{
 			VI::iScene::Play("How2PlayControls");
 			VI::iScene::Pause("Bunny_Menu");
-		}
-	}
-
-
-	//Controls -> Objectives
-
-	if (toObjectives.GetComponent<Button>().isHover)
-	{
-		if (toObjectives.GetComponent<Button>().isClick)
-		{
-			
-			VI::iScene::Pause("How2PlayControls");
-			VI::iScene::Play("How2PlayObjectives");
-			toObjectives.GetComponent<Button>().isClick = false;
-
-		}
-	}
-	
-
-
-
-
-	//Controls <- Objectives
-	if (toControls.GetComponent<Button>().isHover)
-	{
-		if (toControls.GetComponent<Button>().isClick)
-		{			
-			VI::iScene::Pause("How2PlayObjectives");
-			VI::iScene::Play("How2PlayControls");
-			toControls.GetComponent<Button>().isClick = false;
-
-
 		}
 	}
 

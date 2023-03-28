@@ -1,8 +1,8 @@
 [
     {
         "General": {
-            "name": "BackgroundControls",
-            "tag": 4,
+            "name": "backgroundControls",
+            "tag": 0,
             "subtag": 0,
             "isActive": true
         },
@@ -27,6 +27,9 @@
             "sprite": 2,
             "texture": "Textures\\HowtoPlayControls.png",
             "layer": 0
+        },
+        "Script": {
+            "name": "Menu_Button"
         }
     },
     {
@@ -62,7 +65,7 @@
             "frameCount": 5,
             "currFrameIndex": 3,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 3.725290298461914e-9
+            "timeToFrameSwap": 0.05000000447034836
         }
     },
     {
@@ -98,7 +101,7 @@
             "frameCount": 5,
             "currFrameIndex": 3,
             "timePerFrame": 0.10000000149011612,
-            "timeToFrameSwap": 0.05000000447034836
+            "timeToFrameSwap": 0.10000000149011612
         }
     },
     {
@@ -129,42 +132,6 @@
             "sprite": 2,
             "texture": "Textures\\Jam.png",
             "layer": 3
-        }
-    },
-    {
-        "General": {
-            "name": "toObjectives",
-            "tag": 8,
-            "subtag": 0,
-            "isActive": true
-        },
-        "Transform": {
-            "scale": {
-                "X": 150.0,
-                "Y": 150.0
-            },
-            "rotation": 0.0,
-            "translation": {
-                "X": 706.0,
-                "Y": 0.0
-            }
-        },
-        "Sprite": {
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 255
-            },
-            "sprite": 2,
-            "texture": "Textures\\FrontButton.png",
-            "layer": 4
-        },
-        "Script": {
-            "name": "Menu_Button"
-        },
-        "Button": {
-            "interactable": true
         }
     }
 ]
