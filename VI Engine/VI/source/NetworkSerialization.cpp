@@ -431,6 +431,7 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 	char* generalComp = FindSubStringEnd(currBuff, generalName);
 	std::string entityName = generalComp;
 	Entity e = GameStateManager::GetInstance()->GetEntity(entityName);
+	if (e.id == 0) return;
 	currBuff += entityName.size() + 1;
 
 	if (!e.HasComponent<General>()) {
