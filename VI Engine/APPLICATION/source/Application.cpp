@@ -436,7 +436,7 @@ void Application::SecondUpdate() {
   if (gamestateName == "Bunny_GameLevel1") {
     static float timer{};
     timer += FPSManager::dt;
-    if (timer > 0.2f) {
+    if (timer >= 0) {
       manager->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CGamePlayData);
       timer = 0;
     }
