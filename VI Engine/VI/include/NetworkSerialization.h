@@ -48,7 +48,7 @@ public:
 	int SerialisePlayerInputs(char*&);
 
 	int SerialiseData(); // Serialise a string and int to send over
-
+	void EntityInterpolateOpponent(int PID);
 	void DeserialisePlayerControls();													// App::FirstUpdate(), since it's before logic system
 	void DeserialisePlayAgain();															// App::FirstUpdate(), since it's before logic system
 	void DeserialiseGameStarted();
@@ -71,6 +71,13 @@ public:
 
 	char* FindSubStringEnd(char*& str, const char* findee, int strLen = 30000);
 
+	static void UpdateTime(float time);
+	static float GetTime();
+	static void UpdatePrevTime(float time);
+	static float GetPrevTime();
+	void EntityInterpolation(Transform& curr, Transform& prev);
+	static bool GetEntityInterpolation();
+	static void FlipEntityInterpolation();
 	char* mSendBuff;
 	char* mRecvBuff;
 

@@ -14,6 +14,10 @@ namespace {
 	const char physics2dName[] = "Physics2DComponent";
 	const char rectColliderName[] = "RectColliderComponent";
 	const char circleColliderName[] = "CircleColliderComponent";
+	float Bunny_Time = 0.0f;
+	float Bunny_PrevTime = 0.0f;
+	Transform opponentXformPrev{};
+	bool bEntityInterpolation = false;
 }
 
 
@@ -424,7 +428,10 @@ int NetworkSerializationManager::SerialiseEntityDetail(char*& currBuff, Entity _
 
 	return static_cast<int>(currBuff - mSendBuff);
 }
+void NetworkSerializationManager::EntityInterpolateOpponent(int PID)
+{
 
+}
 void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 	// General component
 	// <name\0><isActive><isPaused>
@@ -453,9 +460,23 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 	char* transformPtr{ nullptr };
 	if (transformPtr = FindSubStringEnd(currBuff, transformName)) {
 		currBuff = transformPtr;
-		e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
-		Transform Trans = e.GetComponent<Transform>();
+		if (bEntityInterpolation)
+		{
+			if (mPlayerID == 1)
+				if (entityName == "Chef")
+					EntityInterpolation(e.GetComponent<Transform>(), opponentXformPrev);
+				else if (mPlayerID == 2) {
+					if (entityName == "Bunny")
+						EntityInterpolation(e.GetComponent<Transform>(), opponentXformPrev);
+				}
+				else
+					e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
 
+		}
+		else
+		{
+			e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
+		}
 #if DEBUGPRINT
 		std::cout << "==> Transform Component\n";
 		std::cout << "Trans.rotation: " << Trans.rotation << '\n';
@@ -671,9 +692,38 @@ char* NetworkSerializationManager::FindSubStringEnd(char*& str, const char* find
 	}
 	return nullptr;
 }
+void NetworkSerializationManager::UpdateTime(float time)
+{
+	Bunny_Time += time;
+}
+float NetworkSerializationManager::GetTime()
+{
+	return Bunny_Time;
+}
+void NetworkSerializationManager::UpdatePrevTime(float time)
+{
+	Bunny_PrevTime = time;
+}
+float NetworkSerializationManager::GetPrevTime()
+{
+	return Bunny_PrevTime;
+}
 
-
-
+void NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
+{
+	curr.translation.x = curr.translation.x + (curr.translation.x -
+		prev.translation.x) * (GetTime() - GetPrevTime());
+	curr.translation.y = curr.translation.y + (curr.translation.y -
+		prev.translation.y) * (GetTime() - GetPrevTime());
+}
+bool NetworkSerializationManager::GetEntityInterpolation()
+{
+	return bEntityInterpolation;
+}
+void NetworkSerializationManager::FlipEntityInterpolation()
+{
+	bEntityInterpolation = !bEntityInterpolation;
+}
 
 
 

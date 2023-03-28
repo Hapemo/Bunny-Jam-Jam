@@ -481,10 +481,7 @@ void Application::MainUpdate() {
       continue;
 
     }
-    timestep += FPSManager::dt;
-
-    std::cout << "curr: " << timestep << std::endl;
-    std::cout << "prev: " << prevTime<< std::endl;
+    NetworkSerializationManager::UpdateTime(FPSManager::dt);
     TRACK_PERFORMANCE("MainLoop");
 #ifdef _EDITOR
     TRACK_PERFORMANCE("Editor");
@@ -498,7 +495,6 @@ void Application::MainUpdate() {
     GameStateManager::GetInstance()->Update(); // Game logic
     // shadowManager->Update();
     SystemUpdate();
-    prevTime = timestep;
 #endif
     static bool toggle{ false };
     if (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, F)) Helper::SetFullScreen(toggle = !toggle);
