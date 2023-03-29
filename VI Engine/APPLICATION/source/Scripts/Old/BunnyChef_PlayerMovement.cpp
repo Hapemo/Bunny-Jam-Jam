@@ -274,7 +274,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			if (clientPrediction)
 			{
 				//Move Up
-				if (VI::iInput::CheckKey(E_STATE:::HOLD, E_KEY::W))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::W))
 				{
 					{
 						/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
