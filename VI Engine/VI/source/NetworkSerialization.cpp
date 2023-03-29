@@ -746,11 +746,11 @@ void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
 	prev = curr;
 }
 
-void NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
+void NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev, Transform& tmp)
 {
-	curr.translation.x = prev.translation.x + (curr.translation.x -
+	tmp.translation.x = prev.translation.x + (curr.translation.x -
 		prev.translation.x) * (GetTime() - GetPrevTime());
-	curr.translation.y = prev.translation.y + (curr.translation.y -
+	tmp.translation.y = prev.translation.y + (curr.translation.y -
 		prev.translation.y) * (GetTime() - GetPrevTime());
 }
 bool NetworkSerializationManager::GetEntityInterpolation()
