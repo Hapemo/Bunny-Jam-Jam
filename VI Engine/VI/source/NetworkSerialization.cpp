@@ -470,15 +470,17 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
-					std::cout << "currtime: " << GetTime() << std::endl;
-					std::cout << "prevtime: " << GetPrevTime() << std::endl;
+					//std::cout << "currtime: " << GetTime() << std::endl;
+					//std::cout << "prevtime: " << GetPrevTime() << std::endl;
 					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
 					//e.GetComponent<Transform>() = currxForm;
 					//updatexForm(currxForm, opponentXformPrev);
+					Bunny_PrevTime = GetTime();
+					//std::cout << "currxform: " << currxForm.translation.x << std::endl;
 				}
 			}
-			else
-				e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
+			//else
+				//e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
 
 			if (mPlayerID == 2)
 			{
@@ -486,16 +488,18 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 				{
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
+					//std::cout << "currxform: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
 					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
 					//updatexForm(currxForm, opponentXformPrev);
 					//e.GetComponent<Transform>() = currxForm;
+					Bunny_PrevTime = GetTime();
 
 
 				}
 			}
-			else
-				e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
+			//else
+				//e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
 
 		}
 		else
@@ -746,12 +750,14 @@ void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
 	prev = curr;
 }
 
-void NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev, Transform& tmp)
+Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
 {
-	tmp.translation.x = prev.translation.x + (curr.translation.x -
-		prev.translation.x) * (GetTime() - GetPrevTime());
-	tmp.translation.y = prev.translation.y + (curr.translation.y -
-		prev.translation.y) * (GetTime() - GetPrevTime());
+	Transform tmp = prev;
+	tmp.translation.x = prev.translation.x + ((curr.translation.x -
+		prev.translation.x) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
+	tmp.translation.y = prev.translation.y + ((curr.translation.y -
+		prev.translation.y) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
+	return tmp;
 }
 bool NetworkSerializationManager::GetEntityInterpolation()
 {
