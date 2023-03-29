@@ -76,10 +76,8 @@ public:
 	static void UpdatePrevTime(float time);
 	static float GetPrevTime();
 	static void setPrevxForm(Transform& prev);
-	static void setcURRxForm(Transform& Curr);
 	void updatexForm(Transform& curr, Transform& prev);
-	static void EntityInterpolation(Transform& curr, Transform& prev);
-
+	static Transform EntityInterpolation(Transform& curr, Transform& prev);
 		static Transform& GetCurrXform();
 	static bool GetEntityInterpolation();
 	static void FlipEntityInterpolation();
