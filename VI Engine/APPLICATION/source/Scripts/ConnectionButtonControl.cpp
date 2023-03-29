@@ -281,6 +281,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
                 //ipstring_ = "192.168.50.172";`````
                 //ipstring_ = "192.168.50.16";
                 ipstring_ = "192.168.134.101";
+                //ipstring_ = "192.168.136.176";
                 if (ClientManager::GetInstance()->clientInit(ipstring_, 5051, "gay"))
                 {
                     //Connected Successfully
