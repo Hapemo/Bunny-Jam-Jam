@@ -781,12 +781,10 @@ Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Tran
 	}
 
 	if ( abs(currxForm.translation.x - playerpos.translation.x) >0) {
-		std::cout << " not supposed to be here\n";
 		tmp.translation.x = ((opponentXformPrev.translation.x - opponentXformPrev2.translation.x) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
 		tmp.translation.y = ((opponentXformPrev.translation.y - opponentXformPrev2.translation.y) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
 	}
 	else {
-		std::cout << "leron x junwei\n";
 		//opponentXformPrev2 = opponentXformPrev;
 		//opponentXformPrev = currxForm;
 		tmp.translation.x = 0;
