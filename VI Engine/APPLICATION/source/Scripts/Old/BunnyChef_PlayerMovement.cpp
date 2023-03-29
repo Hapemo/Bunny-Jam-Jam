@@ -172,9 +172,9 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		//Move Up
 		if (server->mP2Input[0])
 		{
-			if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
+			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
 			{
-				sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
+				sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
 				/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
 						BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
 						BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
@@ -186,9 +186,9 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		if (server->mP2Input[1])
 		{
 
-			if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN)
+			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN)
 			{
-				sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN;
+				sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN;
 				//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
 				//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
 				//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
@@ -202,9 +202,9 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		{
 			if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT)
 			{
-				if (BunnyPlayer.GetComponent<Transform>().scale.x > 0.0f)
-					BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
-				sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
+				if (ChefPlayer.GetComponent<Transform>().scale.x > 0.0f)
+					ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
+				sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
 				//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
 				//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
 				//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
@@ -216,11 +216,10 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		//Move Right
 		if (server->mP2Input[3])
 		{
-			if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT)
+			if (sCHEFDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN)
 			{
-				if (BunnyPlayer.GetComponent<Transform>().scale.x < 0.0f)
-					BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
-				sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
+				if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)
+					ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
 				/*			BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
 							BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
 							BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
@@ -404,7 +403,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				{
 					if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)
 						ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
-					//sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
+					sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT;
 					//ChefPlayer.GetComponent<Physics2D>().acceleration = 0;
 					//ChefPlayer.GetComponent<Physics2D>().velocity.x = 0;
 					//ChefPlayer.GetComponent<Physics2D>().velocity.y = 0;
