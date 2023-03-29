@@ -782,8 +782,8 @@ Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Tran
 
 
 	if ( abs(currxForm.translation.x - playerpos.translation.x) >0) {
-		tmp.translation.x = ((opponentXformPrev.translation.x - opponentXformPrev2.translation.x) /*/ 2.10f*/) * VI::GetDeltaTime() * 30.0f;
-		tmp.translation.y = ((opponentXformPrev.translation.y - opponentXformPrev2.translation.y) /*/ 2.10f*/) * VI::GetDeltaTime() * 30.0f;
+		tmp.translation.x = ((opponentXformPrev.translation.x - opponentXformPrev2.translation.x) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
+		tmp.translation.y = ((opponentXformPrev.translation.y - opponentXformPrev2.translation.y) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
 	}
 	else {
 		tmp.translation.x = 0;
