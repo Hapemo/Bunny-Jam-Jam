@@ -255,7 +255,6 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		if (!BunnyPlayer.HasComponent<Bunny>())
 			BunnyPlayer.AddComponent(Bunny{});
 
-		NetworkSerializationManager::GetInstance()->mPlayerID = 1;
 		//Move Up
 		if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
 		{
