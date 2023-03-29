@@ -726,6 +726,29 @@ void NetworkSerializationManager::FlipEntityInterpolation()
 }
 
 
+//// container of sequence number sent
+//std::list<int> clientSequence;
+//int lastProcessedID;	// ID last ack by the server and have performed prediction already
+//
+//int seqID = // client's sequence number
+//clientSequence.push_back(seqID);	// Store sequence number
+//
+//// After receiving packet from server
+//for (int i = 0; i < clientSequence.size(); ++i)
+//{
+//	int seqID = clientSequence[i];
+//
+//	if (seqID <= lastAckID)		// if ID already executed by client, can remove
+//	{
+//		clientSequence.erase(clientSequence.begin() + i);
+//	}
+//	else	// perform client prediction of that input
+//	{
+//		ClientPrediction(input);
+//		lastProcessedID = seqID;
+//	}
+//}
+
 
 
 
