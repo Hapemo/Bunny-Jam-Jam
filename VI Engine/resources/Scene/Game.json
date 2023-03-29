@@ -82,8 +82,14 @@
                 "a": 255
             },
             "sprite": 2,
-            "texture": "Textures\\Button1.png",
+            "texture": "Textures\\Bunny.png",
             "layer": 3
+        },
+        "SheetAnimation": {
+            "frameCount": 5,
+            "currFrameIndex": 1,
+            "timePerFrame": 0.10000000149011612,
+            "timeToFrameSwap": 0.0
         }
     },
     {
@@ -112,8 +118,14 @@
                 "a": 255
             },
             "sprite": 2,
-            "texture": "Textures\\Button2.png",
+            "texture": "Textures\\Chef.png",
             "layer": 5
+        },
+        "SheetAnimation": {
+            "frameCount": 5,
+            "currFrameIndex": 1,
+            "timePerFrame": 0.10000000149011612,
+            "timeToFrameSwap": 0.0
         }
     },
     {
@@ -281,8 +293,8 @@
         },
         "Transform": {
             "scale": {
-                "X": -2.1930761337280273,
-                "Y": -2.1930761337280273
+                "X": 2000.0,
+                "Y": 2000.0
             },
             "rotation": 0.0,
             "translation": {
