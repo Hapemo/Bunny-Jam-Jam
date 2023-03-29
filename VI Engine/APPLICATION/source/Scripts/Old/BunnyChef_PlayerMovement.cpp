@@ -274,7 +274,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			if (clientPrediction)
 			{
 				//Move Up
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
+				if (VI::iInput::CheckKey(E_STATE:::HOLD, E_KEY::W))
 				{
 					{
 						/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
@@ -285,7 +285,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Down
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::S))
 				{
 					{
 						//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
@@ -297,7 +297,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Left
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::A))
 				{
 					{
 						if (BunnyPlayer.GetComponent<Transform>().scale.x > 0.0f)
@@ -311,7 +311,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Right
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::D))
 				{
 					{
 						if (BunnyPlayer.GetComponent<Transform>().scale.x < 0.0f)
@@ -331,7 +331,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		{
 			if (clientPrediction)
 			{
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::W))
 				{
 					{
 						/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
@@ -342,7 +342,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Down
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::S))
 				{
 
 					{
@@ -355,7 +355,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Left
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::A))
 				{
 					{
 						if (ChefPlayer.GetComponent<Transform>().scale.x > 0.0f)
@@ -370,7 +370,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Right
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::D))
 				{
 					{
 						if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)
