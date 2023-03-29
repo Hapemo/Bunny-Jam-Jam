@@ -82,9 +82,11 @@ void clientRecvData()
 
         //if (nLength > 0) std::cout << "\n\n>> [CLIENT] Received data!\n" << "nLength: " << nLength << '\n';
 
-        if (nLength == SOCKET_ERROR) {
+        if (nLength <= 0) {
           std::cout << "RECV SOCKET ERROR\n";
           std::cout << "WSAGetLastError: " << WSAGetLastError() <<'\n';
+          memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
+          memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
           return;
         }
 
