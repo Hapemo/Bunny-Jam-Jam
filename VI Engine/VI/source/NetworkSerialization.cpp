@@ -467,10 +467,11 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 			{
 				if (entityName == "Chef")
 				{
-					currxForm = e.GetComponent<Transform>();
-					EntityInterpolation(currxForm, opponentXformPrev);
+					currxForm = *reinterpret_cast<Transform*>(currBuff);
 
-
+					std::cout << "currxForm: " << currxForm.translation.x << std::endl;
+					std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
+					EntityInterpolation(currxForm, e.GetComponent<Transform>());
 					updatexForm(currxForm, opponentXformPrev);
 				}
 			}
@@ -478,8 +479,10 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 			{
 				if (entityName == "Bunny")
 				{
-					currxForm = e.GetComponent<Transform>();
-					EntityInterpolation(currxForm, opponentXformPrev);
+					currxForm = *reinterpret_cast<Transform*>(currBuff);
+					std::cout << "currxForm: " << currxForm.translation.x << std::endl;
+					std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
+					EntityInterpolation(currxForm, e.GetComponent<Transform>());
 					updatexForm(currxForm, opponentXformPrev);
 
 
