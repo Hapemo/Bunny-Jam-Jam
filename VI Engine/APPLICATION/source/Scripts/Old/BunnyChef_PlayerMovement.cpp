@@ -313,51 +313,51 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 
 				}
 			}
+
+
+			if (clientPrediction)
+			{
+
+				//switch (sPLAYERDIRECTION)
+				//{
+				//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
+				//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,40.0f }, 0.0f);
+				//	// break;
+				//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
+				//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-40.0f }, 0.0f);
+				//	break;
+				//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
+				//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { -40.0f,0.0f }, 0.0f);
+				//	break;
+				//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
+				//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { 40.0f,0.0f }, 0.0f);
+				//	break;
+				//default:
+				//	break;
+				//}
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
+				{
+					VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,4000.0f }, 0.0f);
+				}
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
+				{
+					VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-4000.0f }, 0.0f);
+				}
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
+				{
+					VI::iPhysics::ApplyImpulse(BunnyPlayer, { -4000.0f,0.0f }, 0.0f);
+				}
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
+				{
+					VI::iPhysics::ApplyImpulse(BunnyPlayer, { 4000.0f,0.0f }, 0.0f);
+				}
+
+
+
+
+			}
+
 		}
-
-		if (clientPrediction)
-		{
-
-			//switch (sPLAYERDIRECTION)
-			//{
-			//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
-			//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,40.0f }, 0.0f);
-			//	// break;
-			//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
-			//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-40.0f }, 0.0f);
-			//	break;
-			//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
-			//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { -40.0f,0.0f }, 0.0f);
-			//	break;
-			//case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
-			//	VI::iPhysics::ApplyImpulse(BunnyPlayer, { 40.0f,0.0f }, 0.0f);
-			//	break;
-			//default:
-			//	break;
-			//}
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
-			{
-				VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,4000.0f }, 0.0f);
-			}
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
-			{
-				VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-4000.0f }, 0.0f);
-			}
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
-			{
-				VI::iPhysics::ApplyImpulse(BunnyPlayer, { -4000.0f,0.0f }, 0.0f);
-			}
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
-			{
-				VI::iPhysics::ApplyImpulse(BunnyPlayer, { 4000.0f,0.0f }, 0.0f);
-			}
-
-
-
-
-		}
-
-
 
 		//Mac Chef
 
@@ -409,44 +409,45 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 
 				}
 			}
-		}
-		if (clientPrediction)
-		{
-			//	switch (sCHEFDIRECTION)
-			//	{
-			//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
-			//		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,40.0f }, 0.0f);
-			//		break;
-			//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
-			//		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-40.0f }, 0.0f);
-			//		break;
-			//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
-			//		VI::iPhysics::ApplyImpulse(ChefPlayer, { -40.0f,0.0f }, 0.0f);
-			//		break;
-			//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
-			//		VI::iPhysics::ApplyImpulse(ChefPlayer, { 40.0f,0.0f }, 0.0f);
-			//		break;
-			//	default:
-			//		break;
-			//	}
-			//}
+
+			if (clientPrediction)
+			{
+				//	switch (sCHEFDIRECTION)
+				//	{
+				//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP:
+				//		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,40.0f }, 0.0f);
+				//		break;
+				//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_DOWN:
+				//		VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-40.0f }, 0.0f);
+				//		break;
+				//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT:
+				//		VI::iPhysics::ApplyImpulse(ChefPlayer, { -40.0f,0.0f }, 0.0f);
+				//		break;
+				//	case BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_RIGHT:
+				//		VI::iPhysics::ApplyImpulse(ChefPlayer, { 40.0f,0.0f }, 0.0f);
+				//		break;
+				//	default:
+				//		break;
+				//	}
+				//}
 
 
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
-			{
-				VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,4000.0f }, 0.0f);
-			}
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
-			{
-				VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-4000.0f }, 0.0f);
-			}
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
-			{
-				VI::iPhysics::ApplyImpulse(ChefPlayer, { -4000.0f,0.0f }, 0.0f);
-			}
-			if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
-			{
-				VI::iPhysics::ApplyImpulse(ChefPlayer, { 4000.0f,0.0f }, 0.0f);
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
+				{
+					VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,4000.0f }, 0.0f);
+				}
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
+				{
+					VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-4000.0f }, 0.0f);
+				}
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
+				{
+					VI::iPhysics::ApplyImpulse(ChefPlayer, { -4000.0f,0.0f }, 0.0f);
+				}
+				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
+				{
+					VI::iPhysics::ApplyImpulse(ChefPlayer, { 4000.0f,0.0f }, 0.0f);
+				}
 			}
 		}
 
