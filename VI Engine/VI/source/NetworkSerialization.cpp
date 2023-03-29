@@ -17,6 +17,7 @@ namespace {
 	float Bunny_Time = 0.0f;
 	float Bunny_PrevTime = 0.0f;
 	Transform opponentXformPrev{};
+	Transform currxForm{};
 	bool bEntityInterpolation = false;
 }
 
@@ -463,14 +464,25 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 		if (bEntityInterpolation)
 		{
 			if (mPlayerID == 1)
+			{
 				if (entityName == "Chef")
+				{
 					EntityInterpolation(e.GetComponent<Transform>(), opponentXformPrev);
-				else if (mPlayerID == 2) {
-					if (entityName == "Bunny")
-						EntityInterpolation(e.GetComponent<Transform>(), opponentXformPrev);
+					updatexForm(e.GetComponent<Transform>(), opponentXformPrev);
 				}
-				else
-					e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
+			}
+			else if (mPlayerID == 2)
+			{
+				if (entityName == "Bunny")
+				{
+					EntityInterpolation(e.GetComponent<Transform>(), opponentXformPrev);
+					updatexForm(e.GetComponent<Transform>(), opponentXformPrev);
+
+
+				}
+			}
+			else
+				e.GetComponent<Transform>() = *reinterpret_cast<Transform*>(currBuff);
 
 		}
 		else
@@ -709,11 +721,23 @@ float NetworkSerializationManager::GetPrevTime()
 	return Bunny_PrevTime;
 }
 
+void NetworkSerializationManager::setPrevxForm(Transform& prev)
+{
+	opponentXformPrev = prev;
+}
+
+
+
+void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
+{
+	prev = curr;
+}
+
 void NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
 {
-	curr.translation.x = curr.translation.x + (curr.translation.x -
+	curr.translation.x = prev.translation.x + (curr.translation.x -
 		prev.translation.x) * (GetTime() - GetPrevTime());
-	curr.translation.y = curr.translation.y + (curr.translation.y -
+	curr.translation.y = prev.translation.y + (curr.translation.y -
 		prev.translation.y) * (GetTime() - GetPrevTime());
 }
 bool NetworkSerializationManager::GetEntityInterpolation()

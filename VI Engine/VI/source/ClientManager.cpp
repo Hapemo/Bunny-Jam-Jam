@@ -111,7 +111,6 @@ void clientRecvData()
           NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
           //std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
           NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
-
         }
     }
 
