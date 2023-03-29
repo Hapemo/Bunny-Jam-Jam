@@ -750,31 +750,14 @@ void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
 	prev = curr;
 }
 
-void NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
+Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
 {
-	std::cout << "----------------------Before------------------------\n";
-	//std::cout << tmp.translation.x << " temp.y \n";
-	std::cout << static_cast<int>(curr.translation.x) << " curr.x \n";
-	//std::cout << curr.translation.x << " curr.y \n";
-	std::cout << static_cast<int>(prev.translation.x) << " prev.x \n";
-	std::cout << "----------------------Before------------------------\n";
-	float time = GetTime() - GetPrevTime();
-	if (time > 0)
-	{
-		prev.translation.x +=
-			((static_cast<int>(curr.translation.x) - (static_cast<int>(prev.translation.x))/ time)) * VI::GetDeltaTime();
-		prev.translation.y +=
-			((static_cast<int>(curr.translation.y) - (static_cast<int>(prev.translation.y)) /time)) * VI::GetDeltaTime();
-	}
-
-	std::cout << "Time: " << time << "\n";
-
-	std::cout << "----------------------after-------------------------\n";
-	//std::cout << tmp.translation.x << " temp.y \n";
-	std::cout << static_cast<int>(curr.translation.x) << " curr.x \n";
-	//std::cout << curr.translation.x << " curr.y \n";
-	std::cout << static_cast<int>(prev.translation.x) << " prev.x \n";
-	std::cout << "----------------------after-------------------------\n";
+	Transform tmp = prev;
+	tmp.translation.x = prev.translation.x + ((curr.translation.x -
+		prev.translation.x) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
+	tmp.translation.y = prev.translation.y + ((curr.translation.y -
+		prev.translation.y) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
+	return tmp;
 }
 bool NetworkSerializationManager::GetEntityInterpolation()
 {
