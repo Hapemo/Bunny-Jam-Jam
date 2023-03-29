@@ -467,16 +467,18 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 			{
 				if (entityName == "Chef")
 				{
-					EntityInterpolation(e.GetComponent<Transform>(), opponentXformPrev);
-					updatexForm(e.GetComponent<Transform>(), opponentXformPrev);
+					currxForm = e.GetComponent<Transform>();
+					EntityInterpolation(currxForm, opponentXformPrev);
+					updatexForm(currxForm, opponentXformPrev);
 				}
 			}
 			else if (mPlayerID == 2)
 			{
 				if (entityName == "Bunny")
 				{
-					EntityInterpolation(e.GetComponent<Transform>(), opponentXformPrev);
-					updatexForm(e.GetComponent<Transform>(), opponentXformPrev);
+					currxForm = e.GetComponent<Transform>();
+					EntityInterpolation(currxForm, opponentXformPrev);
+					updatexForm(currxForm, opponentXformPrev);
 
 
 				}
