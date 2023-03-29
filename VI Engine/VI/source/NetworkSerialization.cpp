@@ -469,6 +469,8 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 				{
 					currxForm = e.GetComponent<Transform>();
 					EntityInterpolation(currxForm, opponentXformPrev);
+
+
 					updatexForm(currxForm, opponentXformPrev);
 				}
 			}
