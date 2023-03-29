@@ -470,8 +470,10 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
-					EntityInterpolation(currxForm, e.GetComponent<Transform>());
-					e.GetComponent<Transform>() = currxForm;
+					std::cout << "currtime: " << GetTime() << std::endl;
+					std::cout << "prevtime: " << GetPrevTime() << std::endl;
+					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
+					//e.GetComponent<Transform>() = currxForm;
 					updatexForm(currxForm, opponentXformPrev);
 				}
 			}
@@ -485,9 +487,9 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
-					EntityInterpolation(currxForm, e.GetComponent<Transform>());
+					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
 					updatexForm(currxForm, opponentXformPrev);
-					e.GetComponent<Transform>() = currxForm;
+					//e.GetComponent<Transform>() = currxForm;
 
 
 				}
@@ -758,6 +760,10 @@ bool NetworkSerializationManager::GetEntityInterpolation()
 void NetworkSerializationManager::FlipEntityInterpolation()
 {
 	bEntityInterpolation = !bEntityInterpolation;
+}
+Transform& NetworkSerializationManager::GetCurrXform()
+{
+	return currxForm;
 }
 
 

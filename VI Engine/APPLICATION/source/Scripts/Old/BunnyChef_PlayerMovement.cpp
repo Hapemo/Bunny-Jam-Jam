@@ -113,9 +113,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			//Move Up
 		if (server->mP1Input[0])
 		{
-			if (sPLAYERDIRECTION != BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP)
 			{
-				sPLAYERDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_UP;
 				/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
 						BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
 						BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
@@ -236,7 +234,18 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		entityInter.GetComponent<Sprite>().color = (EntityInterpolation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
 		//if (clientPrediction) {}
 		//if (serverReconciliation) {}
-		//if (EntityInterpolation) {}
+		if (EntityInterpolation) {
+			if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
+			{
+				NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), ChefPlayer.GetComponent<Transform>());
+				ChefPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->GetCurrXform();
+			}
+			if (NetworkSerializationManager::GetInstance()->mPlayerID == 2)
+			{
+				NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), BunnyPlayer.GetComponent<Transform>());
+				BunnyPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->GetCurrXform();
+			}
+		}
 
 
 		if (!BunnyPlayer.HasComponent<Bunny>())

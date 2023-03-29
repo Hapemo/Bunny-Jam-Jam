@@ -112,6 +112,7 @@ void clientRecvData()
           //std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
           NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
         }
+
     }
 
     return;
