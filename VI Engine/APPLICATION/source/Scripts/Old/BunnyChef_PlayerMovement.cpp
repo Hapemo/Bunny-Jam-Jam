@@ -241,14 +241,27 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			Transform tmp{};
 			if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
 			{
-				NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), ChefPlayer.GetComponent<Transform>(), tmp);
-				ChefPlayer.GetComponent<Transform>() = tmp;
+				//ChefPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), ChefPlayer.GetComponent<Transform>());
+					//std::cout << "c:" << ChefPlayer.GetComponent<Transform>().translation.x << std::endl;
+				ChefPlayer.GetComponent<Transform>().translation.x += NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), ChefPlayer.GetComponent<Transform>()).translation.x;
+				ChefPlayer.GetComponent<Transform>().translation.y += NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), ChefPlayer.GetComponent<Transform>()).translation.y;
+			
 			}
 			if (NetworkSerializationManager::GetInstance()->mPlayerID == 2)
 			{
-				NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), BunnyPlayer.GetComponent<Transform>(), tmp);
-				BunnyPlayer.GetComponent<Transform>() = tmp;
+				//BunnyPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), BunnyPlayer.GetComponent<Transform>());
+
+				BunnyPlayer.GetComponent<Transform>().translation.x += NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), BunnyPlayer.GetComponent<Transform>()).translation.x;
+				BunnyPlayer.GetComponent<Transform>().translation.y += NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), BunnyPlayer.GetComponent<Transform>()).translation.y;
+					//std::cout << "b: "<< BunnyPlayer.GetComponent<Transform>().translation.x << std::endl;
 			}
+		}
+		else
+		{
+			if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
+				NetworkSerializationManager::GetInstance()->GetCurrXform() = ChefPlayer.GetComponent<Transform>();
+			if (NetworkSerializationManager::GetInstance()->mPlayerID == 2)
+				NetworkSerializationManager::GetInstance()->GetCurrXform() = BunnyPlayer.GetComponent<Transform>();
 		}
 
 
@@ -261,7 +274,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			if (clientPrediction)
 			{
 				//Move Up
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::W))
 				{
 					{
 						/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
@@ -272,7 +285,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Down
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::S))
 				{
 					{
 						//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
@@ -284,7 +297,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Left
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::A))
 				{
 					{
 						if (BunnyPlayer.GetComponent<Transform>().scale.x > 0.0f)
@@ -298,7 +311,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Right
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::D))
 				{
 					{
 						if (BunnyPlayer.GetComponent<Transform>().scale.x < 0.0f)
@@ -318,7 +331,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		{
 			if (clientPrediction)
 			{
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::W))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::W))
 				{
 					{
 						/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
@@ -329,7 +342,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Down
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::S))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::S))
 				{
 
 					{
@@ -342,7 +355,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Left
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::A))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::A))
 				{
 					{
 						if (ChefPlayer.GetComponent<Transform>().scale.x > 0.0f)
@@ -357,7 +370,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				}
 
 				//Move Right
-				if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::D))
+				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::D))
 				{
 					{
 						if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)

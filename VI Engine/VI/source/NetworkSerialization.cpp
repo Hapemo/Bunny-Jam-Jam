@@ -16,8 +16,14 @@ namespace {
 	const char circleColliderName[] = "CircleColliderComponent";
 	float Bunny_Time = 0.0f;
 	float Bunny_PrevTime = 0.0f;
+	float Relap_Time = 0.f;
 	Transform opponentXformPrev{};
+	Transform opponentXformPrev2{};
 	Transform currxForm{};
+
+	Transform tmp ;
+	bool initialize = true;
+
 	bool bEntityInterpolation = false;
 }
 
@@ -746,12 +752,52 @@ void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
 	prev = curr;
 }
 
-void NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev, Transform& tmp)
+Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& playerpos)
 {
-	tmp.translation.x = prev.translation.x + (curr.translation.x -
-		prev.translation.x) * (GetTime() - GetPrevTime());
-	tmp.translation.y = prev.translation.y + (curr.translation.y -
-		prev.translation.y) * (GetTime() - GetPrevTime());
+
+	Relap_Time += VI::GetDeltaTime();
+
+	if (initialize == true) {
+		tmp = currxForm;
+		initialize = false;
+
+	}
+	if (Relap_Time >= 0.10f) {
+		opponentXformPrev2 = opponentXformPrev;
+		opponentXformPrev = currxForm;
+
+		//std::cout << opponentXformPrev.translation.x << " old prev \n";
+		//std::cout << opponentXformPrev2.translation.x << " old prev v2\n";
+
+
+		//std::cout << currxForm.translation.x << " server position x \n";
+	//	std::cout << playerpos.translation.x << " player position x \n";
+
+		Relap_Time = 0;
+	}
+
+	if ( abs(currxForm.translation.x - playerpos.translation.x) >0|| abs(currxForm.translation.y - playerpos.translation.y) > 0) {
+		tmp.translation.x = ((opponentXformPrev.translation.x - opponentXformPrev2.translation.x) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
+		tmp.translation.y = ((opponentXformPrev.translation.y - opponentXformPrev2.translation.y) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
+	}
+	else {
+		//opponentXformPrev2 = opponentXformPrev;
+		//opponentXformPrev = currxForm;
+		tmp.translation.x = 0;
+		tmp.translation.y = 0;
+
+		
+	}
+
+
+	return tmp;
+
+	//Transform tmp = prev;
+	//tmp.translation.x = prev.translation.x + ((curr.translation.x -
+	//	prev.translation.x) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
+	//tmp.translation.y = prev.translation.y + ((curr.translation.y -
+	//	prev.translation.y) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
+	//return tmp;
 }
 bool NetworkSerializationManager::GetEntityInterpolation()
 {

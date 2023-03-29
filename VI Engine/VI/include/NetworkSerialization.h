@@ -3,7 +3,8 @@
 #include <ECS_tools.h>
 #include <vec2.h>
 
-#define MAX_UDP_PACKET_SIZE 65507
+//#define MAX_UDP_PACKET_SIZE 65507
+#define MAX_UDP_PACKET_SIZE 30000
 
 /*!*****************************************************************************
 \brief
@@ -77,7 +78,7 @@ public:
 	static float GetPrevTime();
 	static void setPrevxForm(Transform& prev);
 	void updatexForm(Transform& curr, Transform& prev);
-	static void EntityInterpolation(Transform& curr, Transform& prev, Transform& tmp);
+	static Transform EntityInterpolation(Transform& curr, Transform& prev);
 		static Transform& GetCurrXform();
 	static bool GetEntityInterpolation();
 	static void FlipEntityInterpolation();
