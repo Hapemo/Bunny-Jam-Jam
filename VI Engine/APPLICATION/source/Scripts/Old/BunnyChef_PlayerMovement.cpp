@@ -223,7 +223,10 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 
 	// Network Toggle
 		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_1)) { clientPrediction = !clientPrediction; }
-		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_2)) { serverReconciliation = !serverReconciliation; }
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_2)) { 
+			serverReconciliation = !serverReconciliation; 
+			ClientManager::GetInstance()->serverReconcilation = serverReconciliation;
+		}
 		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_3))
 		{
 			EntityInterpolation = !EntityInterpolation;
