@@ -3,7 +3,8 @@
 #include <ECS_tools.h>
 #include <vec2.h>
 
-#define MAX_UDP_PACKET_SIZE 65507
+//#define MAX_UDP_PACKET_SIZE 65507
+#define MAX_UDP_PACKET_SIZE 30000
 
 /*!*****************************************************************************
 \brief

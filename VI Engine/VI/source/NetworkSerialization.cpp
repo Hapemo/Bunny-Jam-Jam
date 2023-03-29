@@ -764,30 +764,35 @@ Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Tran
 	if (initialize == true) {
 		tmp = currxForm;
 		initialize = false;
+
 	}
-	
 	if (Relap_Time >= 0.10f) {
-		 opponentXformPrev2 = opponentXformPrev;
-		 opponentXformPrev = currxForm;
+		opponentXformPrev2 = opponentXformPrev;
+		opponentXformPrev = currxForm;
 
-		 //std::cout << opponentXformPrev.translation.x << " old prev \n";
-		 //std::cout << opponentXformPrev2.translation.x << " old prev v2\n";
+		//std::cout << opponentXformPrev.translation.x << " old prev \n";
+		//std::cout << opponentXformPrev2.translation.x << " old prev v2\n";
 
 
-		 std::cout << currxForm.translation.x << " server position x \n";
-		 std::cout << playerpos.translation.x << " player position x \n";
+		//std::cout << currxForm.translation.x << " server position x \n";
+	//	std::cout << playerpos.translation.x << " player position x \n";
 
 		Relap_Time = 0;
 	}
 
-
 	if ( abs(currxForm.translation.x - playerpos.translation.x) >0) {
+		std::cout << " not supposed to be here\n";
 		tmp.translation.x = ((opponentXformPrev.translation.x - opponentXformPrev2.translation.x) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
 		tmp.translation.y = ((opponentXformPrev.translation.y - opponentXformPrev2.translation.y) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
 	}
 	else {
+		std::cout << "leron x junwei\n";
+		//opponentXformPrev2 = opponentXformPrev;
+		//opponentXformPrev = currxForm;
 		tmp.translation.x = 0;
 		tmp.translation.y = 0;
+
+		
 	}
 
 
