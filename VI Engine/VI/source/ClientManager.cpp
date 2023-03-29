@@ -102,7 +102,7 @@ void clientRecvData()
 
         //std::cout << ">> [CLIENT] oldpacketnum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
         //std::cout << ">> [CLIENT] newPacketNum: " << newPacketNum << '\n';
-        if (ClientManager::GetInstance()->serverPacketNum < newPacketNum) 
+        if (ClientManager::GetInstance()->serverReconcilation || (ClientManager::GetInstance()->serverPacketNum < newPacketNum))
         {
           //std::cout << "Successful, going to deserialise\n";
           ClientManager::GetInstance()->serverPacketNum = newPacketNum;

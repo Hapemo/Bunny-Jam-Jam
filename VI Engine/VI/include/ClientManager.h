@@ -37,6 +37,7 @@ public:
 	C_SERVER			m_ServerInstance;
 	bool					m_StopReceive;
 	char					playerNum;
+	bool					serverReconcilation;
 	unsigned long serverPacketNum = 0;
 	unsigned long clientPacketNum = 0;
 };
