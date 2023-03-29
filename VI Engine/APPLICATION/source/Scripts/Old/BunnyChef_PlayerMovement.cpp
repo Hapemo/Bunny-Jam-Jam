@@ -235,14 +235,16 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		//if (clientPrediction) {}
 		//if (serverReconciliation) {}
 		if (EntityInterpolation) {
-			Transform tmp{};
 			if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
 			{
+				Transform tmp = ChefPlayer.GetComponent<Transform>();
 				NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), ChefPlayer.GetComponent<Transform>(), tmp);
+				
 				ChefPlayer.GetComponent<Transform>() = tmp;
 			}
 			if (NetworkSerializationManager::GetInstance()->mPlayerID == 2)
 			{
+				Transform tmp = BunnyPlayer.GetComponent<Transform>();
 				NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), BunnyPlayer.GetComponent<Transform>(), tmp);
 				BunnyPlayer.GetComponent<Transform>() = tmp;
 			}
