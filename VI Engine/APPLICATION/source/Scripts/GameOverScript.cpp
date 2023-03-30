@@ -92,7 +92,15 @@ void GameOverScript::Update(Entity const& _e) {
 	}
 	//else
 	{
-		winnerBunny.GetComponent<Sprite>().color = { 255,255,255,0 };
+		if (Bunny_MatchOver::getwin() == true)
+		{
+			winnerBunny.GetComponent<Sprite>().color = { 255,255,255,255 };
+			winnerChef.GetComponent<Sprite>().color = { 255,255,255,0 };
+		}
+		if (Bunny_MatchOver::getwin() == false) {
+			winnerBunny.GetComponent<Sprite>().color = { 255,255,255,0 };
+			winnerChef.GetComponent<Sprite>().color = { 255,255,255,255 };
+		}
 
 	}
 

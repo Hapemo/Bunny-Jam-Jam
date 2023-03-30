@@ -26,7 +26,7 @@ public:
 
 	Bunny_MatchOver() = default;
 	~Bunny_MatchOver() override = default;
-
+	static bool& getwin();
 	/*!*****************************************************************************
 	\brief
 	Function will run when the gamestate of the entity is activated.

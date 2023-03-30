@@ -19,7 +19,7 @@ Press "ESC" to toggle the pause menu.
 
 #include "Bunny_Timer.h"
 #include "ServerManager.h"
-
+#include "Bunny_MatchOver.h"
 REGISTER_SCRIPT(ScriptComponent, Bunny_Timer);
 namespace {
 	Entity INGAMESTATEMANAGER;
@@ -79,7 +79,10 @@ void Bunny_Timer::Update(const Entity& _e) {
 		if (ServerManager::GetInstance()->mTimeRemaining > 0)
 			ServerManager::GetInstance()->mTimeRemaining -= VI::GetDeltaTime();
 		else
+		{
 			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_TIMEUP;
+			ServerManager::GetInstance()->mTimeRemaining = 3.0f;
+		}
 		if (_e.HasComponent<Text>())
 		{
 			_e.GetComponent<Text>().text = "00:";
@@ -104,11 +107,16 @@ void Bunny_Timer::Update(const Entity& _e) {
 	{
 		_e.GetComponent<Text>().offset.x = -108.0f;
 		_e.GetComponent<Text>().text = "TIMES UP!";
+		if (ServerManager::GetInstance()->mTimeRemaining > 0)
+			ServerManager::GetInstance()->mTimeRemaining -= VI::GetDeltaTime();
+		else
+			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_WIN;
+
 	}
 	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_WIN)
 	{
-		_e.GetComponent<Text>().offset.x = -108.0f;
-		_e.GetComponent<Text>().text = "GAME END!";
+		Bunny_MatchOver::getwin() = true;
+		VI::iGameState::ChangeGameState("Bunny_GameOver");
 	}
 }
 

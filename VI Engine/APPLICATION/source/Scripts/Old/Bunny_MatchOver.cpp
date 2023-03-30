@@ -15,7 +15,7 @@ Updates the fps count, for the fps printer in entity
 #include "Bunny_MatchOver.h"
 #include "Menu_Button.h"
 #include "Bunny_PlayerMovement.h"
-
+bool win = false;
 static bool updateOnce{ false };
 //bool ConnectionButtonControl::startMenu_{ false };
 REGISTER_SCRIPT(ScriptComponent, Bunny_MatchOver);
@@ -28,6 +28,10 @@ namespace {
 }
 
 
+bool& Bunny_MatchOver::getwin()
+{
+	return win;
+}
 int Bunny_MatchOver::Transit(int zoom, Entity loadicon, float& acc, float& scaling) {
 	(void)zoom;
 	(void)loadicon;
@@ -141,14 +145,15 @@ void Bunny_MatchOver::Update(Entity const& _e) {
 		if (bunny_at_matchover.GetComponent<Physics2D>().velocity.y < 40.0f)
 			VI::iPhysics::ApplyImpulse(bunny_at_matchover, { 0.0f,-40.0f }, { 0.0f });
 		if (bunny_at_matchover.GetComponent<Transform>().translation.y < -Bunny_CollidedlimitDOWN)
-			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_MATCHOVER;
+			INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs = BUNNY_LOSE;
+
 	}
 	
 	// jh here
-	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_MATCHOVER)
+	if (INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs == BUNNY_LOSE)
 	{
+		win = false;
 		VI::iGameState::ChangeGameState("Bunny_GameOver");
-
 	}
 
 	
