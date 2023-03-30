@@ -80,6 +80,9 @@ public:
 	void updatexForm(Transform& curr, Transform& prev);
 	static Transform EntityInterpolation(Transform& curr, Transform& prev);
 		static Transform& GetCurrXform();
+static Transform& GetPrevXform();
+static Transform& GetPrev2Xform();
+
 	static bool GetEntityInterpolation();
 	static void FlipEntityInterpolation();
 	char* mSendBuff;
