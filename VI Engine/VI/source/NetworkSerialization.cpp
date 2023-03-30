@@ -32,7 +32,7 @@ NetworkSerializationManager::NetworkSerializationManager() :
 	mSendBuff(new char[MAX_UDP_PACKET_SIZE]), mRecvBuff(new char[MAX_UDP_PACKET_SIZE]), mSize(0),
 	mNumberOfClientConnected(), mPlayerID()
 {
-	std::cout << "mRecvBuff: " << mRecvBuff << '\n';
+	//std::cout << "mRecvBuff: " << mRecvBuff << '\n';
 }
 
 NetworkSerializationManager::~NetworkSerializationManager() {
