@@ -27,6 +27,7 @@ bool BunnyOrChef{ false }; //False = Bunny , True = Chef
 bool clientPrediction{ false };
 bool serverReconciliation{ false };
 bool EntityInterpolation{ false };
+bool tick{ false };
 namespace
 {
 	Entity BunnyPlayer;
@@ -233,7 +234,15 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			NetworkSerializationManager::FlipEntityInterpolation();
 		}
 		clientPred.GetComponent<Sprite>().color = (clientPrediction) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
-		ServerRecon.GetComponent<Sprite>().color = (serverReconciliation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
+		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::Z)) { tick = true;}
+		if (!tick) 
+		{
+			ServerRecon.GetComponent<Sprite>().color = (serverReconciliation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
+		}
+		else
+		{
+			ServerRecon.GetComponent<Sprite>().color = Color{ 255, 255, 255, 255 };
+		}
 		entityInter.GetComponent<Sprite>().color = (EntityInterpolation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
 		//if (clientPrediction) {}
 		//if (serverReconciliation) {}
