@@ -66,11 +66,6 @@ void clientRecvData()
 {
     while (1)
     {
-        //char buffer[1024];
-        //int fromlength = sizeof(buffer);
-        //if (ClientManager::GetInstance()->m_StopReceive)
-        //    return;
-
         char localBuff[MAX_UDP_PACKET_SIZE];
         int size = sizeof(localBuff);
 
@@ -79,8 +74,6 @@ void clientRecvData()
                                MAX_UDP_PACKET_SIZE, 0, 
                                (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, 
                                &size);
-
-        //if (nLength > 0) std::cout << "\n\n>> [CLIENT] Received data!\n" << "nLength: " << nLength << '\n';
 
         if (nLength <= 0) {
           std::cout << "RECV SOCKET ERROR\n";
@@ -108,10 +101,14 @@ void clientRecvData()
                 NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
             }
         }
+<<<<<<< Updated upstream
         
 
     }
 
+=======
+    }
+>>>>>>> Stashed changes
 }
 
 
@@ -119,9 +116,7 @@ void clientRecvData()
 bool ClientManager::clientSendData(const char* Data, int size)
 {
     int nSendCnt = 0;
-	//int nLength = strlen(Data.c_str());
 	int nLength = size;
-	//char* pBuffer = (char*)Data.c_str();
     
     while ((nSendCnt = sendto(m_ClientInstance.clientSocket, Data, nLength, 0, (sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo))) != nLength)
     {
@@ -147,32 +142,3 @@ void ClientManager::clientClose()
 	closesocket(m_ClientInstance.clientSocket);
 	WSACleanup();
 }
-
-
-
-//// private function to initialize winsock2
-//bool ClientManager::InitWinSock2_0()
-//{
-//    WSADATA wsaData;
-//    WORD wVersion = MAKEWORD(2, 0);
-//
-//    if (!WSAStartup(wVersion, &wsaData))
-//        return true;
-//
-//    return false;
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

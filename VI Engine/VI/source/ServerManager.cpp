@@ -70,34 +70,6 @@ bool ServerManager::serverInit(u_short serverPortNumber)
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(serverPortNumber);
 	serverAddr.sin_addr.s_addr = inet_addr(ipstr);
-	//serverAddr.sin_addr.s_addr = inet_addr(std::string("172.28.139.212").c_str());
-    
-    //m_ServerInstance.m_ServerInfo = *(struct sockaddr_in*)info->ai_addr;
-    //m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);
-    //m_ServerInstance.m_ServerAddress = std::string(ipstr);
-    //m_ServerInstance.m_ServerPort = htons(serverPortNumber);
-    
-   // //!< Binding the Server socket to the address & port. We need this because port numbers for UDP are more sensitive
-   // int reiterations = 0;
-   // do
-   // {
-   //     // skip the first iteration
-   //     if (++reiterations != 1) {
-   //         std::cout << "Error Code: " << WSAGetLastError() << " - ";
-   //         std::cout << "Unable to connect to " << inet_ntoa(m_ServerInstance.m_ServerInfo.sin_addr) << " port " << ntohs(m_ServerInstance.m_ServerInfo.sin_port) << std::endl;
-   //         std::cout << "Retrying with port number: " << ++serverPortNumber << "\n";
-
-			//m_ServerInstance.m_ServerPort = htons(serverPortNumber);
-   //         //closesocket(m_ServerSocket);
-   //         //WSACleanup();
-   //         //return false;
-   //     }
-
-   //     //m_ServerInstance.m_ServerInfo.sin_family = AF_INET;                                                     // The address family. MUST be AF_INET
-   //     //m_ServerInstance.m_ServerInfo.sin_addr.s_addr = inet_addr(m_ServerInstance.m_ServerAddress.c_str());    // converts a string containing ipv4 address into a proper address for the IN_ADDR struct  
-   //     //m_ServerInstance.m_ServerInfo.sin_port = htons(serverPortNumber);                                       // converts a u_short from host to TCP/IP network byte order (which is big-endian)
-   // } while (bind(m_ServerSocket, (struct sockaddr*)&m_ServerInstance.m_ServerInfo, sizeof(m_ServerInstance.m_ServerInfo)) == SOCKET_ERROR);
-    
     
   std::cout << "Preparing to bind\n";
   if (bind(m_ServerSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
@@ -127,7 +99,6 @@ bool ServerManager::serverSendData(char* data, int size)
     for (auto const& c : m_ClientList) 
     {
         data[size] = static_cast<char>(c.second.sPlayerNum);
-        //std::cout << "[SERVER] :: Sending out clientid to client in serverSendData -> " << c.second.sPlayerNum << "\n";
         
         if (SendMsg(c.second, data, size + sizeof(char)) == false)
             return false;
@@ -162,11 +133,6 @@ void serverRecvData()
         
         memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
         memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
-        
-        if (nLength >= 0) {
-            //cBuffer[nLength] = '\0';
-            //std::cout << ">> [S] Data received!\n" << "nLength: " << nLength << '\n';
-        }
 
         if (nLength == SOCKET_ERROR) {
             std::cout << "RECV SOCKET ERROR\n";
@@ -191,9 +157,6 @@ void serverRecvData()
 
             NetworkSerializationManager::GetInstance()->SerialiseAndSend(NetworkSerializationManager::NETWORKDATATYPE::S2CNumOfClientConnected);
             
-            //std::cout << "[SERVER] :: Number of connected clients: " << NetworkSerializationManager::GetInstance()->mNumberOfClientConnected << "\n";
-            //std::cout << ">> [SERVER] :: Received a new client connection: " << clientdata << "\n";
-            
             if (ServerManager::GetInstance()->m_ClientList.size() > 1) {
               std::cout << "More than 1 player, starting game\n";
               NetworkSerializationManager::GetInstance()->mGameStarted = true;
@@ -203,15 +166,10 @@ void serverRecvData()
         
         else 
         {
-            // std::cout << "clientinstance->second.clientPacketNum: " << clientinstance->second.clientPacketNum << '\n';
-            // std::cout << "newPacketNum: " << newPacketNum << '\n';
           if (clientinstance->second.clientPacketNum < newPacketNum) 
           {
             clientinstance->second.clientPacketNum = newPacketNum;
             NetworkSerializationManager::GetInstance()->mPlayerID = std::distance(ServerManager::GetInstance()->m_ClientList.begin(), clientinstance) + 1;
-            
-            //std::cout << "[SERVER] :: Successful, going to deserialise\n";
-            //std::cout << "[SERVER] :: mPlayerID within recvServerData -> " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n";
             
             NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
           }
@@ -263,178 +221,3 @@ void ServerManager::BroadcastMessage(CLIENT_INFO const& sender, std::string cons
         SendMsg(c.second, message.c_str(), msgLen);
     }
 }
-
-//bool ServerManager::InitWinSock2_0()
-//{
-//    WSADATA wsaData;
-//    WORD wVersion = MAKEWORD(2, 0);
-//
-//    if (WSAStartup(wVersion, &wsaData))
-//    {
-//        std::cout << "Unable to Initialize Windows Socket environment" << WSAGetLastError() << std::endl;
-//        return false;
-//    }
-//
-//    return true;
-//}
-
-//BOOL WINAPI ClientServerThread(LPVOID lpData)
-//{
-//
-//    CLIENT_INFO* pClientInfo = (CLIENT_INFO*)lpData;
-//    CLIENT_INFO clientInfo = *pClientInfo;
-//    char szBuffer[1024];
-//    int nLength{ 0 };
-//
-//    clientInfo.semaphore = CreateSemaphore(NULL, 0, 1, NULL);
-//    if (clientInfo.semaphore == NULL)
-//    {
-//        printf("CreateSemaphore error: %d\n", GetLastError());
-//        return 1;
-//    }
-//
-//    while (true)
-//    {
-//        nLength = recv(clientInfo.hClientSocket, szBuffer, sizeof(szBuffer), 0);
-//        if (nLength > 0)
-//        {
-//            if (nLength < static_cast<int>(sizeof(szBuffer)))
-//                szBuffer[nLength] = '\0';
-//
-//            strcpy(clientInfo.username, szBuffer);
-//
-//            //check for existing users
-//            if (ServerManager::GetInstance()->IsUsernameTaken(clientInfo.username))
-//            {
-//                std::string sameUsername = "[Username has already been used. Please enter another name.]";
-//                ServerManager::GetInstance()->SendMsg(clientInfo, sameUsername);
-//                continue;
-//            }
-//
-//            //display welcome message to the user
-//            std::string tempUsername = clientInfo.username;
-//            //for (CLIENT_INFO const& c : ServerManager::GetInstance()->m_ClientList)
-//            {
-//                // Broadcast welcome message to all existing users
-//                std::string joinMsg = "[" + tempUsername + " joined]";
-//                //ServerManager::GetInstance()->SendMsg(c, joinMsg);                // Greet new client
-//            }
-//            std::string welcomeMsg = "[Welcome " + tempUsername + "!]";
-//            ServerManager::GetInstance()->SendMsg(clientInfo, welcomeMsg);
-//            //ServerManager::GetInstance()->m_ClientList.push_back(clientInfo);     // add new client
-//
-//            std::cout << tempUsername << " connected from IP: " << inet_ntoa(clientInfo.clientAddr.sin_addr) << std::endl;
-//
-//            HANDLE clientThread;
-//            DWORD threadId;
-//
-//            // Create an extra thread to settle one client instance
-//            clientThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ClientThread, (LPVOID)&clientInfo, 0, &threadId);
-//
-//            if (clientThread == NULL)
-//            {
-//                std::cout << "Unable to create client thread" << std::endl;
-//                return FALSE;
-//            }
-//            else
-//                CloseHandle(clientThread);
-//
-//            while (WaitForSingleObject(clientInfo.semaphore, 0) != WAIT_OBJECT_0)
-//            {
-//                //std::cout << "WAITING\n";
-//            }
-//            return TRUE;
-//        }
-//    }
-//}
-
-//BOOL WINAPI ClientThread(LPVOID lpData)
-//{
-//    CLIENT_INFO* pClientInfo = (CLIENT_INFO*)lpData;
-//    CLIENT_INFO clientInfo = *pClientInfo;
-//    char szBuffer[1024];
-//    int nLength;
-//
-//    if (clientInfo.semaphore)
-//    {
-//        ReleaseSemaphore(clientInfo.semaphore, 1, NULL);
-//    }
-//
-//    while (1)
-//    {
-//        nLength = recv(clientInfo.hClientSocket, szBuffer, sizeof(szBuffer), 0);
-//        if (nLength > 0)
-//        {
-//            if (nLength < static_cast<int>(sizeof(szBuffer)))
-//                szBuffer[nLength] = '\0';
-//
-//            // Convert the string to upper case and send it back, if its not QUIT
-//            //_strupr( szBuffer ) ;
-//            if (strcmp(szBuffer, "@quit") == 0)
-//            {
-//                ServerManager::GetInstance()->QuitMessage(clientInfo.username);
-//                closesocket(clientInfo.hClientSocket);
-//                return TRUE;
-//            }
-//
-//            if (strcmp(szBuffer, "@names") == 0)
-//            {
-//                ServerManager::GetInstance()->DisplayAllUsers(clientInfo);
-//                continue;
-//            }
-//
-//            // broadcast message from this user to all other users
-//            ServerManager::GetInstance()->BroadcastMessage(clientInfo, szBuffer);
-//        }
-//        else
-//        {
-//            std::cout << "Error reading the data from " << inet_ntoa(clientInfo.clientAddr.sin_addr) << std::endl;
-//            ServerManager::GetInstance()->QuitMessage(clientInfo.username);
-//            closesocket(clientInfo.hClientSocket);
-//            break;
-//        }
-//    }
-//
-//    return TRUE;
-//}
-
-
-
-//void ServerManager::QuitMessage(std::string const& username)
-//{
-//    //for (size_t i = 0; i < m_ClientList.size(); ++i)
-//    for(auto& x : m_ClientList)
-//    {
-//        if (username == x.second.username)
-//        {
-//            m_ClientList.erase(x);   // remove client from vector
-//            std::cout << username << " exited\n";
-//            break;
-//        }
-//    }
-//
-//    //for (size_t i = 0; i < m_ClientList.size(); ++i)
-//    for(const auto& x : m_ClientList)
-//    {
-//        std::string message = "[" + username + " exited]";
-//        SendMsg(x.second, message);
-//    }
-//}
-
-
-//void ServerManager::DisplayAllUsers(CLIENT_INFO const& ReqClient)
-//{
-//    std::string users = "[Connected users: ";
-//    for (size_t i = 0; i < m_ClientList.size(); ++i)
-//    {
-//        users += m_ClientList[i].username;
-//
-//        if (i != m_ClientList.size() - 1)
-//            users += ", ";
-//        else
-//            users += "]";
-//    }
-//
-//    SendMsg(ReqClient, users);
-//}
-

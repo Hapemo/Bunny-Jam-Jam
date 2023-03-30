@@ -67,15 +67,12 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 		break;
 		
 	case NETWORKDATATYPE::S2CEntityDetail:
-		//dataSize = SerialiseEntityDetail();
 		break;
 		
 	case NETWORKDATATYPE::S2CGameStats:
-		//dataSize = SerialiseGameStats();
 		break;
 		
 	case NETWORKDATATYPE::S2CPlayAgainCount:
-		//dataSize = SerialiseNumOfPlayerReplay();
 		break;
 
 	case NETWORKDATATYPE::C2SData:
@@ -105,7 +102,6 @@ void NetworkSerializationManager::SerialiseAndSend(NETWORKDATATYPE dataType) {
 #if DEBUGPRINT
 	std::cout << "data size: " << dataSize << '\n';
 #endif
-	//ServerManager::GetInstance()->serverSendData(mSendBuff, dataSize);
 }
 
 void NetworkSerializationManager::DeserialiseAndLoad() {
@@ -158,7 +154,7 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	// Data consists of 4 keys, each key has 1 state (1 bytes each).
 	// So 4 bytes in total. plus another 4 bytes at the front for 
 
-	E_KEY up = E_KEY::W;		// 0001
+	E_KEY up = E_KEY::W;	// 0001
 	E_KEY down = E_KEY::S;	// 0010
 	E_KEY left = E_KEY::A;	// 0100
 	E_KEY right = E_KEY::D;	// 1000
@@ -185,9 +181,6 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 	if (currInput == prevInput) return 0;
 	prevInput = currInput;
 
-	//std::bitset<8> bit( currInput );
-	//std::cout << "send: " << bit << '\n';
-
 	currBuff[0] = currInput;
 	++currBuff;
 
@@ -198,20 +191,13 @@ int NetworkSerializationManager::SerialisePlayerControls() {
 
 void NetworkSerializationManager::DeserialisePlayerControls() {
 	char input{ mRecvBuff[1]};
-	//bool up{static_cast<bool>(mRecvBuff[5])};
-	//bool down{static_cast<bool>(mRecvBuff[6])};
-	//bool left{static_cast<bool>(mRecvBuff[7])};
-	//bool right{static_cast<bool>(mRecvBuff[8])};
 
 	std::bitset<8> bit( input );
-	//std::cout << "input: " << bit << '\n';
 
 	if (input & (1L << 4)) {
-		//std::cout << "p1\n";
 		ServerManager::GetInstance()->mP1Input = bit;
 	} 
 	if (!(input & (1L << 4))) {
-		//std::cout << "p2\n";
 		ServerManager::GetInstance()->mP2Input = bit;
 	}
 
@@ -267,12 +253,7 @@ int NetworkSerializationManager::SerialiseGameStarted() {
 }
 
 void NetworkSerializationManager::DeserialiseGameStarted() {
-	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGameStarted)
-	//	std::cout << "NETWORKDATATYPE::S2CGameStarted\n";
-
-	//std::cout << "mgamecountdown: " << mGameCountDown << "\n";
 	if (mGameCountDown > 0) return;
-	//std::cout << "mgamecountdown saved: " << mGameCountDown << "\n";
 
 	mGameCountDown = *reinterpret_cast<float*>(mRecvBuff + 1) - 1;
 }
@@ -313,9 +294,6 @@ int NetworkSerializationManager::SerialiseGamePlayData() {
 }
 
 void NetworkSerializationManager::DeserialiseGamePlayData() {
-	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CGamePlayData)
-	//	std::cout << "NETWORKDATATYPE::S2CGamePlayData\n";
-
 	char* currBuff{ mRecvBuff + 1 };
 
 	DeserialisePlayerInputs(currBuff);
@@ -341,11 +319,6 @@ void NetworkSerializationManager::DeserialiseGameStats(char*& currBuff) {
 }
 
 int NetworkSerializationManager::SerialiseMultipleEntities(char*& currBuff, std::set<Entity> entities) {
-	// Data Structure
-	// NETWORKDATATYPE::S2CEntityDetail<NumberOfEntities><ListOfMemoryPosition><EachEntityData>
-	//memset(mSendBuff, 0, MAX_UDP_PACKET_SIZE);
-	//char* currBuff{ mSendBuff + 1 };
-	//mSendBuff[0] = static_cast<char>(NETWORKDATATYPE::S2CEntityDetail);
 	*reinterpret_cast<int*>(currBuff) = static_cast<int>(entities.size());
 	currBuff += sizeof(int);
 
@@ -396,43 +369,6 @@ int NetworkSerializationManager::SerialiseEntityDetail(char*& currBuff, Entity _
 		currBuff += sizeof(transformComp);
 	}
 
-	//// Physics2D component
-	//// Size until before std::vector<Force> is 56
-	//// Physics2DComponent<56 bytes of physics2dComp><numOfForces><ListOfForces>
-	//if (_e.HasComponent<Physics2D>()) {
-	//	Physics2D& physics2dComp = _e.GetComponent<Physics2D>();
-	//	memcpy(currBuff, physics2dName, strlen(physics2dName));
-	//	currBuff += strlen(physics2dName);
-	//	memcpy(currBuff, &physics2dComp, 56);
-	//	currBuff += 56;
-	//	currBuff[0] = static_cast<char>(physics2dComp.forceList.size());
-	//	++currBuff;
-	//	for (Force& force : physics2dComp.forceList) {
-	//		memcpy(currBuff, &force, sizeof(Force));
-	//		currBuff += sizeof(Force);
-	//	}
-	//}
-
-	// RectCollider
-	// RectColliderComponent<Whole RectCollider component>
-	//if (_e.HasComponent<RectCollider>()) {
-	//	RectCollider& rectColliderComp = _e.GetComponent<RectCollider>();
-	//	memcpy(currBuff, rectColliderName, strlen(rectColliderName));
-	//	currBuff += strlen(rectColliderName);
-	//	memcpy(currBuff, &rectColliderComp, sizeof(rectColliderComp));
-	//	currBuff += sizeof(rectColliderComp);
-	//}
-
-	//// CircleCollider
-	//// CircleColliderComponent<Whole CircleCollider component>
-	//if (_e.HasComponent<CircleCollider>()) {
-	//	CircleCollider& circleColliderComp = _e.GetComponent<CircleCollider>();
-	//	memcpy(currBuff, circleColliderName, strlen(circleColliderName));
-	//	currBuff += strlen(circleColliderName);
-	//	memcpy(currBuff, &circleColliderComp, sizeof(circleColliderComp));
-	//	currBuff += sizeof(circleColliderComp);
-	//}
-
 	return static_cast<int>(currBuff - mSendBuff);
 }
 void NetworkSerializationManager::EntityInterpolateOpponent(int PID)
@@ -474,13 +410,6 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 				if (entityName == "Chef")
 				{
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
-					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
-					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
-					//std::cout << "currtime: " << GetTime() << std::endl;
-					//std::cout << "prevtime: " << GetPrevTime() << std::endl;
-					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
-					//e.GetComponent<Transform>() = currxForm;
-					//updatexForm(currxForm, opponentXformPrev);
 					opponentXformPrev = e.GetComponent<Transform>();
 					Bunny_PrevTime = GetTime();
 				}
@@ -493,11 +422,6 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 				if (entityName == "Bunny")
 				{
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
-					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
-					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
-					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
-					//updatexForm(currxForm, opponentXformPrev);
-					//e.GetComponent<Transform>() = currxForm;
 					opponentXformPrev = e.GetComponent<Transform>();
 					Bunny_PrevTime = GetTime();
 				}
@@ -517,76 +441,6 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 		std::cout << "Trans.translation: " << Trans.translation << '\n';
 #endif
 	}
-	
-	// Physics2D component
-	// Size until before std::vector<Force> is 56
-	// Physics2DComponent<56 bytes of physics2dComp><numOfForces><ListOfForces>
-	/*char* physics2dPtr{ nullptr };
-
-	if (physics2dPtr = FindSubStringEnd(currBuff, physics2dName)) {
-		Physics2D& physicsComp{ e.GetComponent<Physics2D>() };
-		memcpy(&physicsComp, currBuff, 56);
-		currBuff += 56;
-		int forceSize = static_cast<int>(currBuff[0]);
-		++currBuff;
-
-		physicsComp.forceList.clear();
-		for (int i{}; i < forceSize; ++i) {
-			Force tempForce{ *reinterpret_cast<Force*>(currBuff) };
-			physicsComp.forceList.push_back(tempForce);
-			currBuff += sizeof(Force);
-		}
-
-#if DEBUGPRINT
-		Physics2D physics = e.GetComponent<Physics2D>();
-		std::cout << "===> Physics2D Component\n";
-		std::cout << "mass: " << physics.mass << '\n';
-		std::cout << "inertia: " << physics.inertia << '\n';
-		std::cout << "restitution: " << physics.restitution << '\n';
-		std::cout << "friction: " << physics.friction << '\n';
-		std::cout << "damping: " << physics.damping << '\n';
-		std::cout << "accumulatedForce: " << physics.accumulatedForce << '\n';
-		std::cout << "velocity: " << physics.velocity << '\n';
-		std::cout << "acceleration: " << physics.acceleration << '\n';
-		std::cout << "angularVelocity: " << physics.angularVelocity << '\n';
-		std::cout << "angularTorque: " << physics.angularTorque << '\n';
-#endif
-	}*/
-
-	// RectCollider
-	// RectColliderComponent<Whole RectCollider component>
-//	char* rectColliderPtr{ nullptr };
-//	if (rectColliderPtr = FindSubStringEnd(currBuff, rectColliderName)) {
-//		currBuff = rectColliderPtr;
-//		e.GetComponent<RectCollider>() = *reinterpret_cast<RectCollider*>(currBuff);
-//		
-//#if DEBUGPRINT
-//		RectCollider rectcollider = e.GetComponent<RectCollider>();
-//		std::cout << "===> RectCollider Component\n";
-//		std::cout << "centerOffset" << rectcollider.centerOffset << '\n';
-//		std::cout << "scaleOffset" << rectcollider.scaleOffset << '\n';
-//		std::cout << "isTrigger" << rectcollider.isTrigger << '\n';
-//		std::cout << "renderFlag" << rectcollider.renderFlag << '\n';
-//#endif
-//	}
-//
-//	// CircleCollider
-//	// CircleColliderComponent<Whole CircleCollider component>
-//	char* circleColliderPtr{ nullptr };
-//	if (circleColliderPtr = FindSubStringEnd(currBuff, circleColliderName)) {
-//		currBuff = circleColliderPtr;
-//		e.GetComponent<CircleCollider>() = *reinterpret_cast<CircleCollider*>(currBuff);
-//
-//#if DEBUGPRINT
-//		CircleCollider circlecollider = e.GetComponent<CircleCollider>();
-//		std::cout << "===> CircleCollider Component\n";
-//		std::cout << "centerOffset" << circlecollider.centerOffset << '\n';
-//		std::cout << "scaleOffset" << circlecollider.scaleOffset << '\n';
-//		std::cout << "isTrigger" << circlecollider.isTrigger << '\n';
-//		std::cout << "renderFlag" << circlecollider.renderFlag << '\n';
-//#endif
-//	}
-
 }
 
 
@@ -629,9 +483,6 @@ void NetworkSerializationManager::DeserialisePlayerInputs(char*& currBuff) {
 	currBuff += 2;
 }
 
-
-
-
 void NetworkSerializationManager::PrepareData(std::string str, int i) {
 	dataBankBuffStr = str;
 	dataBankBuffInt = i;
@@ -649,17 +500,9 @@ int NetworkSerializationManager::SerialiseData() {
 	currBuff += sizeof(int);
 
 	return static_cast<int>(currBuff - mSendBuff);
-	
-	// Doesn't matter what the data type is, just save it as C2SData
-	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CPlayAgainCount)
-	//	std::cout << "NETWORKDATATYPE::S2CPlayAgainCount\n";
 }
 
 void NetworkSerializationManager::DeserialiseData() {
-	// Doesn't matter what the data type is, just save it as C2SData
-	//if (static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::C2SData || static_cast<NETWORKDATATYPE>(mRecvBuff[0]) == NETWORKDATATYPE::S2CData)
-	//	std::cout << "NETWORKDATATYPE::C2SData or NETWORKDATATYPE::S2CData\n";
-
 	char* currBuff{ mRecvBuff + 1 };
 	std::string tempStr = currBuff;
 	currBuff += tempStr.size() + 1;
@@ -725,18 +568,22 @@ char* NetworkSerializationManager::FindSubStringEnd(char*& str, const char* find
 	}
 	return nullptr;
 }
+
 void NetworkSerializationManager::UpdateTime(float time)
 {
 	Bunny_Time += time;
 }
+
 float NetworkSerializationManager::GetTime()
 {
 	return Bunny_Time;
 }
+
 void NetworkSerializationManager::UpdatePrevTime(float time)
 {
 	Bunny_PrevTime = time;
 }
+
 float NetworkSerializationManager::GetPrevTime()
 {
 	return Bunny_PrevTime;
@@ -746,8 +593,6 @@ void NetworkSerializationManager::setPrevxForm(Transform& prev)
 {
 	opponentXformPrev = prev;
 }
-
-
 
 void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
 {
@@ -768,55 +613,23 @@ Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Tran
 	}
 	return tmp;
 }
+
 bool NetworkSerializationManager::GetEntityInterpolation()
 {
 	return bEntityInterpolation;
 }
+
 void NetworkSerializationManager::FlipEntityInterpolation()
 {
 	bEntityInterpolation = !bEntityInterpolation;
 }
+
 Transform& NetworkSerializationManager::GetCurrXform()
 {
 	return currxForm;
 }
+
 Transform& NetworkSerializationManager::GetPrevXform()
 {
 	return opponentXformPrev;
 }
-
-
-//// container of sequence number sent
-//std::list<int> clientSequence;
-//int lastProcessedID;	// ID last ack by the server and have performed prediction already
-//
-//int seqID = // client's sequence number
-//clientSequence.push_back(seqID);	// Store sequence number
-//
-//// After receiving packet from server
-//for (int i = 0; i < clientSequence.size(); ++i)
-//{
-//	int seqID = clientSequence[i];
-//
-//	if (seqID <= lastAckID)		// if ID already executed by client, can remove
-//	{
-//		clientSequence.erase(clientSequence.begin() + i);
-//	}
-//	else	// perform client prediction of that input
-//	{
-//		ClientPrediction(input);
-//		lastProcessedID = seqID;
-//	}
-//}
-
-
-
-
-
-
-
-
-
-
-
-
