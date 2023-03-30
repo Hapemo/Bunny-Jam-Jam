@@ -754,6 +754,7 @@ void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
 	prev = curr;
 }
 
+//ENTITY INTERPOLATION
 Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
 {
 	float render_timestamp = GetTime() - (1000.0f / 30.0f);
@@ -761,18 +762,11 @@ Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Tran
 	if ((render_timestamp - GetPrevTime())> 0 && (GetTime() - GetPrevTime()) > 0)
 	{
 		tmp.translation.x = prev.translation.x + ((curr.translation.x -
-			prev.translation.x) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+			prev.translation.x) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime()));
 		tmp.translation.y = prev.translation.y + ((curr.translation.y -
-			prev.translation.y) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+			prev.translation.y) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime()));
 	}
 	return tmp;
-
-	//Transform tmp = prev;
-	//tmp.translation.x = prev.translation.x + ((curr.translation.x -
-	//	prev.translation.x) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
-	//tmp.translation.y = prev.translation.y + ((curr.translation.y -
-	//	prev.translation.y) * (GetTime() - GetPrevTime())) * VI::GetDeltaTime();
-	//return tmp;
 }
 bool NetworkSerializationManager::GetEntityInterpolation()
 {

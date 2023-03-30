@@ -221,7 +221,6 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 
 #ifdef _CLIENT
 
-		std::cout << serverReconciliation << " bunnyside manager \n";
 	// Network Toggle
 		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_1)) { clientPrediction = !clientPrediction; }
 		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_2)) { 
@@ -279,40 +278,30 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		
 		if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
 		{
+			// CLIENT PREDICTION
 			if (clientPrediction)
 			{
 				//Move Up
 				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::W))
 				{
 					{
-						/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-								BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-								BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
 						VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,4000.0f }, 0.0f);
 					}
 				}
-
 				//Move Down
 				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::S))
 				{
 					{
-						//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
 						VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-4000.0f }, 0.0f);
 
 					}
 				}
-
 				//Move Left
 				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::A))
 				{
 					{
 						if (BunnyPlayer.GetComponent<Transform>().scale.x > 0.0f)
 							BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
-						//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
 						VI::iPhysics::ApplyImpulse(BunnyPlayer, { -4000.0f,0.0f }, 0.0f);
 
 					}
@@ -324,10 +313,6 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 					{
 						if (BunnyPlayer.GetComponent<Transform>().scale.x < 0.0f)
 							BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
-						/*			BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-									BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-									BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
-
 						VI::iPhysics::ApplyImpulse(BunnyPlayer, { 4000.0f,0.0f }, 0.0f);
 					}
 				}
