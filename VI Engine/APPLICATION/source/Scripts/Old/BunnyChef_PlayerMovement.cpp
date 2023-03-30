@@ -202,7 +202,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			NetworkSerializationManager::FlipEntityInterpolation();
 		}
 		clientPred.GetComponent<Sprite>().color = (clientPrediction) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
-		ServerRecon.GetComponent<Sprite>().color = Color{ 255, 255, 255, 255 };	
+		ServerRecon.GetComponent<Sprite>().color = (serverReconciliation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
 		entityInter.GetComponent<Sprite>().color = (EntityInterpolation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
 
 		if (EntityInterpolation) {
@@ -302,9 +302,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 						if (ChefPlayer.GetComponent<Transform>().scale.x > 0.0f)
 							ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
 						sCHEFDIRECTION = BUNNY_PLAYER_DIRECTION::BUNNY_DIRECTION_LEFT;
-						//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
 						VI::iPhysics::ApplyImpulse(ChefPlayer, { -4000.0f,0.0f }, 0.0f);
 
 					}
