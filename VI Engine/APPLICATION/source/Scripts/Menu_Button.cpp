@@ -19,9 +19,9 @@ REGISTER_SCRIPT(ScriptComponent, Menu_Button);
 namespace {
 	Entity playButton; // THIS SHOULD REMOVE WHEN REAL PARTICLE SYSTEM IS IMPLEMENTED
 	Entity h2pButton;
-	Entity toObjectives;
 	Entity toControls;
 	Entity loadicon_;
+	Entity exitButton;
 
 
 	float acc_ = 300;
@@ -50,10 +50,6 @@ int Menu_Button::Transit(int zoom, Entity loadicon, float& acc, float& scaling) 
 		}
 
 
-	//	counter++;
-		//std::cout << counter << " counter for menu_button \n";
-
-
 	}
 
 	else if (zoom == 0 && loadicon.GetComponent<Transform>().scale.x >= 0) {
@@ -71,9 +67,7 @@ int Menu_Button::Transit(int zoom, Entity loadicon, float& acc, float& scaling) 
 		}
 	}
 
-	//std::cout << acc_ << " acceleration \n";
-	//std::cout << scaling_ << " scaling \n";
-	//std::cout << loadicon_.GetComponent<Transform>().scale.x << " scale \n";
+
 
 	if (loadicon.GetComponent<Transform>().scale.x <= 0) {
 		loadicon.GetComponent<Sprite>().color.a = 0;
@@ -148,6 +142,7 @@ void Menu_Button::Update(Entity const& _e) {
 		playButton = VI::iEntity::GetEntity("Play_Button", "");
 		loadicon_ = VI::iEntity::GetEntity("BunnyLoadM", "");
 		h2pButton = VI::iEntity::GetEntity("H2P_Button", "");
+		exitButton = VI::iEntity::GetEntity("Exit_Button", "");
 		updateOne = true;
 
 	}
@@ -163,23 +158,12 @@ void Menu_Button::Update(Entity const& _e) {
 	if (playButton.GetComponent<Button>().isHover) {
 
 		if (playButton.GetComponent<Button>().isClick) {
-			//VI::iScene::Play("Game");
-			//VI::iScene::Pause("Bunny_Menu");
 
 			
 			startMenu_ = 1;
-		//	if (startMenu_ == 1) {
 			loadicon_.GetComponent<Transform>().scale.x = 0.f;
 			loadicon_.GetComponent<Transform>().scale.y = 0.f;
 
-			//std::cout << "lMAMEEEEEEEEEEEEEEEE\n";
-
-		//	}
-			/*else if (startMenu_ == 0) {
-
-				loadicon_.GetComponent<Transform>().scale.x = 2000.f;
-				loadicon_.GetComponent<Transform>().scale.y = 2000.f;
-			}*/
 
 		}
 	}
@@ -195,10 +179,16 @@ void Menu_Button::Update(Entity const& _e) {
 		}
 	}
 
-	if (!VI::iScene::IsPaused("How2PlayControls")) 
+	//Main Menu -> Controls
+	if (exitButton.GetComponent<Button>().isHover)
 	{
-		//toControls.GetComponent<Button>().isClick = false;
+		if (exitButton.GetComponent<Button>().isClick)
+		{
+			VI::iGameState().GameStateExit();
+		}
 	}
+
+
 
 
 	//Back to main menu

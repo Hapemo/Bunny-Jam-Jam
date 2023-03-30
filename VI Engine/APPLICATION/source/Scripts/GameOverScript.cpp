@@ -81,28 +81,22 @@ void GameOverScript::Update(Entity const& _e) {
 
 		if (exitButton.GetComponent<Button>().isClick) 
 		{
-
+			VI::iGameState().GameStateExit();
 		}
 	}
 
-	//if (!Bunny_MatchOver::bunnywin)
+	
+	if (Bunny_MatchOver::getwin() == true)
 	{
-
-		//winnerChef.GetComponent<Sprite>().color = { 255,255,255,0 };
+		winnerBunny.GetComponent<Sprite>().color = { 255,255,255,255 };
+		winnerChef.GetComponent<Sprite>().color = { 255,255,255,0 };
 	}
-	//else
-	{
-		if (Bunny_MatchOver::getwin() == true)
-		{
-			winnerBunny.GetComponent<Sprite>().color = { 255,255,255,255 };
-			winnerChef.GetComponent<Sprite>().color = { 255,255,255,0 };
-		}
-		if (Bunny_MatchOver::getwin() == false) {
-			winnerBunny.GetComponent<Sprite>().color = { 255,255,255,0 };
-			winnerChef.GetComponent<Sprite>().color = { 255,255,255,255 };
-		}
-
+	if (Bunny_MatchOver::getwin() == false) {
+		winnerBunny.GetComponent<Sprite>().color = { 255,255,255,0 };
+		winnerChef.GetComponent<Sprite>().color = { 255,255,255,255 };
 	}
+
+	
 
 	
 

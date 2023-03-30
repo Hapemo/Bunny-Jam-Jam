@@ -101,15 +101,12 @@ void clientRecvData()
                 NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
             }
         }
-<<<<<<< Updated upstream
         
 
     }
 
-=======
-    }
->>>>>>> Stashed changes
-}
+ }
+
 
 
 //== Send message to the server.
