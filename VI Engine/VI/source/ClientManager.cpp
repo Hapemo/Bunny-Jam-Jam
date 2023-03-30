@@ -74,20 +74,20 @@ void clientRecvData()
         char localBuff[MAX_UDP_PACKET_SIZE];
         int size = sizeof(localBuff);
 
-        int nLength = recvfrom(ClientManager::GetInstance()->m_ClientInstance.clientSocket, 
-                               localBuff,
-                               MAX_UDP_PACKET_SIZE, 0, 
-                               (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo, 
-                               &size);
+        int nLength = recvfrom(ClientManager::GetInstance()->m_ClientInstance.clientSocket,
+            localBuff,
+            MAX_UDP_PACKET_SIZE, 0,
+            (sockaddr*)&ClientManager::GetInstance()->m_ServerInstance.m_ServerInfo,
+            &size);
 
         //if (nLength > 0) std::cout << "\n\n>> [CLIENT] Received data!\n" << "nLength: " << nLength << '\n';
 
         if (nLength <= 0) {
-          std::cout << "RECV SOCKET ERROR\n";
-          std::cout << "WSAGetLastError: " << WSAGetLastError() <<'\n';
-          memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
-          memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
-          return;
+            std::cout << "RECV SOCKET ERROR\n";
+            std::cout << "WSAGetLastError: " << WSAGetLastError() << '\n';
+            memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
+            memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
+            return;
         }
 
         memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
@@ -97,24 +97,27 @@ void clientRecvData()
         //    std::cout << "the sizes are the same!\n";
         //else
         //    std::cout << "nlength: " << nLength << ", size: " << size << "\n";
-        
+
         //NetworkSerializationManager::GetInstance()->PrintRecvBuff();
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - sizeof(char)));
 
 
         //std::cout << ">> [CLIENT] oldpacketnum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
         //std::cout << ">> [CLIENT] newPacketNum: " << newPacketNum << '\n';
-        if (ClientManager::GetInstance()->serverReconcilation || (ClientManager::GetInstance()->serverPacketNum < newPacketNum))
+        if (ClientManager::GetInstance()->serverReconcilation)
         {
-          //std::cout << "Successful, going to deserialise\n";
-          ClientManager::GetInstance()->serverPacketNum = newPacketNum;
-          // tell jazz to deserialize
-          NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
-          NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
-          //std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
-          NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
-        }
+            //std::cout << "Successful, going to deserialise\n";
+            ClientManager::GetInstance()->serverPacketNum = newPacketNum;
+            // tell jazz to deserialize
 
+        }
+        if ((ClientManager::GetInstance()->serverPacketNum < newPacketNum))
+        {
+            NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
+                NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
+                //std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
+                NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
+        }
     }
 
     return;

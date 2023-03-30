@@ -475,11 +475,10 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
-					std::cout << "currtime: " << GetTime() << std::endl;
-					std::cout << "prevtime: " << GetPrevTime() << std::endl;
 					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
 					//e.GetComponent<Transform>() = currxForm;
-					updatexForm(currxForm, opponentXformPrev);
+					opponentXformPrev = e.GetComponent<Transform>();
+
 				}
 			}
 			else
@@ -493,7 +492,8 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
 					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
-					updatexForm(currxForm, opponentXformPrev);
+					opponentXformPrev = e.GetComponent<Transform>();
+
 					//e.GetComponent<Transform>() = currxForm;
 
 
@@ -755,10 +755,14 @@ Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Tran
 {
 	float render_timestamp = GetTime() - (1000.0f / 60.0f);
 	Transform tmp = prev;
-	tmp.translation.x = prev.translation.x + ((curr.translation.x -
-		prev.translation.x) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
-	tmp.translation.y = prev.translation.y + ((curr.translation.y -
-		prev.translation.y) * (render_timestamp - GetPrevTime())/(GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+	if (render_timestamp - GetPrevTime() > 0 && (GetTime() - GetPrevTime() > 0))
+	{
+		tmp.translation.x = prev.translation.x + ((curr.translation.x -
+			prev.translation.x) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+		tmp.translation.y = prev.translation.y + ((curr.translation.y -
+			prev.translation.y) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+	}
+	prev = tmp;
 	return tmp;
 }
 bool NetworkSerializationManager::GetEntityInterpolation()
