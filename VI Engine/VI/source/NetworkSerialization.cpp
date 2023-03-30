@@ -755,10 +755,13 @@ Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Tran
 {
 	float render_timestamp = GetTime() - (1000.0f / 60.0f);
 	Transform tmp = prev;
-	tmp.translation.x = prev.translation.x + ((curr.translation.x -
-		prev.translation.x) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
-	tmp.translation.y = prev.translation.y + ((curr.translation.y -
-		prev.translation.y) * (render_timestamp - GetPrevTime())/(GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+	if (render_timestamp - GetPrevTime() > 0 && GetTime() - GetPrevTime() > 0)
+	{
+		tmp.translation.x = prev.translation.x + ((curr.translation.x -
+			prev.translation.x) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+		tmp.translation.y = prev.translation.y + ((curr.translation.y -
+			prev.translation.y) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+	}
 	return tmp;
 }
 bool NetworkSerializationManager::GetEntityInterpolation()
