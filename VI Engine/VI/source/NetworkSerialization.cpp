@@ -204,14 +204,14 @@ void NetworkSerializationManager::DeserialisePlayerControls() {
 	//bool right{static_cast<bool>(mRecvBuff[8])};
 
 	std::bitset<8> bit( input );
-	std::cout << "input: " << bit << '\n';
+	//std::cout << "input: " << bit << '\n';
 
 	if (input & (1L << 4)) {
-		std::cout << "p1\n";
+		//std::cout << "p1\n";
 		ServerManager::GetInstance()->mP1Input = bit;
 	} 
 	if (!(input & (1L << 4))) {
-		std::cout << "p2\n";
+		//std::cout << "p2\n";
 		ServerManager::GetInstance()->mP2Input = bit;
 	}
 
