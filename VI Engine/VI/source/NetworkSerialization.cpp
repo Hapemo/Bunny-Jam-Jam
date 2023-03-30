@@ -20,7 +20,7 @@ namespace {
 	Transform opponentXformPrev{};
 	Transform opponentXformPrev2{};
 	Transform currxForm{};
-
+	Transform prevxForm{};
 	Transform tmp ;
 	bool initialize = true;
 
@@ -476,11 +476,13 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 					currxForm = *reinterpret_cast<Transform*>(currBuff);
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
-					std::cout << "currtime: " << GetTime() << std::endl;
-					std::cout << "prevtime: " << GetPrevTime() << std::endl;
+					//std::cout << "currtime: " << GetTime() << std::endl;
+					//std::cout << "prevtime: " << GetPrevTime() << std::endl;
 					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
 					//e.GetComponent<Transform>() = currxForm;
-					updatexForm(currxForm, opponentXformPrev);
+					//updatexForm(currxForm, opponentXformPrev);
+					opponentXformPrev = e.GetComponent<Transform>();
+					Bunny_PrevTime = GetTime();
 				}
 			}
 			else
@@ -494,10 +496,10 @@ void NetworkSerializationManager::DeserialiseEntityDetail(char* currBuff) {
 					//std::cout << "currxForm: " << currxForm.translation.x << std::endl;
 					//std::cout << "opponentXformPrev: " << opponentXformPrev.translation.x << std::endl;
 					//EntityInterpolation(currxForm, e.GetComponent<Transform>());
-					updatexForm(currxForm, opponentXformPrev);
+					//updatexForm(currxForm, opponentXformPrev);
 					//e.GetComponent<Transform>() = currxForm;
-
-
+					opponentXformPrev = e.GetComponent<Transform>();
+					Bunny_PrevTime = GetTime();
 				}
 			}
 			else
@@ -752,44 +754,17 @@ void NetworkSerializationManager::updatexForm(Transform& curr, Transform& prev)
 	prev = curr;
 }
 
-Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& playerpos)
+Transform NetworkSerializationManager::EntityInterpolation(Transform& curr, Transform& prev)
 {
-
-	Relap_Time += VI::GetDeltaTime();
-
-	if (initialize == true) {
-		tmp = currxForm;
-		initialize = false;
-
+	float render_timestamp = GetTime() - (1000.0f / 30.0f);
+	Transform tmp = prev;
+	if ((render_timestamp - GetPrevTime())> 0 && (GetTime() - GetPrevTime()) > 0)
+	{
+		tmp.translation.x = prev.translation.x + ((curr.translation.x -
+			prev.translation.x) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
+		tmp.translation.y = prev.translation.y + ((curr.translation.y -
+			prev.translation.y) * (render_timestamp - GetPrevTime()) / (GetTime() - GetPrevTime())) /** VI::GetDeltaTime()*/;
 	}
-	if (Relap_Time >= 0.10f) {
-		opponentXformPrev2 = opponentXformPrev;
-		opponentXformPrev = currxForm;
-
-		//std::cout << opponentXformPrev.translation.x << " old prev \n";
-		//std::cout << opponentXformPrev2.translation.x << " old prev v2\n";
-
-
-		//std::cout << currxForm.translation.x << " server position x \n";
-	//	std::cout << playerpos.translation.x << " player position x \n";
-
-		Relap_Time = 0;
-	}
-
-	if ( abs(currxForm.translation.x - playerpos.translation.x) >0|| abs(currxForm.translation.y - playerpos.translation.y) > 0) {
-		tmp.translation.x = ((opponentXformPrev.translation.x - opponentXformPrev2.translation.x) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
-		tmp.translation.y = ((opponentXformPrev.translation.y - opponentXformPrev2.translation.y) /*/ 2.10f*/) * VI::GetDeltaTime() * 21.0f;
-	}
-	else {
-		//opponentXformPrev2 = opponentXformPrev;
-		//opponentXformPrev = currxForm;
-		tmp.translation.x = 0;
-		tmp.translation.y = 0;
-
-		
-	}
-
-
 	return tmp;
 
 	//Transform tmp = prev;
@@ -810,6 +785,10 @@ void NetworkSerializationManager::FlipEntityInterpolation()
 Transform& NetworkSerializationManager::GetCurrXform()
 {
 	return currxForm;
+}
+Transform& NetworkSerializationManager::GetPrevXform()
+{
+	return opponentXformPrev;
 }
 
 
