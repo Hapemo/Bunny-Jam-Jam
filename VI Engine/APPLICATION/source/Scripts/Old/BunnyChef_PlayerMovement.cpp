@@ -220,7 +220,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 
 #ifdef _CLIENT
 
-
+		std::cout << serverReconciliation << " bunnyside manager \n";
 	// Network Toggle
 		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_1)) { clientPrediction = !clientPrediction; }
 		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::_2)) { 
