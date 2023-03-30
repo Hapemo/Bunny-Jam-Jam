@@ -93,21 +93,7 @@ void clientRecvData()
         memset(NetworkSerializationManager::GetInstance()->mRecvBuff, 0, MAX_UDP_PACKET_SIZE);
         memcpy(NetworkSerializationManager::GetInstance()->mRecvBuff, localBuff, nLength);
 
-        //if (nLength == size)
-        //    std::cout << "the sizes are the same!\n";
-        //else
-        //    std::cout << "nlength: " << nLength << ", size: " << size << "\n";
-        
-        //NetworkSerializationManager::GetInstance()->PrintRecvBuff();
         unsigned long newPacketNum = *reinterpret_cast<unsigned long*>(NetworkSerializationManager::GetInstance()->mRecvBuff + (nLength - sizeof(unsigned long) - sizeof(char)));
-
-
-        ////std::cout << ">> [CLIENT] oldpacketnum: " << ClientManager::GetInstance()->serverPacketNum << '\n';
-        ////std::cout << ">> [CLIENT] newPacketNum: " << newPacketNum << '\n';
-        
-
-
-
 
         // SERVER RECONCILATION
         if (!NetworkSerializationManager::GetInstance()->mGameStarted) {
@@ -124,55 +110,8 @@ void clientRecvData()
         }
         
 
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-    //    if (ClientManager::GetInstance()->serverReconcilation)
-    //    {
-    //        if (ClientManager::GetInstance()->serverPacketNum < newPacketNum)
-    //        {
-    //            //ClientManager::GetInstance()->serverPacketNum = newPacketNum;
-    //            //// tell jazz to deserialize
-    //            //NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
-    //            //NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
-
-    //            ////std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
-    //            //NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
-    //        }
-    //        else
-    //        {
-    //            ClientManager::GetInstance()->serverPacketNum = newPacketNum;
-    //            // tell jazz to deserialize
-    //            NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
-    //            NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
-
-    //            //std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
-    //            NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
-    //        }
-    //    }
-    //    else
-    //    {
-    //        NetworkSerializationManager::GetInstance()->DeserialiseAndLoad();
-    //        NetworkSerializationManager::GetInstance()->mPlayerID = static_cast<int>(*(NetworkSerializationManager::GetInstance()->mRecvBuff + nLength - sizeof(char)));
-
-    //        //std::cout << ">> [CLIENT] :: PlayerID in clientRecvData is " << NetworkSerializationManager::GetInstance()->mPlayerID << "\n\ncvcv";
-    //        NetworkSerializationManager::GetInstance()->UpdatePrevTime(NetworkSerializationManager::GetInstance()->GetTime());
-    //    }
-
     }
 
-   // return;
 }
 
 

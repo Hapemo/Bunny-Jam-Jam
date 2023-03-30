@@ -33,7 +33,7 @@ void Bunny_Timer::Alive(const Entity& _e) {
 
 void Bunny_Timer::Init(const Entity& _e) {
 	(void)_e;
-	ServerManager::GetInstance()->mTimeRemaining = 999;
+	ServerManager::GetInstance()->mTimeRemaining = 120;
 	countdowntimer = 4.0f;
 	if (_e.HasComponent<Text>())
 		_e.GetComponent<Text>().text = "00:60";

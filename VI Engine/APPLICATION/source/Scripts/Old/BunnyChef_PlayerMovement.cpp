@@ -27,7 +27,6 @@ bool BunnyOrChef{ false }; //False = Bunny , True = Chef
 bool clientPrediction{ false };
 bool serverReconciliation{ false };
 bool EntityInterpolation{ false };
-bool tick{ false };
 namespace
 {
 	Entity BunnyPlayer;
@@ -115,9 +114,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		if (server->mP1Input[0])
 		{
 			{
-				/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-						BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-						BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
+
 				VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,4000.0f }, 0.0f);
 			}
 		}
@@ -126,9 +123,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 		if (server->mP1Input[1])
 		{
 			{
-				//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
 				VI::iPhysics::ApplyImpulse(BunnyPlayer, { 0.0f,-4000.0f }, 0.0f);
 
 			}
@@ -140,9 +135,7 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			{
 				if (BunnyPlayer.GetComponent<Transform>().scale.x > 0.0f)
 					BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
-				//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
+
 				VI::iPhysics::ApplyImpulse(BunnyPlayer, { -4000.0f,0.0f }, 0.0f);
 
 			}
@@ -150,40 +143,23 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 
 		//Move Right
 		if (server->mP1Input[3])
-		{
-			{
+		{			
 				if (BunnyPlayer.GetComponent<Transform>().scale.x < 0.0f)
 					BunnyPlayer.GetComponent<Transform>().scale.x = -BunnyPlayer.GetComponent<Transform>().scale.x;
-				/*			BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-							BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-							BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
-
 				VI::iPhysics::ApplyImpulse(BunnyPlayer, { 4000.0f,0.0f }, 0.0f);
-			}
+		
 		}
 
 		//Move Up
 		if (server->mP2Input[0])
 		{
-			{
-				/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-						BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-						BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
 				VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,4000.0f }, 0.0f);
-			}
 		}
 
 		//Move Down
 		if (server->mP2Input[1])
 		{
-
-			{
-				//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
-				VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-4000.0f }, 0.0f);
-
-			}
+			VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-4000.0f }, 0.0f);			
 		}
 
 		//Move Left
@@ -192,9 +168,6 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			{
 				if (ChefPlayer.GetComponent<Transform>().scale.x > 0.0f)
 					ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
-				//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-				//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
 				VI::iPhysics::ApplyImpulse(ChefPlayer, { -4000.0f,0.0f }, 0.0f);
 
 			}
@@ -206,17 +179,13 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			{
 				if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)
 					ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
-				/*			BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-							BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-							BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
+
 
 				VI::iPhysics::ApplyImpulse(ChefPlayer, { 4000.0f,0.0f }, 0.0f);
 			}
 		}
-		// Update bunny movement
 #endif
 
-	//std::cout << "state: " << INGAMESTATEMANAGER.GetComponent<Bunny_InGameStateComponent>().bigs << std::endl;
 
 
 #ifdef _CLIENT
@@ -233,33 +202,21 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 			NetworkSerializationManager::FlipEntityInterpolation();
 		}
 		clientPred.GetComponent<Sprite>().color = (clientPrediction) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
-		if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::Z)) { tick = true;}
-		if (!tick) 
-		{
-			ServerRecon.GetComponent<Sprite>().color = (serverReconciliation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
-		}
-		else
-		{
-			ServerRecon.GetComponent<Sprite>().color = Color{ 255, 255, 255, 255 };
-		}
+		ServerRecon.GetComponent<Sprite>().color = Color{ 255, 255, 255, 255 };	
 		entityInter.GetComponent<Sprite>().color = (EntityInterpolation) ? Color{ 255, 255, 255, 255 } : Color{ 255, 255, 255, 0 };
-		//if (clientPrediction) {}
-		//if (serverReconciliation) {}
+
 		if (EntityInterpolation) {
 			if (NetworkSerializationManager::GetInstance()->mPlayerID == 1)
 			{
-				//ChefPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), ChefPlayer.GetComponent<Transform>());
-					//std::cout << "c:" << ChefPlayer.GetComponent<Transform>().translation.x << std::endl;
+
 				ChefPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(),
 					NetworkSerializationManager::GetInstance()->GetPrevXform());
 				
 			}
 			if (NetworkSerializationManager::GetInstance()->mPlayerID == 2)
 			{
-				//BunnyPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(), BunnyPlayer.GetComponent<Transform>());
 				BunnyPlayer.GetComponent<Transform>() = NetworkSerializationManager::GetInstance()->EntityInterpolation(NetworkSerializationManager::GetInstance()->GetCurrXform(),
 					NetworkSerializationManager::GetInstance()->GetPrevXform());
-					//std::cout << "b: "<< BunnyPlayer.GetComponent<Transform>().translation.x << std::endl;
 			}
 		}
 		else
@@ -327,24 +284,15 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::W))
 				{
 					{
-						/*		BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-								BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-								BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
+
 						VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,4000.0f }, 0.0f);
 					}
 				}
 
 				//Move Down
 				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::S))
-				{
-
-					{
-						//BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-						//BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;
-						VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-4000.0f }, 0.0f);
-
-					}
+				{					
+						VI::iPhysics::ApplyImpulse(ChefPlayer, { 0.0f,-4000.0f }, 0.0f);				
 				}
 
 				//Move Left
@@ -364,22 +312,16 @@ void BunnyChef_PlayerMovement::Update(const Entity& _e)
 
 				//Move Right
 				if (VI::iInput::CheckKey(E_STATE::HOLD, E_KEY::D))
-				{
-					{
+				{					
 						if (ChefPlayer.GetComponent<Transform>().scale.x < 0.0f)
 							ChefPlayer.GetComponent<Transform>().scale.x = -ChefPlayer.GetComponent<Transform>().scale.x;
-						/*			BunnyPlayer.GetComponent<Physics2D>().acceleration = 0;
-									BunnyPlayer.GetComponent<Physics2D>().velocity.x = 0;
-									BunnyPlayer.GetComponent<Physics2D>().velocity.y = 0;*/
 
-						VI::iPhysics::ApplyImpulse(ChefPlayer, { 4000.0f,0.0f }, 0.0f);
-					}
+						VI::iPhysics::ApplyImpulse(ChefPlayer, { 4000.0f,0.0f }, 0.0f);					
 				}
 			}
 		}
 #endif
 	}
-	//if (VI::iInput::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) { BunnyOrChef = !BunnyOrChef; }
 }
 void BunnyChef_PlayerMovement::FixedUpdate(const Entity& _e) {
 	(void)_e;

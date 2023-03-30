@@ -18,7 +18,6 @@ Updates the fps count, for the fps printer in entity
 
 
 static bool updateOnce{ false };
-//bool ConnectionButtonControl::startMenu_{ false };
 REGISTER_SCRIPT(ScriptComponent, ConnectionButtonControl);
 
 namespace {
@@ -51,7 +50,6 @@ namespace {
     bool textin_ = false;
     int iplen_ = 0;
 
-    //int counter = 0;
 }
 
 
@@ -65,17 +63,11 @@ int ConnectionButtonControl::Transit(int zoom, Entity loadicon, float& acc, floa
             acc += 2000.f * (float)FUNC->GetDeltaTime();
             scaling += acc * (float)FUNC->GetDeltaTime() * 60;
         }
-        //  counter++;
-        //  std::cout << counter << " counter for menu_button \n";
 
     }
 
     else if (zoom == 0 && loadicon.GetComponent<Transform>().scale.x >= 0) {
 
-
-        //std::cout << acc_ << " acceleration \n";
-        //std::cout << scaling_ << " scaling \n";
-        //std::cout << loadicon_.GetComponent<Transform>().scale.x << " scale \n";
 
         loadicon.GetComponent<Transform>().scale.x -= scaling * (float)FUNC->GetDeltaTime();
         loadicon.GetComponent<Transform>().scale.y -= scaling * (float)FUNC->GetDeltaTime();
@@ -129,12 +121,6 @@ void ConnectionButtonControl::Init(Entity const& _e) {
     p1_ = VI::iEntity::GetEntity("Player1", "Game");
     p2_ = VI::iEntity::GetEntity("Player2", "Game");
 
-    //if (zoom_ == 1) {
-
-    //  loadicon_.GetComponent<Transform>().scale.x =0.f;
-    //  loadicon_.GetComponent<Transform>().scale.y =0.f;
-    //}
-    //else if (zoom_ == 0) {
     zoom_ = 0;
     you_.GetComponent<Transform>().scale.x = 0.f;
     you_.GetComponent<Transform>().scale.y = 0.f;
@@ -177,10 +163,6 @@ void ConnectionButtonControl::Update(Entity const& _e) {
     }
 
 
-    // default p1 pos -400 / 8
-    // default p2 pos -400 / 220
-    // default you_ size 335 / 150
-    // default player1/2 button size 260 / 180
 
 
 
@@ -348,9 +330,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
 
 
     if (back_.GetComponent<Button>().isHover) {
-        //if (join_.GetComponent<Transform>().scale.x < 200) {
-        //  join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
-        //}
+
         if (back_.GetComponent<Button>().isClick) {
             zoom_ = 1;
             Menu_Button::startMenu_ = 0;
@@ -359,9 +339,7 @@ void ConnectionButtonControl::Update(Entity const& _e) {
     zoom_ = Transit(zoom_, loadicon_, acc_, scaling_);
 
     if (join_.GetComponent<Button>().isHover) {
-        //if (join_.GetComponent<Transform>().scale.x < 200) {
-        //  join_.GetComponent<Transform>().scale.x += 1000.f * (float)FUNC->GetDeltaTime();
-        //}
+
         if (join_.GetComponent<Button>().isClick) {
             textin_ = true;
             if(!isConnected)
